@@ -3,37 +3,76 @@ import Image from "next/image";
 import { useScroll, motion, useMotionValueEvent } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
+
+// Utility functions
+const getRadianValue = (deg:number) => (deg*Math.PI/180)
+const calculateScaleConstant = ({dpr, dar}:{dpr:number, dar:number}) => ((dar+(1/dar))/(dpr))
+const constantTranslateK = ({px, dpr, dar}:{px:number, dpr:number, dar:number}) => (px + (dpr*dar*10))
+const translateXConstantX = ({px}:{px:number}) => (px)
+const translateYConstantY = ({px}:{px:number}) => (px)
+
+// Constants
+const MAX_DELTA_A = getRadianValue(10)
+const ISLAND_SCALE_K = 0
+const BIRD_SCALE_K = 0.8
+
+interface CloudProps {
+  top?:number|string,
+  left?:number|string,
+  right?:number|string,
+  bottom?:number|string,
+  scale:number|string,
+}
+const Cloud = ({url, props, alt, current }:{url:string, alt:string, props:CloudProps, current:{px:number, percent:number}}) => {
+  const {left, top, bottom, right,scale} = props
+  return (
+    <motion.div
+      transition={{ duration: 0.75, ease: [0.87, 1, 0.13, 1] }}
+      initial={{opacity:0}}
+      animate={{opacity: current.percent > .13 ? 1 : 0 }}
+      exit={{opacity:0, transition:{duration:0.75, ease:[0.87, 1,.13, 1]}}}
+      className="fixed object-cover bg-cover z-[9]  w-[80%] md:w-[60%] lg:w-[40%] h-[80%] md:h-[60%] lg:h-[40%] m-auto"
+      style={{top:top ?? "auto", left:left ?? "auto",right:right ?? "auto", bottom:bottom ?? "auto", transform: `scale(${scale})` }}
+    >
+      <Image
+        src={url}
+        alt={alt}
+        width={1000}
+        height={1000}
+      />
+    </motion.div>
+  )
+}
 export default function Home() {
   const { scrollYProgress, scrollY } = useScroll();
-  const [currentPos, setCurrentPos] = useState(0);
-  const [currentPxl, setCurrentPxl] = useState(0);
-  const [viewHeight, setViewHeight] = useState(0);
-  const [viewWidth, setViewWidth] = useState(0);
-  const [isPhone, setIsPhone] = useState(true);
+  const [current, setCurrent] = useState({px: 0, percent: 0})
+  const [d, setD] = useState({vw: 0, vh: 0, dpr: 1, dar: (16/9)})
+  
   useEffect(() => {
     if (window) {
-      setViewHeight(window.innerHeight);
-      setViewWidth(window.innerWidth);
-      console.log("dpr", window.devicePixelRatio);
+      setD({
+        dpr: window.devicePixelRatio,
+        vw: window.innerWidth,
+        vh: window.innerHeight,
+        dar: window.innerWidth / window.innerHeight
+      })
     }
   }, []);
-  useEffect(() => {
-    if (viewHeight > 0 && viewWidth > 0) {
-      if (viewHeight < viewWidth) {
-        setIsPhone(false);
-      }
-      console.log(viewHeight / viewWidth);
-    }
-  }, [viewHeight, viewWidth]);
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    setCurrentPos(latest);
+  
+  // useEffect(() => {
+  //   if (viewHeight > 0 && viewWidth > 0) {
+  //     if (viewHeight < viewWidth) {
+  //       setIsPhone(false);
+  //     }
+  //     console.log(viewHeight / viewWidth);
+  //   }
+  // }, [viewHeight, viewWidth]);
+  useMotionValueEvent(scrollYProgress, "change", (percent) => {
+    setCurrent(p => ({...p, percent}));
   });
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setCurrentPxl(latest);
-  });
-  useEffect(() => {
-    console.log((currentPos * currentPxl) / (viewWidth / viewHeight));
-  }, [currentPos]);
+  useMotionValueEvent(scrollY, "change", (px) => {
+    setCurrent(p => ({...p, px}));
+  })
   return (
     <main className="h-full relative">
       {/* FIRST COMP */}
@@ -46,10 +85,10 @@ export default function Home() {
         </p>
         <motion.div
           style={{
-            transform: `translateX(-${currentPxl}px) translateY(${
-              currentPos * 50
+            transform: `translateX(-${current.px}px) translateY(${
+              current.percent * 50
             }%)`,
-            bottom: `${isPhone ? (viewHeight / viewWidth) * 3 : 0}%`,
+            // bottom: `${isPhone ? (viewHeight / viewWidth) * 3 : 0}%`,
           }}
           className={`fixed z-[20] w-full`}
         >
@@ -57,19 +96,19 @@ export default function Home() {
             src="/chennai_blue.svg"
             alt="Chennai Blue"
             style={{
-              scale: `${isPhone ? (viewHeight / viewWidth) * 100 : 100}%`,
+              // scale: `${isPhone ? (viewHeight / viewWidth) * 100 : 100}%`,
             }}
-            className={`  w-full`}
+            className={`w-full`}
             width={2000}
             height={2000}
           />
         </motion.div>
         <motion.div
           style={{
-            transform: `translateX(${currentPxl}px) translateY(${
-              currentPos * 50
+            transform: `translateX(${current.px}px) translateY(${
+              current.percent * 50
             }%)`,
-            bottom: `${isPhone ? (viewHeight / viewWidth) * 3 : 0}%`,
+            // bottom: `${isPhone ? (viewHeight / viewWidth) * 3 : 0}%`,
           }}
           className="fixed  z-[20] w-full"
         >
@@ -78,7 +117,7 @@ export default function Home() {
             alt="Chennai Color"
             className="w-full"
             style={{
-              scale: `${isPhone ? (viewHeight / viewWidth) * 100 : 100}%`,
+              // scale: `${isPhone ? (viewHeight / viewWidth) * 100 : 100}%`,
             }}
             width={2000}
             height={2000}
@@ -88,13 +127,18 @@ export default function Home() {
 
       {/* SECOND COMP */}
       <motion.div className="h-screen   bg-red-300  relative">
+        <Cloud url="/cloud_left.svg" alt="Left Cloud" props={{scale:1, top:0, bottom:0, left:"-20%"}} current={current} />
+        <Cloud url="/cloud_middle.svg" alt="Middle Cloud" props={{scale:1, top:0, bottom:0, left:0, right:0}} current={current} />
+        <Cloud url="/cloud_right.svg" alt="Right Cloud" props={{scale:1, top:0, bottom:0, right:"-20%"}} current={current} />
+      </motion.div>
+      {/* <motion.div className="h-screen   bg-red-300  relative">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: currentPos > 0.13 ? 1 : 0 }}
           exit={{ opacity: 0 }}
           style={{
             left: currentPos > 0.12 ? currentPos * -2 * 300 : "-100%",
-            width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
+            // width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
           }}
           transition={{ duration: 0.75, ease: [0.87, 1, 0.13, 1] }}
           className="fixed top-[25%] bottom-0 w-[80%] md:w-[60%] lg:w-[40%] h-[80%] md:h-[60%] lg:h-[40%] object-cover bg-cover z-[9]"
@@ -111,7 +155,7 @@ export default function Home() {
           animate={{ opacity: currentPos > 0.13 ? 1 : 0 }}
           style={{
             bottom: currentPos > 0.12 ? currentPos * 2 * 400 : 0,
-            width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
+            // width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
           }}
           className="fixed w-[80%] left-0 right-0 m-auto ml-[20%] md:w-[60%] lg:w-[40%] object-cover bg-cover z-[9]"
         >
@@ -127,7 +171,7 @@ export default function Home() {
           animate={{ opacity: currentPos > 0.13 ? 1 : 0 }}
           style={{
             right: currentPos > 0.12 ? currentPos * -2 * 300 : "-100%",
-            width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
+            // width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
           }}
           className="fixed top-[25%] bottom-0 w-[80%] md:w-[60%] lg:w-[40%] object-cover bg-cover z-[9]"
         >
@@ -146,7 +190,7 @@ export default function Home() {
             transform: `matrix(${currentPos + 0.75}, 0,0,${
               currentPos + 0.75
             }, ${currentPos * 100}, -${
-              currentPxl - viewHeight + (200 + (viewHeight / viewWidth) * 100)
+              currentPxl - d.vh + (200 + (1/d.dar) * 100)
             })`,
           }}
           className="fixed left-0 right-0 m-auto w-[80%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[7]"
@@ -159,17 +203,17 @@ export default function Home() {
             height={1000}
           />
         </motion.div>
-      </motion.div>
+      </motion.div> */}
 
       <div className="h-screen  bg-red-500  relative">
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.2 ? 1 : 0 }}
+          animate={{ opacity: current.percent > 0.2 ? 1 : 0 }}
           className="fixed bottom-0 w-screen h-[25%] xl:h-[20%] z-[7] bg-[#70cbff]"
         ></motion.div>
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.2 ? 1 : 0 }}
+          animate={{ opacity: current.percent > 0.2 ? 1 : 0 }}
           className="fixed bottom-0 w-screen h-[3%] z-[7] bg-[#f6e1aa]"
         ></motion.div>
       </div>
