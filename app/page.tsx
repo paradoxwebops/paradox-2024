@@ -1,31 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useScroll, motion, useMotionValueEvent } from "framer-motion";
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
-
-// Utility functions
-const getRadianValue = (deg: number) => (deg * Math.PI) / 180;
-const getCurrentComponent = ({ height, px }: { height: number; px: number }) =>
-  px / height;
-const calculateScaleConstant = ({ dpr, dar }: { dpr: number; dar: number }) =>
-  (dar + 1 / dar) / dpr;
-const constantTranslateK = ({
-  px,
-  dpr,
-  dar,
-}: {
-  px: number;
-  dpr: number;
-  dar: number;
-}) => (px + dpr * dar) / 2;
-const translateXConstantX = ({ px }: { px: number }) => px / 10;
-const translateYConstantY = ({ px }: { px: number }) => px;
-
-// Constants
-const MAX_DELTA_A = getRadianValue(30);
-const ISLAND_SCALE_K = 0;
-const BIRD_SCALE_K = 0.8;
 
 interface CloudProps {
   top?: number | string;
@@ -33,6 +10,58 @@ interface CloudProps {
   right?: number | string;
   bottom?: number | string;
 }
+
+type ScreenMeasurements = {
+  dar: number;
+  dpr: number;
+  vw: number;
+  vh: number;
+}
+
+type ScrollValues = {
+  px: number;
+  percent: number;
+}
+
+// Utility functions
+const getRadianValue = (deg: number) => ((deg * Math.PI) / 180);
+const getCurrentComponent = ({ height, px }: { height: number; px: number }) =>
+  px / height;
+const calculateScaleConstant = ({ dpr, dar }: ScreenMeasurements) =>
+  (dar + 1 / dar) / dpr;
+const constantTranslateK = ({
+  px,
+  dpr,
+  dar,
+}: ScrollValues & ScreenMeasurements) => (px + dpr * dar) / dpr;
+const translateXConstantX = ({ px }: { px: number }) => px / 10;
+const translateYConstantY = ({ px }: { px: number }) => px;
+
+
+// const buildingBottom = ({dpr, dar}:ScreenMeasurements, scale:number, ref:RefObject<HTMLImageElement>) => {
+//   // if (0.7 < dar && dar < 1) {
+//   // }
+  
+//   // if (0.4 < dar && dar < 0.7) {
+//   //   return `${10 - dar*dpr}vh`
+//   // }
+  
+//   return `${(ref?.current?.naturalHeight ?? 0)*(scale-1)}px`
+//   // return 0
+// }
+
+const buildingScale = ({dpr, dar}:ScreenMeasurements) => {
+  if (0.5 < dar && dar < 1) {
+    return 0.6 + (dar*dpr)
+  }
+  return 1
+}
+
+// Constants
+const MAX_DELTA_A = getRadianValue(30);
+const ISLAND_SCALE_K = 0;
+const BIRD_SCALE_K = 0.6;
+
 const Cloud = ({
   url,
   props,
@@ -75,11 +104,15 @@ const Cloud = ({
     </motion.div>
   );
 };
+
 export default function Home() {
   const { scrollYProgress, scrollY } = useScroll();
-  const [current, setCurrent] = useState({ px: 0, percent: 0 });
-  const [d, setD] = useState({ vw: 0, vh: 0, dpr: 1, dar: 16 / 9 });
+  const [current, setCurrent] = useState<ScrollValues>({ px: 0, percent: 0 });
+  const [d, setD] = useState<ScreenMeasurements>({ vw: 0, vh: 0, dpr: 1, dar: 16 / 9 });
   const [comp, setComp] = useState(0);
+  // const chennaiBlueRef = useRef<HTMLImageElement>(null)
+  // const chennaiColorRef = useRef<HTMLImageElement>(null)
+
   useEffect(() => {
     if (window) {
       setD({
@@ -91,14 +124,6 @@ export default function Home() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (viewHeight > 0 && viewWidth > 0) {
-  //     if (viewHeight < viewWidth) {
-  //       setIsPhone(false);
-  //     }
-  //     console.log(viewHeight / viewWidth);
-  //   }
-  // }, [viewHeight, viewWidth]);
   useMotionValueEvent(scrollYProgress, "change", (percent) => {
     setCurrent((p) => ({ ...p, percent }));
   });
@@ -107,6 +132,7 @@ export default function Home() {
     const height = window.innerHeight;
     setComp(getCurrentComponent({ height, px }));
   });
+
   return (
     <main className="h-full relative">
       {/* FIRST COMP */}
@@ -119,44 +145,40 @@ export default function Home() {
         </p>
         <motion.div
           style={{
-            transform: `translateX(-${current.px}px) translateY(${
-              current.percent * 50
-            }%)`,
-            // bottom: `${isPhone ? (viewHeight / viewWidth) * 3 : 0}%`,
+            transform: `translateX(-${current.px}px) translateY(${current.percent * 50}%)`,
+            // bottom: `${buildingBottom({...d}, buildingScale({...d}), chennaiBlueRef)}`
           }}
           className={`fixed z-[20] w-full bottom-0`}
         >
           <Image
+            // ref={chennaiBlueRef}
             src="/chennai_blue.svg"
             alt="Chennai Blue"
-            style={
-              {
-                // scale: `${isPhone ? (viewHeight / viewWidth) * 100 : 100}%`,
-              }
-            }
             className={`w-full`}
+            style={{
+              transform: `scale(${buildingScale({...d})})`,
+              transformOrigin: '50% 100%'
+            }}
             width={2000}
             height={2000}
           />
         </motion.div>
         <motion.div
           style={{
-            transform: `translateX(${current.px}px) translateY(${
-              current.percent * 50
-            }%)`,
-            // bottom: `${isPhone ? (viewHeight / viewWidth) * 3 : 0}%`,
+            transform: `translateX(${current.px}px) translateY(${current.percent * 50}%)`,
+            // bottom: `${buildingBottom({...d}, buildingScale({...d}), chennaiColorRef)}`
           }}
           className="fixed  z-[20] w-full bottom-0"
         >
           <Image
             src="/chennai_color.svg"
             alt="Chennai Color"
+            // ref={chennaiColorRef}
             className="w-full"
-            style={
-              {
-                // scale: `${isPhone ? (viewHeight / viewWidth) * 100 : 100}%`,
-              }
-            }
+            style={{
+              transform: `scale(${buildingScale({...d})})`,
+              transformOrigin: '50% 100%'
+            }}
             width={2000}
             height={2000}
           />
@@ -164,7 +186,7 @@ export default function Home() {
       </div>
 
       {/* SECOND COMP */}
-      <motion.div className="h-screen     relative">
+      <motion.div className="h-screen relative">
         <Cloud
           url="/cloud_left.svg"
           alt="Left Cloud"
@@ -198,7 +220,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: comp > 0.4 ? 1 : 0 }}
           style={{
-            transform: `matrix(1, 0,0,1, ${
+            transform: `matrix(1, 0, 0, 1, ${
               MAX_DELTA_A * current.percent * 800
             }, -${current.px / 4 + 300})`,
           }}
@@ -213,79 +235,6 @@ export default function Home() {
           />
         </motion.div>
       </motion.div>
-      {/* <motion.div className="h-screen   bg-red-300  relative">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.13 ? 1 : 0 }}
-          exit={{ opacity: 0 }}
-          style={{
-            left: currentPos > 0.12 ? currentPos * -2 * 300 : "-100%",
-            // width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
-          }}
-          transition={{ duration: 0.75, ease: [0.87, 1, 0.13, 1] }}
-          className="fixed top-[25%] bottom-0 w-[80%] md:w-[60%] lg:w-[40%] h-[80%] md:h-[60%] lg:h-[40%] object-cover bg-cover z-[9]"
-        >
-          <Image
-            src="cloud_left.svg"
-            alt="Left Cloud"
-            width={1000}
-            height={1000}
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.13 ? 1 : 0 }}
-          style={{
-            bottom: currentPos > 0.12 ? currentPos * 2 * 400 : 0,
-            // width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
-          }}
-          className="fixed w-[80%] left-0 right-0 m-auto ml-[20%] md:w-[60%] lg:w-[40%] object-cover bg-cover z-[9]"
-        >
-          <Image
-            src="cloud_middle.svg"
-            alt="Middle Cloud"
-            width={1000}
-            height={1000}
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.13 ? 1 : 0 }}
-          style={{
-            right: currentPos > 0.12 ? currentPos * -2 * 300 : "-100%",
-            // width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
-          }}
-          className="fixed top-[25%] bottom-0 w-[80%] md:w-[60%] lg:w-[40%] object-cover bg-cover z-[9]"
-        >
-          <Image
-            src="cloud_right.svg"
-            className=""
-            alt="Right Cloud"
-            width={1000}
-            height={1000}
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.15 ? 1 : 0 }}
-          style={{
-            transform: `matrix(${currentPos + 0.75}, 0,0,${
-              currentPos + 0.75
-            }, ${currentPos * 100}, -${
-              currentPxl - d.vh + (200 + (1/d.dar) * 100)
-            })`,
-          }}
-          className="fixed left-0 right-0 m-auto w-[80%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[7]"
-        >
-          <Image
-            src="sun.svg"
-            className=""
-            alt="Sun"
-            width={1000}
-            height={1000}
-          />
-        </motion.div>
-      </motion.div> */}
       {/* THIRD COMP */}
       <div className="h-screen   relative">
         <motion.div
@@ -313,8 +262,7 @@ export default function Home() {
           <Image src="/bird.svg" alt="Bird" width={1000} height={1000} />
         </motion.div>
       </div>
-      <div className="h-screen    relative"></div>
-      <div className="h-screen    relative"></div>
+      <div className="h-screen relative"></div>
     </main>
   );
 }
