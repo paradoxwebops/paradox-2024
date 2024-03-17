@@ -98,6 +98,14 @@ export default function Home() {
     }
   }, []);
 
+  // useEffect(() => {
+  //   if (viewHeight > 0 && viewWidth > 0) {
+  //     if (viewHeight < viewWidth) {
+  //       setIsPhone(false);
+  //     }
+  //     console.log(viewHeight / viewWidth);
+  //   }
+  // }, [viewHeight, viewWidth]);
   useMotionValueEvent(scrollYProgress, "change", (percent) => {
     setCurrent((p) => ({ ...p, percent }));
     percentValue.set(percent);
@@ -156,7 +164,7 @@ export default function Home() {
       </div>
 
       {/* SECOND COMP */}
-      <motion.div className="h-screen relative">
+      <motion.div className="h-screen     relative">
         <Cloud
           url="/cloud_left.svg"
           alt="Left Cloud"
