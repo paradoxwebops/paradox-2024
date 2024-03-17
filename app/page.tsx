@@ -1,36 +1,13 @@
+
 "use client";
 import Image from "next/image";
 import {
   useScroll,
   motion,
   useMotionValueEvent,
-  useSpring,
 } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
-
-// Utility functions
-const getRadianValue = (deg: number) => (deg * Math.PI) / 180;
-const getCurrentComponent = ({ height, px }: { height: number; px: number }) =>
-  px / height;
-const calculateScaleConstant = ({ dpr, dar }: { dpr: number; dar: number }) =>
-  (dar + 1 / dar) / dpr;
-const constantTranslateK = ({
-  px,
-  dpr,
-  dar,
-}: {
-  px: number;
-  dpr: number;
-  dar: number;
-}) => (px + dpr * dar) / 2;
-const translateXConstantX = ({ px }: { px: number }) => px / 40;
-const translateYConstantY = ({ px }: { px: number }) => px;
-
-// Constants
-const MAX_DELTA_A = getRadianValue(30);
-const ISLAND_SCALE_K = 0;
-const BIRD_SCALE_K = 0.8;
 
 interface CloudProps {
   top?: number | string;
@@ -38,6 +15,66 @@ interface CloudProps {
   right?: number | string;
   bottom?: number | string;
 }
+
+type ScreenMeasurements = {
+  dar: number;
+  dpr: number;
+  vw: number;
+  vh: number;
+}
+
+type ScrollValues = {
+  px: number;
+  percent: number;
+}
+
+// Utility functions
+const getRadianValue = (deg: number) => ((deg * Math.PI) / 180);
+const getCurrentComponent = ({ height, px }: { height: number; px: number }) =>
+  px / height;
+const calculateScaleConstant = ({ dpr, dar }: ScreenMeasurements) =>
+  (dar + 1 / dar) / dpr;
+const constantTranslateK = ({
+  px,
+  dpr,
+  dar,
+}: ScrollValues & ScreenMeasurements) => (px + dpr * dar) / dpr;
+const translateXConstantX = ({ px }: { px: number }) => px / 10;
+const translateYConstantY = ({ px }: { px: number }) => px;
+
+const calculateSunTranslateX = ({vw, percent}: ScreenMeasurements & ScrollValues) => {
+  return (percent * vw) / 4
+}
+
+const calculateSunTranslateY = ({dar, percent, px, vh, dpr}: ScreenMeasurements & ScrollValues) => {
+  return ((10 / 3) * dar * percent * vh)/(dar >= 1 ? (dpr) : (1/dpr))
+}
+
+const calculateIslandScale = ({current, d}: {current: ScrollValues, d:ScreenMeasurements}) => {
+  return ((current.percent * calculateScaleConstant(d))/(d.dar >= 1 ? (d.dar-1) : (d.dar))) + ISLAND_SCALE_K
+}
+
+const calculateBirdTranslateXPx = ({px, vh}: ScreenMeasurements & ScrollValues) => {
+  return px - vh
+}
+
+const calculateBirdTranslateYPx = ({px, vh, dar}: ScreenMeasurements & ScrollValues) => {
+  return (px - vh) * (dar >= 1 ? (1 / dar) : (dar))
+}
+
+const buildingScale = ({dpr, dar}:ScreenMeasurements) => {
+  if (0.5 < dar && dar < 1) {
+    return 0.6 + (dar*dpr)
+  }
+  return 1
+}
+
+// Constants
+const MAX_DELTA_A = getRadianValue(30);
+const ISLAND_SCALE_K = 0;
+const BIRD_SCALE_K = 0.6;
+
+
 const Cloud = ({
   url,
   props,
@@ -62,15 +99,13 @@ const Cloud = ({
           opacity: 0,
           transition: { duration: 0.75, ease: [0.87, 1, 0.13, 1] },
         }}
-        className="fixed object-cover bg-cover z-[8]  w-[80%] md:w-[60%] lg:w-[40%]  m-auto"
+        className="fixed object-cover bg-cover z-[8]  w-[80%] md:w-[50%] lg:w-[40%]  m-auto"
         style={{
           top: top ?? "auto",
           left: left ?? "auto",
           right: right ?? "auto",
           bottom: bottom ?? "auto",
-          transform: `translateX(${translateXConstantX(
-            current
-          )}px) translateY(-${MAX_DELTA_A * current.percent}px)`,
+          transform: `translateX(${translateXConstantX(current)}px) translateY(${getRadianValue(95)*current.percent*100}px)`,
         }}
         src={url}
         alt={alt}
@@ -81,12 +116,12 @@ const Cloud = ({
   );
 };
 export default function Home() {
+
   const { scrollYProgress, scrollY } = useScroll();
-  const [current, setCurrent] = useState({ px: 0, percent: 0 });
-  const pxValue = useSpring(0);
-  const percentValue = useSpring(0);
-  const [d, setD] = useState({ vw: 0, vh: 0, dpr: 1, dar: 16 / 9 });
-  const [comp, setComp] = useState(0);
+  const [current, setCurrent] = useState<ScrollValues>({ px: 0, percent: 0 });
+  const [d, setD] = useState<ScreenMeasurements>({ vw: 0, vh: 0, dpr: 1, dar: 16 / 9 });
+  const [comp, setComp] = useState<number>(0);
+
   useEffect(() => {
     if (window) {
       setD({
@@ -108,17 +143,12 @@ export default function Home() {
   // }, [viewHeight, viewWidth]);
   useMotionValueEvent(scrollYProgress, "change", (percent) => {
     setCurrent((p) => ({ ...p, percent }));
-    percentValue.set(percent);
   });
   useMotionValueEvent(scrollY, "change", (px) => {
     setCurrent((p) => ({ ...p, px }));
     const height = window.innerHeight;
     setComp(getCurrentComponent({ height, px }));
-    pxValue.set(px);
-  });
-  useEffect(() => {
-    console.log(percentValue, pxValue);
-  }, [percentValue, pxValue]);
+  })
   return (
     <main className="h-full relative">
       {/* FIRST COMP */}
@@ -148,7 +178,7 @@ export default function Home() {
         <motion.div
           style={{
             transform: `translateX(${current.px}px) translateY(${
-              current.percent * 50
+              current.percent * 150
             }%)`,
           }}
           className="fixed  z-[20] w-full bottom-0"
@@ -164,7 +194,7 @@ export default function Home() {
       </div>
 
       {/* SECOND COMP */}
-      <motion.div className="h-screen     relative">
+      <motion.div className="h-screen relative">
         <Cloud
           url="/cloud_left.svg"
           alt="Left Cloud"
@@ -198,9 +228,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           style={{
-            transform: `matrix(1, 0,0,1, ${(current.percent * d.vw) / 4}, -${
-              ((10 / 3) * d.dar * current.percent * d.vh) / 2 + d.dar
-            })`,
+            transform: `matrix(1, 0, 0, 1, ${calculateSunTranslateX({...current, ...d})}, -${calculateSunTranslateY({...current, ...d})})`,
           }}
           className="fixed left-0 right-0 m-auto w-[40%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[7]"
         >
@@ -216,15 +244,15 @@ export default function Home() {
       {/* THIRD COMP */}
       <div className="h-screen   relative">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: current.percent > 0.2 ? 1 : 0 }}
+          initial={{ marginBottom: '-3%' }}
+          animate={{ marginBottom: current.percent > 0.2 ? 0 : `-${(3*(1 - current.percent))}%` }}
           style={{ height: current.px }}
-          className="fixed bottom-0 w-full max-h-[25%] xl:max-h-[20%] z-[7] bg-[#70cbff]"
+          className="fixed bottom-0 w-full max-h-[25%] xl:max-h-[20%] z-[9] bg-[#70cbff]"
         >
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: current.percent > 0.2 ? 1 : 0 }}
-            className="fixed bottom-0 w-full h-[3%] z-[7] bg-[#f6e1aa]"
+            initial={{ marginBottom: '-3%' }}
+            animate={{ marginBottom: current.percent > 0.2 ? 0 : `-${(3*(1 - current.percent))}%` }}
+            className="fixed bottom-0 w-full h-[3%] z-[9] bg-[#f6e1aa]"
           ></motion.div>
         </motion.div>
         <motion.div
@@ -234,28 +262,33 @@ export default function Home() {
           style={{
             transform: `scale(${
               current.percent * calculateScaleConstant(d) + BIRD_SCALE_K
-            }) translateX(${current.px - d.vh}px) translateY(-${
-              (current.px - d.vh) * (1 / d.dar)
-            }px)`,
+            }) translateX(${calculateBirdTranslateXPx({...current, ...d})}px) translateY(-${calculateBirdTranslateYPx({...current, ...d})}px)`,
           }}
         >
           <Image src="/bird.svg" alt="Bird" width={1000} height={1000} />
         </motion.div>
       </div>
       <div className="h-screen relative">
+        <div className="w-[80%] md:w-[40%] h-auto z-[11] relative m-auto" style={{paddingTop: `${(1/d.dar)*10}%`}}>
+          <Image 
+            src={'/paradox_title.svg'}
+            alt="Paradox"
+            width={1000}
+            height={1000}
+          />
+        </div>
         <motion.div
-          className="fixed bottom-[50px] left-0 right-0 m-auto w-[50%] md:w-[30%] lg:w-[20%] z-[9]"
+          className="fixed bottom-[12%] left-0 right-0 m-auto w-[50%] md:w-[30%] lg:w-[20%] z-[9]"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           style={{
-            transform: `scale(${current.percent * calculateScaleConstant(d) + ISLAND_SCALE_K})`,
-            transformOrigin: 'bottom left'
+            transform: `scale(${calculateIslandScale({current, d})})`,
+            transformOrigin: d.dar >= 1 ? 'bottom left' : 'bottom center',
           }}
         >
-          <Image src="/island.svg" alt="Island" width={1000} height={1000} />
+          <Image src="/island.svg" alt="Island" width={1000} height={1000} style={{marginLeft: d.dar >= 1 ? '10vw' : 0}} />
         </motion.div>
       </div>
-      <div className="h-screen    relative"></div>
     </main>
   );
 }
