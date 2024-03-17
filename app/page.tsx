@@ -62,7 +62,7 @@ const Cloud = ({
           opacity: 0,
           transition: { duration: 0.75, ease: [0.87, 1, 0.13, 1] },
         }}
-        className="fixed object-cover bg-cover z-[9]  w-[80%] md:w-[60%] lg:w-[40%]  m-auto"
+        className="fixed object-cover bg-cover z-[8]  w-[80%] md:w-[60%] lg:w-[40%]  m-auto"
         style={{
           top: top ?? "auto",
           left: left ?? "auto",
@@ -70,7 +70,7 @@ const Cloud = ({
           bottom: bottom ?? "auto",
           transform: `translateX(${translateXConstantX(
             current
-          )}px) translateY(${MAX_DELTA_A * current.percent}px)`,
+          )}px) translateY(-${MAX_DELTA_A * current.percent}px)`,
         }}
         src={url}
         alt={alt}
@@ -242,7 +242,19 @@ export default function Home() {
           <Image src="/bird.svg" alt="Bird" width={1000} height={1000} />
         </motion.div>
       </div>
-      <div className="h-screen    relative"></div>
+      <div className="h-screen relative">
+        <motion.div
+          className="fixed bottom-[50px] left-0 right-0 m-auto w-[50%] md:w-[30%] lg:w-[20%] z-[9]"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          style={{
+            transform: `scale(${current.percent * calculateScaleConstant(d) + ISLAND_SCALE_K})`,
+            transformOrigin: 'bottom left'
+          }}
+        >
+          <Image src="/island.svg" alt="Island" width={1000} height={1000} />
+        </motion.div>
+      </div>
       <div className="h-screen    relative"></div>
     </main>
   );
