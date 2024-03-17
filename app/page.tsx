@@ -1,6 +1,11 @@
 "use client";
 import Image from "next/image";
-import { useScroll, motion, useMotionValueEvent } from "framer-motion";
+import {
+  useScroll,
+  motion,
+  useMotionValueEvent,
+  useSpring,
+} from "framer-motion";
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 
@@ -19,7 +24,7 @@ const constantTranslateK = ({
   dpr: number;
   dar: number;
 }) => (px + dpr * dar) / 2;
-const translateXConstantX = ({ px }: { px: number }) => px / 10;
+const translateXConstantX = ({ px }: { px: number }) => px / 40;
 const translateYConstantY = ({ px }: { px: number }) => px;
 
 // Constants
@@ -65,7 +70,7 @@ const Cloud = ({
           bottom: bottom ?? "auto",
           transform: `translateX(${translateXConstantX(
             current
-          )}px) translateY(${MAX_DELTA_A * current.percent * -400}px)`,
+          )}px) translateY(${MAX_DELTA_A * current.percent}px)`,
         }}
         src={url}
         alt={alt}
@@ -78,6 +83,8 @@ const Cloud = ({
 export default function Home() {
   const { scrollYProgress, scrollY } = useScroll();
   const [current, setCurrent] = useState({ px: 0, percent: 0 });
+  const pxValue = useSpring(0);
+  const percentValue = useSpring(0);
   const [d, setD] = useState({ vw: 0, vh: 0, dpr: 1, dar: 16 / 9 });
   const [comp, setComp] = useState(0);
   useEffect(() => {
@@ -91,22 +98,19 @@ export default function Home() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (viewHeight > 0 && viewWidth > 0) {
-  //     if (viewHeight < viewWidth) {
-  //       setIsPhone(false);
-  //     }
-  //     console.log(viewHeight / viewWidth);
-  //   }
-  // }, [viewHeight, viewWidth]);
   useMotionValueEvent(scrollYProgress, "change", (percent) => {
     setCurrent((p) => ({ ...p, percent }));
+    percentValue.set(percent);
   });
   useMotionValueEvent(scrollY, "change", (px) => {
     setCurrent((p) => ({ ...p, px }));
     const height = window.innerHeight;
     setComp(getCurrentComponent({ height, px }));
+    pxValue.set(px);
   });
+  useEffect(() => {
+    console.log(percentValue, pxValue);
+  }, [percentValue, pxValue]);
   return (
     <main className="h-full relative">
       {/* FIRST COMP */}
@@ -120,21 +124,15 @@ export default function Home() {
         <motion.div
           style={{
             transform: `translateX(-${current.px}px) translateY(${
-              current.percent * 50
+              current.percent * 150
             }%)`,
-            // bottom: `${isPhone ? (viewHeight / viewWidth) * 3 : 0}%`,
           }}
           className={`fixed z-[20] w-full bottom-0`}
         >
           <Image
             src="/chennai_blue.svg"
             alt="Chennai Blue"
-            style={
-              {
-                // scale: `${isPhone ? (viewHeight / viewWidth) * 100 : 100}%`,
-              }
-            }
-            className={`w-full`}
+            className={`w-full scale-[250%] md:scale-150 lg:scale-100 origin-bottom`}
             width={2000}
             height={2000}
           />
@@ -144,19 +142,13 @@ export default function Home() {
             transform: `translateX(${current.px}px) translateY(${
               current.percent * 50
             }%)`,
-            // bottom: `${isPhone ? (viewHeight / viewWidth) * 3 : 0}%`,
           }}
           className="fixed  z-[20] w-full bottom-0"
         >
           <Image
             src="/chennai_color.svg"
             alt="Chennai Color"
-            className="w-full"
-            style={
-              {
-                // scale: `${isPhone ? (viewHeight / viewWidth) * 100 : 100}%`,
-              }
-            }
+            className="w-full  scale-[250%] md:scale-150 lg:scale-100 origin-bottom"
             width={2000}
             height={2000}
           />
@@ -164,7 +156,7 @@ export default function Home() {
       </div>
 
       {/* SECOND COMP */}
-      <motion.div className="h-screen     relative">
+      <motion.div className="h-screen relative">
         <Cloud
           url="/cloud_left.svg"
           alt="Left Cloud"
@@ -196,13 +188,13 @@ export default function Home() {
         />
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: comp > 0.4 ? 1 : 0 }}
+          animate={{ opacity: 1 }}
           style={{
-            transform: `matrix(1, 0,0,1, ${
-              MAX_DELTA_A * current.percent * 800
-            }, -${current.px / 4 + 300})`,
+            transform: `matrix(1, 0,0,1, ${(current.percent * d.vw) / 4}, -${
+              ((10 / 3) * d.dar * current.percent * d.vh) / 2 + d.dar
+            })`,
           }}
-          className="fixed left-0 right-0 m-auto w-[80%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[7]"
+          className="fixed left-0 right-0 m-auto w-[40%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[7]"
         >
           <Image
             src="sun.svg"
@@ -213,100 +205,29 @@ export default function Home() {
           />
         </motion.div>
       </motion.div>
-      {/* <motion.div className="h-screen   bg-red-300  relative">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.13 ? 1 : 0 }}
-          exit={{ opacity: 0 }}
-          style={{
-            left: currentPos > 0.12 ? currentPos * -2 * 300 : "-100%",
-            // width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
-          }}
-          transition={{ duration: 0.75, ease: [0.87, 1, 0.13, 1] }}
-          className="fixed top-[25%] bottom-0 w-[80%] md:w-[60%] lg:w-[40%] h-[80%] md:h-[60%] lg:h-[40%] object-cover bg-cover z-[9]"
-        >
-          <Image
-            src="cloud_left.svg"
-            alt="Left Cloud"
-            width={1000}
-            height={1000}
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.13 ? 1 : 0 }}
-          style={{
-            bottom: currentPos > 0.12 ? currentPos * 2 * 400 : 0,
-            // width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
-          }}
-          className="fixed w-[80%] left-0 right-0 m-auto ml-[20%] md:w-[60%] lg:w-[40%] object-cover bg-cover z-[9]"
-        >
-          <Image
-            src="cloud_middle.svg"
-            alt="Middle Cloud"
-            width={1000}
-            height={1000}
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.13 ? 1 : 0 }}
-          style={{
-            right: currentPos > 0.12 ? currentPos * -2 * 300 : "-100%",
-            // width: `${(1 / (viewHeight / viewWidth)) * 100}%`,
-          }}
-          className="fixed top-[25%] bottom-0 w-[80%] md:w-[60%] lg:w-[40%] object-cover bg-cover z-[9]"
-        >
-          <Image
-            src="cloud_right.svg"
-            className=""
-            alt="Right Cloud"
-            width={1000}
-            height={1000}
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: currentPos > 0.15 ? 1 : 0 }}
-          style={{
-            transform: `matrix(${currentPos + 0.75}, 0,0,${
-              currentPos + 0.75
-            }, ${currentPos * 100}, -${
-              currentPxl - d.vh + (200 + (1/d.dar) * 100)
-            })`,
-          }}
-          className="fixed left-0 right-0 m-auto w-[80%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[7]"
-        >
-          <Image
-            src="sun.svg"
-            className=""
-            alt="Sun"
-            width={1000}
-            height={1000}
-          />
-        </motion.div>
-      </motion.div> */}
       {/* THIRD COMP */}
       <div className="h-screen   relative">
         <motion.div
-          //  initial={{ opacity: 0 }}
-          //   animate={{ opacity: current.percent > 0.2 ? 1 : 0 }}
-          //   style={{bottom:100 - }}
-          className="fixed bottom-0 w-full h-[25%] xl:h-[20%] z-[7] bg-[#70cbff]"
-        ></motion.div>
+          initial={{ opacity: 0 }}
+          animate={{ opacity: current.percent > 0.2 ? 1 : 0 }}
+          style={{ height: current.px }}
+          className="fixed bottom-0 w-full max-h-[25%] xl:max-h-[20%] z-[7] bg-[#70cbff]"
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: current.percent > 0.2 ? 1 : 0 }}
+            className="fixed bottom-0 w-full h-[3%] z-[7] bg-[#f6e1aa]"
+          ></motion.div>
+        </motion.div>
         <motion.div
-          // initial={{ opacity: 0 }}
-          // animate={{ opacity: current.percent > 0.2 ? 1 : 0 }}
-          className="fixed bottom-0 w-full h-[3%] z-[7] bg-[#f6e1aa]"
-        ></motion.div>
-        <motion.div
-          className="fixed bottom-0 left-0 w-[50%] md:w-[30%] lg:w-[20%] z-[10]"
-          initial={{ left: 0, bottom: 0 }}
+          className="fixed -bottom-24 -left-24 w-[50%] md:w-[30%] lg:w-[20%] z-[10]"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           style={{
             transform: `scale(${
               current.percent * calculateScaleConstant(d) + BIRD_SCALE_K
-            }) translateX(${current.px}px) translateY(-${
-              current.px * (1 / d.dar)
+            }) translateX(${current.px - d.vh}px) translateY(-${
+              (current.px - d.vh) * (1 / d.dar)
             }px)`,
           }}
         >
