@@ -8,6 +8,11 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+@font-face {
+  font-family: "Milestone";
+  src: url("/font/milestone/Milestone.otf");
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -44,4 +49,8 @@ h5 {
 }
 h6 {
   @apply xl:text-2xl lg:text-xl md:text-lg text-base;
+}
+
+.milestone {
+  font-family: "Milestone";
 }
