@@ -3,6 +3,10 @@
 import { Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import {
+    motion,
+    AnimatePresence,
+} from "framer-motion"
 
 type NavbarLink = {
     name: string,
@@ -13,10 +17,11 @@ type NavbarLink = {
 const NavBar = () => {
     return (
         <>
+
         {/* <NavBarMenuFullScreen /> */}
-        <nav className="flex justify-between p-6 items-center">
+        <nav className="flex justify-between p-6 items-center fixed w-full z-[99]">
             <Image
-                src={'/bird.svg'}
+                src={'/logo.webp'}
                 alt="Logo"
                 width={50}
                 height={50}
@@ -79,7 +84,7 @@ const NavBarLinks = () => {
         {data.map((item) => {
             const {name} = item
             return (
-                <Link {...item}>{name}</Link>
+                <Link {...item} key={name}>{name}</Link>
             )
         })}
         </>
@@ -88,20 +93,22 @@ const NavBarLinks = () => {
 
 
 const NavBarMenuCloseButton = () => {
+    const circleScales = [0.5, 1, 1.5]
+    
     return (
         <>
-            <div 
-                className="w-[40vw] h-[40vw] z-[101] fixed top-[-20vw] right-[-20vw] rounded-full" 
-                style={{backgroundColor: 'rgba(32, 97, 125, 0.2)', transform:'scale(1.5)', transformOrigin: '50% 50% '}}
-            ></div>
-            <div 
-                className="w-[40vw] h-[40vw] z-[101] fixed top-[-20vw] right-[-20vw] rounded-full" 
-                style={{backgroundColor: 'rgba(32, 97, 125, 0.2)', transform:'scale(1)', transformOrigin: '50% 50% '}}
-            ></div>
-            <div 
-                className="w-[40vw] h-[40vw] z-[101] fixed top-[-20vw] right-[-20vw] rounded-full" 
-                style={{backgroundColor: 'rgba(32, 97, 125, 0.2)', transform:'scale(.5)', transformOrigin: '50% 50% '}}
-            ></div>
+            {circleScales.map((val, ind) => {
+                return (
+                    <motion.div 
+                        initial={{transform: `scale(0)`}}
+                        animate={{transform: `scale(${val})`}}
+                        transition={{delay: 0.1 * (ind+1), ease: [0.87, 0, .25, 1]}}
+                        className="w-[40vw] h-[40vw] z-[101] fixed top-[-20vw] right-[-20vw] rounded-full" 
+                        style={{backgroundColor: 'rgba(32, 97, 125, 0.2)', transformOrigin: '50% 50% '}}
+                        key={`${val}_${ind}`}
+                    />
+                )
+            })}
             <button className="fixed top-4 right-4 z-[104]">
                 <X className="w-8 h-8" />
             </button>

@@ -59,7 +59,7 @@ const calculateBirdTranslateXPx = ({px, vh}: ScreenMeasurements & ScrollValues) 
 }
 
 const calculateBirdTranslateYPx = ({px, vh, dar}: ScreenMeasurements & ScrollValues) => {
-  return (px - vh) * (dar >= 1 ? (1 / dar) : (dar))
+  return (px - vh) * (dar >= 1 ? (1 / dar) : (dar)) * (dar < .5 ? (2) : (1))
 }
 
 const buildingScale = ({dpr, dar}:ScreenMeasurements) => {
@@ -72,7 +72,7 @@ const buildingScale = ({dpr, dar}:ScreenMeasurements) => {
 // Constants
 const MAX_DELTA_A = getRadianValue(30);
 const ISLAND_SCALE_K = 0;
-const BIRD_SCALE_K = 0.6;
+const BIRD_SCALE_K = 0.1;
 
 
 const Cloud = ({
@@ -99,7 +99,7 @@ const Cloud = ({
           opacity: 0,
           transition: { duration: 0.75, ease: [0.87, 1, 0.13, 1] },
         }}
-        className="fixed object-cover bg-cover z-[8]  w-[80%] md:w-[50%] lg:w-[40%]  m-auto"
+        className="fixed object-cover bg-cover z-[5]  w-[80%] md:w-[50%] lg:w-[40%]  m-auto"
         style={{
           top: top ?? "auto",
           left: left ?? "auto",
@@ -133,14 +133,6 @@ export default function Home() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (viewHeight > 0 && viewWidth > 0) {
-  //     if (viewHeight < viewWidth) {
-  //       setIsPhone(false);
-  //     }
-  //     console.log(viewHeight / viewWidth);
-  //   }
-  // }, [viewHeight, viewWidth]);
   useMotionValueEvent(scrollYProgress, "change", (percent) => {
     setCurrent((p) => ({ ...p, percent }));
   });
@@ -149,6 +141,7 @@ export default function Home() {
     const height = window.innerHeight;
     setComp(getCurrentComponent({ height, px }));
   })
+
   return (
     <main className="h-full relative">
       {/* FIRST COMP */}
@@ -165,7 +158,7 @@ export default function Home() {
               current.percent * 150
             }%)`,
           }}
-          className={`fixed z-[20] w-full bottom-0`}
+          className={`fixed z-[14] w-full bottom-0`}
         >
           <Image
             src="/chennai_blue.svg"
@@ -181,7 +174,7 @@ export default function Home() {
               current.percent * 150
             }%)`,
           }}
-          className="fixed  z-[20] w-full bottom-0"
+          className="fixed  z-[15] w-full bottom-0"
         >
           <Image
             src="/chennai_color.svg"
@@ -230,7 +223,7 @@ export default function Home() {
           style={{
             transform: `matrix(1, 0, 0, 1, ${calculateSunTranslateX({...current, ...d})}, -${calculateSunTranslateY({...current, ...d})})`,
           }}
-          className="fixed left-0 right-0 m-auto w-[40%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[7]"
+          className="fixed left-0 right-0 m-auto w-[40%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[4]"
         >
           <Image
             src="sun.svg"
@@ -244,15 +237,23 @@ export default function Home() {
       {/* THIRD COMP */}
       <div className="h-screen   relative">
         <motion.div
-          initial={{ marginBottom: '-3%' }}
-          animate={{ marginBottom: current.percent > 0.2 ? 0 : `-${(3*(1 - current.percent))}%` }}
-          style={{ height: current.px }}
-          className="fixed bottom-0 w-full max-h-[25%] xl:max-h-[20%] z-[9] bg-[#70cbff]"
+          initial={{ marginBottom: '-10%' }}
+          animate={{ marginBottom: current.percent > 0.2 ? 0 : `-${(10*(1 - current.percent))}%` }}
+          // style={{ height: current.px }}
+          className="fixed bottom-0 w-full z-[7] bg-[#70cbff]"
         >
+          <Image 
+            src={'/sea.svg'}
+            className="w-full"
+            alt="Sea"
+            style={{transform: `scale(${d.dar < 1 ? ((1 + (1/d.dar))*d.dpr) : 1})`, transformOrigin: '70% 50%'}}
+            width={1000}
+            height={1000}
+          />
           <motion.div
-            initial={{ marginBottom: '-3%' }}
-            animate={{ marginBottom: current.percent > 0.2 ? 0 : `-${(3*(1 - current.percent))}%` }}
-            className="fixed bottom-0 w-full h-[3%] z-[9] bg-[#f6e1aa]"
+            initial={{ height: '0%' }}
+            animate={{ height: current.percent > 1 ? `${((1 - current.percent))}%` : `${(5*(1 - current.percent))}%` }}
+            className="fixed bottom-0 w-full z-[9] bg-[#f6e1aa]"
           ></motion.div>
         </motion.div>
         <motion.div
@@ -269,7 +270,9 @@ export default function Home() {
         </motion.div>
       </div>
       <div className="h-screen relative">
-        <div className="w-[80%] md:w-[40%] h-auto z-[11] relative m-auto" style={{paddingTop: `${(1/d.dar)*10}%`}}>
+        <div 
+          className="w-[80%] md:w-[40%] h-auto z-[6] relative m-auto" 
+          style={{paddingTop: `${(1/d.dar)*10}%`, zIndex: current.percent >= .95 ? (Math.floor(6 + (current.percent*10))) : 6, opacity: current.percent >= .9 ? ((current.percent)) : 0, transition: '.3s ease opacity'}}>
           <Image 
             src={'/paradox_title.svg'}
             alt="Paradox"
