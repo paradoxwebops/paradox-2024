@@ -6,8 +6,7 @@ import {
   motion,
   useMotionValueEvent,
 } from "framer-motion";
-import { useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react"
 
 interface CloudProps {
   top?: number | string;
@@ -133,6 +132,10 @@ export default function Home() {
     }
   }, []);
 
+  const scrollToBottom = () => {
+    // scrollYProgress.set(1)
+  }
+
   useMotionValueEvent(scrollYProgress, "change", (percent) => {
     setCurrent((p) => ({ ...p, percent }));
   });
@@ -146,12 +149,15 @@ export default function Home() {
     <main className="h-full relative">
       {/* FIRST COMP */}
       <div className="h-screen relative">
-        <motion.h1 className="xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl text-4xl text-center p-8">
-          IITM BS Degree Presents
-        </motion.h1>
-        <p className="text-center flex flex-col pt-12 items-center justify-center animate-bounce">
-          Scroll Down <ChevronDown />{" "}
-        </p>
+        <div className="flex flex-col justify-center items-center z-[20] relative" style={{paddingTop: d.dar < 1 ? '15%' : '5%'}}>
+          <motion.h1 className="xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl text-4xl milestone tracking-wide text-[#289398]">
+            IITM BS
+          </motion.h1>
+          <p className="text-4xl font-bold my-3">PRESENTS</p>
+          <button className="flex py-3 px-5 mt-3 items-center justify-center animate-bounce rounded bg-neutral-950/20 font-bold" onClick={scrollToBottom}>
+            Scroll Down
+          </button>
+        </div>
         <motion.div
           style={{
             transform: `translateX(-${current.px}px) translateY(${
