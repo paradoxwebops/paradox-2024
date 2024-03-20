@@ -18,6 +18,6 @@ export default function About() {
     //     })}
     //   </h4>
     // </main>
-    <div></div>
+    <div>Building the page</div>
   );
 }
