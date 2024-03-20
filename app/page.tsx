@@ -1,12 +1,7 @@
-
 "use client";
 import Image from "next/image";
-import {
-  useScroll,
-  motion,
-  useMotionValueEvent,
-} from "framer-motion";
-import { useEffect, useState } from "react"
+import { useScroll, motion, useMotionValueEvent } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface CloudProps {
   top?: number | string;
@@ -20,15 +15,15 @@ type ScreenMeasurements = {
   dpr: number;
   vw: number;
   vh: number;
-}
+};
 
 type ScrollValues = {
   px: number;
   percent: number;
-}
+};
 
 // Utility functions
-const getRadianValue = (deg: number) => ((deg * Math.PI) / 180);
+const getRadianValue = (deg: number) => (deg * Math.PI) / 180;
 const getCurrentComponent = ({ height, px }: { height: number; px: number }) =>
   px / height;
 const calculateScaleConstant = ({ dpr, dar }: ScreenMeasurements) =>
@@ -41,38 +36,63 @@ const constantTranslateK = ({
 const translateXConstantX = ({ px }: { px: number }) => px / 10;
 const translateYConstantY = ({ px }: { px: number }) => px;
 
-const calculateSunTranslateX = ({vw, percent}: ScreenMeasurements & ScrollValues) => {
-  return (percent * vw) / 4
-}
+const calculateSunTranslateX = ({
+  vw,
+  percent,
+}: ScreenMeasurements & ScrollValues) => {
+  return (percent * vw) / 4;
+};
 
-const calculateSunTranslateY = ({dar, percent, px, vh, dpr}: ScreenMeasurements & ScrollValues) => {
-  return ((10 / 3) * dar * percent * vh)/(dar >= 1 ? (dpr) : (1/dpr))
-}
+const calculateSunTranslateY = ({
+  dar,
+  percent,
+  px,
+  vh,
+  dpr,
+}: ScreenMeasurements & ScrollValues) => {
+  return ((10 / 3) * dar * percent * vh) / (dar >= 1 ? dpr : 1 / dpr);
+};
 
-const calculateIslandScale = ({current, d}: {current: ScrollValues, d:ScreenMeasurements}) => {
-  return ((current.percent * calculateScaleConstant(d))/(d.dar >= 1 ? (d.dar-1) : (d.dar))) + ISLAND_SCALE_K
-}
+const calculateIslandScale = ({
+  current,
+  d,
+}: {
+  current: ScrollValues;
+  d: ScreenMeasurements;
+}) => {
+  return (
+    (current.percent * calculateScaleConstant(d)) /
+      (d.dar >= 1 ? d.dar - 1 : d.dar) +
+    ISLAND_SCALE_K
+  );
+};
 
-const calculateBirdTranslateXPx = ({px, vh}: ScreenMeasurements & ScrollValues) => {
-  return px - vh
-}
+const calculateBirdTranslateXPx = ({
+  px,
+  vh,
+}: ScreenMeasurements & ScrollValues) => {
+  return px - vh;
+};
 
-const calculateBirdTranslateYPx = ({px, vh, dar}: ScreenMeasurements & ScrollValues) => {
-  return (px - vh) * (dar >= 1 ? (1 / dar) : (dar)) * (dar < .5 ? (2) : (1))
-}
+const calculateBirdTranslateYPx = ({
+  px,
+  vh,
+  dar,
+}: ScreenMeasurements & ScrollValues) => {
+  return (px - vh) * (dar >= 1 ? 1 / dar : dar) * (dar < 0.5 ? 2 : 1);
+};
 
-const buildingScale = ({dpr, dar}:ScreenMeasurements) => {
+const buildingScale = ({ dpr, dar }: ScreenMeasurements) => {
   if (0.5 < dar && dar < 1) {
-    return 0.6 + (dar*dpr)
+    return 0.6 + dar * dpr;
   }
-  return 1
-}
+  return 1;
+};
 
 // Constants
 const MAX_DELTA_A = getRadianValue(30);
 const ISLAND_SCALE_K = 0;
 const BIRD_SCALE_K = 0.1;
-
 
 const Cloud = ({
   url,
@@ -104,7 +124,9 @@ const Cloud = ({
           left: left ?? "auto",
           right: right ?? "auto",
           bottom: bottom ?? "auto",
-          transform: `translateX(${translateXConstantX(current)}px) translateY(${getRadianValue(95)*current.percent*100}px)`,
+          transform: `translateX(${translateXConstantX(
+            current
+          )}px) translateY(${getRadianValue(95) * current.percent * 100}px)`,
         }}
         src={url}
         alt={alt}
@@ -115,10 +137,14 @@ const Cloud = ({
   );
 };
 export default function Home() {
-
   const { scrollYProgress, scrollY } = useScroll();
   const [current, setCurrent] = useState<ScrollValues>({ px: 0, percent: 0 });
-  const [d, setD] = useState<ScreenMeasurements>({ vw: 0, vh: 0, dpr: 1, dar: 16 / 9 });
+  const [d, setD] = useState<ScreenMeasurements>({
+    vw: 0,
+    vh: 0,
+    dpr: 1,
+    dar: 16 / 9,
+  });
   const [comp, setComp] = useState<number>(0);
 
   useEffect(() => {
@@ -134,7 +160,7 @@ export default function Home() {
 
   const scrollToBottom = () => {
     // scrollYProgress.set(1)
-  }
+  };
 
   useMotionValueEvent(scrollYProgress, "change", (percent) => {
     setCurrent((p) => ({ ...p, percent }));
@@ -143,19 +169,25 @@ export default function Home() {
     setCurrent((p) => ({ ...p, px }));
     const height = window.innerHeight;
     setComp(getCurrentComponent({ height, px }));
-  })
+  });
 
   return (
     <main className="h-full relative">
       {/* FIRST COMP */}
       <div className="h-screen relative">
-        <div className="flex flex-col justify-center items-center z-[20] relative" style={{paddingTop: d.dar < 1 ? '15%' : '5%'}}>
+        <div
+          className="flex flex-col justify-center items-center z-[20] relative"
+          style={{ paddingTop: d.dar < 1 ? "25%" : "5%" }}
+        >
           <motion.h1 className="xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl text-4xl milestone tracking-wide text-[#289398]">
             IITM BS
           </motion.h1>
-          <p className="text-4xl font-bold my-3">PRESENTS</p>
-          <button className="flex py-3 px-5 mt-3 items-center justify-center animate-bounce rounded bg-neutral-950/20 font-bold" onClick={scrollToBottom}>
-            Scroll Down
+          <p className="text-2xl font-thin my-3 milestone">presents</p>
+          <button
+            className="flex py-2 px-5 mt-3 text-xs items-center justify-center animate-bounce rounded bg-neutral-950/20 "
+            onClick={scrollToBottom}
+          >
+            SCROLL DOWN
           </button>
         </div>
         <motion.div
@@ -227,7 +259,10 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           style={{
-            transform: `matrix(1, 0, 0, 1, ${calculateSunTranslateX({...current, ...d})}, -${calculateSunTranslateY({...current, ...d})})`,
+            transform: `matrix(1, 0, 0, 1, ${calculateSunTranslateX({
+              ...current,
+              ...d,
+            })}, -${calculateSunTranslateY({ ...current, ...d })})`,
           }}
           className="fixed left-0 right-0 m-auto w-[40%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[4]"
         >
@@ -243,22 +278,33 @@ export default function Home() {
       {/* THIRD COMP */}
       <div className="h-screen   relative">
         <motion.div
-          initial={{ marginBottom: '-10%' }}
-          animate={{ marginBottom: current.percent > 0.2 ? 0 : `-${(10*(1 - current.percent))}%` }}
+          initial={{ marginBottom: "-10%" }}
+          animate={{
+            marginBottom:
+              current.percent > 0.2 ? 0 : `-${10 * (1 - current.percent)}%`,
+          }}
           // style={{ height: current.px }}
           className="fixed bottom-0 w-full z-[7] bg-[#70cbff]"
         >
-          <Image 
-            src={'/sea.svg'}
+          <Image
+            src={"/sea.svg"}
             className="w-full"
             alt="Sea"
-            style={{transform: `scale(${d.dar < 1 ? ((1 + (1/d.dar))*d.dpr) : 1})`, transformOrigin: '70% 50%'}}
+            style={{
+              transform: `scale(${d.dar < 1 ? (1 + 1 / d.dar) * d.dpr : 1})`,
+              transformOrigin: "70% 50%",
+            }}
             width={1000}
             height={1000}
           />
           <motion.div
-            initial={{ height: '0%' }}
-            animate={{ height: current.percent > 1 ? `${((1 - current.percent))}%` : `${(5*(1 - current.percent))}%` }}
+            initial={{ height: "0%" }}
+            animate={{
+              height:
+                current.percent > 1
+                  ? `${1 - current.percent}%`
+                  : `${5 * (1 - current.percent)}%`,
+            }}
             className="fixed bottom-0 w-full z-[9] bg-[#f6e1aa]"
           ></motion.div>
         </motion.div>
@@ -269,18 +315,33 @@ export default function Home() {
           style={{
             transform: `scale(${
               current.percent * calculateScaleConstant(d) + BIRD_SCALE_K
-            }) translateX(${calculateBirdTranslateXPx({...current, ...d})}px) translateY(-${calculateBirdTranslateYPx({...current, ...d})}px)`,
+            }) translateX(${calculateBirdTranslateXPx({
+              ...current,
+              ...d,
+            })}px) translateY(-${calculateBirdTranslateYPx({
+              ...current,
+              ...d,
+            })}px)`,
           }}
         >
           <Image src="/bird.svg" alt="Bird" width={1000} height={1000} />
         </motion.div>
       </div>
       <div className="h-screen relative">
-        <div 
-          className="w-[80%] md:w-[40%] h-auto z-[6] relative m-auto" 
-          style={{paddingTop: `${(1/d.dar)*10}%`, zIndex: current.percent >= .95 ? (Math.floor(6 + (current.percent*10))) : 6, opacity: current.percent >= .9 ? ((current.percent)) : 0, transition: '.3s ease opacity'}}>
-          <Image 
-            src={'/paradox_title.svg'}
+        <div
+          className="w-[80%] md:w-[40%] h-auto z-[6] relative m-auto"
+          style={{
+            paddingTop: `${(1 / d.dar) * 10}%`,
+            zIndex:
+              current.percent >= 0.95
+                ? Math.floor(6 + current.percent * 10)
+                : 6,
+            opacity: current.percent >= 0.9 ? current.percent : 0,
+            transition: ".3s ease opacity",
+          }}
+        >
+          <Image
+            src={"/paradox_title.svg"}
             alt="Paradox"
             width={1000}
             height={1000}
@@ -291,11 +352,17 @@ export default function Home() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           style={{
-            transform: `scale(${calculateIslandScale({current, d})})`,
-            transformOrigin: d.dar >= 1 ? 'bottom left' : 'bottom center',
+            transform: `scale(${calculateIslandScale({ current, d })})`,
+            transformOrigin: d.dar >= 1 ? "bottom left" : "bottom center",
           }}
         >
-          <Image src="/island.svg" alt="Island" width={1000} height={1000} style={{marginLeft: d.dar >= 1 ? '10vw' : 0}} />
+          <Image
+            src="/island.svg"
+            alt="Island"
+            width={1000}
+            height={1000}
+            style={{ marginLeft: d.dar >= 1 ? "10vw" : 0 }}
+          />
         </motion.div>
       </div>
     </main>
