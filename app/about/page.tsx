@@ -1,6 +1,6 @@
 import AnimatedText from "@/components/AnimatedText";
 
-export default function About() {
+export default function AboutPage() {
   const text = "PROFILE";
   const textArr = text.split("");
   return (

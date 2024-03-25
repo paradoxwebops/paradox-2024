@@ -18,10 +18,11 @@ const NavBar = () => {
   const showToggle = () => {
     setOpen((s) => !s);
   };
+  const maxHeightPx = 98
   return (
-    <>
+    <div className="w-full" style={{height: `${maxHeightPx}px`}}>
       <NavBarMenuFullScreen open={open} showToggle={showToggle} />
-      <nav className="flex justify-between p-6 items-center fixed w-full z-[99]">
+      <nav className="flex justify-between p-6 items-center fixed w-full z-[99]" style={{maxHeight: `${maxHeightPx}px`}}>
         <Link href={"/"}>
           <Image src={"/logo.webp"} alt="Logo" width={50} height={50} />
         </Link>
@@ -35,7 +36,7 @@ const NavBar = () => {
           Menu
         </button> */}
       </nav>
-    </>
+    </div>
   );
 };
 
@@ -109,7 +110,7 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
       target: "_self",
     },
     {
-      href: "/",
+      href: "/fest",
       name: "FEST REGISTRATION",
       target: "_self",
     },
@@ -119,7 +120,7 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
       target: "_self",
     },
     {
-      href: "/",
+      href: "/events",
       name: "EVENTS",
       target: "_self",
     },

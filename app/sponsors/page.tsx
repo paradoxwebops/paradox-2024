@@ -1,3 +1,3 @@
-export default function Sponsors() {
+export default function SponsorsPage() {
   return <div></div>;
 }
