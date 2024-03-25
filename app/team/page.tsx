@@ -73,10 +73,10 @@ const coresData = [
 export default function EventsPage() {
   return (
     <>
-    <div className="w-full px-48">
+    <div className="w-full px-6 md:px-48">
       <h2 className={`${eastSeaDokdo.className} text-8xl text-center my-12`} style={{color: '#EA9C41'}}>Secretary</h2>
       
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-8">
         {secretaryData.map(({img, name}, ind) => {
           return (
             <div className="flex flex-col" key={`${name}_${ind}`}>
@@ -95,7 +95,7 @@ export default function EventsPage() {
 
       <h2 className={`${eastSeaDokdo.className} text-8xl text-center my-12`} style={{color: '#EA9C41'}}>Cores</h2>
       
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-8">
         {coresData.map(({img, name, department}, ind) => {
           return (
             <div className="flex flex-col" key={`${name}_${ind}`}>
