@@ -274,8 +274,7 @@ function RegistrationForm() {
       </Select>
       <Button
         type="submit"
-        className="w-full font-bold"
-        color="success"
+        className="font-bold bg-[#2D78A2] text-[#ECF4F8]"
         onClick={handleSubmit}
       >
         Register
