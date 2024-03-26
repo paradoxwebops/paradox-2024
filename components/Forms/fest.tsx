@@ -6,13 +6,32 @@ import {
   Input,
   Button,
 } from "@nextui-org/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {GeoInfo} from "./geoinfo";
 import { festRegister } from "@/lib/methods";
 import { FormDataProps } from "@/lib/interfaces";
-import { useToast } from "@/contexts";
+import { useToast, useAxios } from "@/contexts";
 import { useRouter } from "next/navigation";
-import { useAxios } from "@/contexts/axios";
+
+export const inputClassNames = {
+  label: [
+    "!text-[#000]",
+    "font-semibold",
+  ],
+  input: [
+    "text-[#2D78A3]",
+    "font-bold",
+    "placeholder:text-[#2D78A3] placeholder:font-bold",
+  ],
+  inputWrapper: [
+    "bg-[#B9D7DE]",
+  ],
+}
+
+export const selectClassNames = {
+  trigger: [...inputClassNames.inputWrapper],
+  ...inputClassNames,
+}
 
 function RegistrationForm() {
   const {axios} = useAxios()
@@ -129,6 +148,7 @@ function RegistrationForm() {
     }
   };
 
+
   return (
     <div className="w-full flex flex-col gap-4">
       <Input
@@ -136,6 +156,7 @@ function RegistrationForm() {
         placeholder="DOB"
         type="date"
         isRequired
+        classNames={{...inputClassNames}}
         onChange={(e) =>
           setFormData((prev) => ({
             ...prev,
@@ -157,6 +178,7 @@ function RegistrationForm() {
         placeholder="Whatsapp Number"
         isRequired
         type="tel"
+        classNames={{...inputClassNames}}
         isInvalid={
           invalid.filter((e) => e.name == "phNo" && e.invalid).length > 0
         }
@@ -173,6 +195,7 @@ function RegistrationForm() {
         isRequired
         label="Select your gender"
         placeholder="Gender"
+        classNames={{...selectClassNames}}
         onChange={(e) =>
           setFormData((prev) => ({ ...prev, gender: e.target.value }))
         }
@@ -189,6 +212,7 @@ function RegistrationForm() {
         label="Arrival Date "
         placeholder="Arrival"
         isRequired
+        classNames={{...inputClassNames}}
         type="date"
         isInvalid={
           invalid.filter((e) => e.name == "arrival" && e.invalid).length > 0
@@ -208,6 +232,7 @@ function RegistrationForm() {
       <Input
         label="Departure Date"
         defaultValue={new Date("30-5-2024").toString()}
+        classNames={{...inputClassNames}}
         placeholder="Departure"
         isRequired
         isInvalid={
@@ -231,6 +256,7 @@ function RegistrationForm() {
       <Select
         isRequired
         label="Likelihood of coming to paradox"
+        classNames={{...selectClassNames}}
         placeholder="How likely are you to come to paradox"
         onChange={(e) =>
           setFormData((prev) => ({ ...prev, likelihood: e.target.value }))
