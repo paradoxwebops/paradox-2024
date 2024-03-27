@@ -5,32 +5,64 @@ export default function ContactPage() {
   const data = [
     {
       title: "General Inquiries",
-      img: "",
+      img: "/con_general.svg",
+      info: {
+        email: ["support@iitmparadox.org"]
+      },
+      description: "For any general questions or inquiries concerning Paradox 2024.",
     },
     {
       title: "Grievances",
-      img: "",
+      img: "/con_grieve.svg",
+      info: {
+        email: ["grievances@iitmparadox.org"]
+      },
+      description: "To report any issues or concerns related to Paradox 2024, its events, or its participants.",
     },
     {
       title: "Event Related Queries",
-      img: "",
+      img: "/con_events.svg",
+      info: {
+        email: ["events@iitmparadox.org"]
+      },
+      description: "Regarding any support from Department Heads of Sports - Culturals - Technicals.",
     },
     {
       title: "Payment Related Queries",
-      img: "",
+      img: "/con_pay.svg",
+      info: {
+        email: ["payments@iitmparadox.org"]
+      },
+      description: "All the queries regarding payment issues and failure.",
     },
   ];
 
   return (
     <>
-      <h2 className={`text-8xl my-12`} style={{ color: "#000" }}>
+      <h2 className={`text-6xl my-12`} style={{ color: "#000" }}>
         Paradox 2024 Contact Information
       </h2>
       <div className="grid md:grid-cols-2 gap-8">
-        {data.map(({ title, img }, ind) => {
+        {data.map(({ title, img, info, description }, ind) => {
           return (
-            <Card bgColor="#03190F" className="flex items-end">
-              <h3 className="text-white text-7xl">{title}</h3>
+            <Card bgColor="#03190F" className="flex max-md:flex-col-reverse justify-between" key={ind}>
+              <div className="w-full md:w-1/2 flex flex-col justify-around">
+                <h3 className="text-white text-3xl">{title}</h3>
+                <div>
+                  <div className="underline text-[#A3F613]">
+                    {info.email.join(', ')}
+                  </div>
+                  <div className="text-white">
+                    {description}
+                  </div>
+                </div>
+              </div>
+              <div className="">
+                <img 
+                  src={img}
+                  className="w-full h-auto"
+                />
+              </div>
             </Card>
           );
         })}
