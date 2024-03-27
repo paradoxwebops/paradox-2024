@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "@/store";
 import { useToast } from "@/contexts";
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { axios } from "@/lib/axios";
-// import {doRefreshToken} from '@/lib/methods'
-// import { setAuth } from '@/store/actions'
+import {doRefreshToken} from '@/lib/methods'
+import { setAuth } from '@/store/actions'
 
 const useAxios = () => {
   const [isSet, setisSet] = useState(false);
   const auth = useSelector((state) => state.auth);
   const { toast } = useToast()
-//   const dispatch = useDispatch()
+  const dispatch = useDispatch()
   
   const { access_token, refresh_token } = auth;
 
@@ -44,19 +44,16 @@ const useAxios = () => {
       err: (err: AxiosError | Error | any) => {
         const error = err.response;
         // console.log('Error from axios')
-        console.log(error);
-
-
-        
+        // console.log(error);
         
         switch (error?.status) {
           case 401:
-            // if (!!refresh_token) {
-            //   console.log('doing refresh');
-              
-            //   doRefreshToken({refresh_token}).then((tokens) => dispatch(setAuth({...tokens})))
-            // }
-            // if (!!access_token && !!refresh_token)
+
+            if (!!refresh_token) {
+              console.log('doing refresh');
+              doRefreshToken(axios, {refresh_token}).then((tokens) => dispatch(setAuth({...tokens})))
+            }
+
             break;
 
           default:
