@@ -8,17 +8,15 @@ import SmoothScrolling from "../SmoothScrolling";
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <>
-    <ToastProvider>
-      <GoogleOAuthProvider>
-        <ReduxProvider>
-          <NextUIProvider>
-            <SmoothScrolling>
-              {children}
-            </SmoothScrolling>
-          </NextUIProvider>
-        </ReduxProvider>
-      </GoogleOAuthProvider>
-    </ToastProvider>
+      <ToastProvider>
+        <GoogleOAuthProvider>
+          <ReduxProvider>
+            <NextUIProvider>
+              <SmoothScrolling>{children}</SmoothScrolling>
+            </NextUIProvider>
+          </ReduxProvider>
+        </GoogleOAuthProvider>
+      </ToastProvider>
     </>
   );
 }

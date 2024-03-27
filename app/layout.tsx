@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 // import { GeistSans } from "geist/font/sans"
-import {Bricolage_Grotesque} from 'next/font/google'
+import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import { NavBar } from "@/components/Navbar";
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
   description: "Paradox '24",
 };
 
-const bricolage = Bricolage_Grotesque({weight: ["300", "400", "500", "600", "700"], subsets: ["latin"]})
+const bricolage = Bricolage_Grotesque({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
@@ -22,9 +25,7 @@ export default function RootLayout({
       <body className={bricolage.className}>
         <NavBar />
         <main>
-          <Providers>
-            {children}
-          </Providers>
+          <Providers>{children}</Providers>
         </main>
       </body>
     </html>
