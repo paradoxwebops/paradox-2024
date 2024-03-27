@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import { Card } from ".."
 import {motion} from 'framer-motion'
@@ -50,16 +52,17 @@ const Header = ({bg, text, image}: HeaderData) => {
                     alt="Paradox logo"
                     width={200}
                     height={150}
+                    className="max-md:w-1/4 h-auto"
                 />
             </div>
-            <div className="flex w-full justify-between items-center px-6">
-                <h1 className="milestone text-8xl mb-0 text-white" style={{letterSpacing: '2px'}}>{text}</h1>
-                <Image 
+            <div className="flex w-full justify-start items-center px-6">
+                <h1 className="milestone text-5xl md:text-8xl mb-0 text-white" style={{letterSpacing: '2px'}}>{text}</h1>
+                {/* <Image 
                     src={image}
                     alt="Header image"
                     height={100}
                     width={200}
-                />
+                /> */}
             </div>
         </Card>
     )

@@ -1,3 +1,7 @@
 export default function SponsorsPage() {
-  return <div></div>;
+  return (
+    <>
+    <h2 className="text-center text-5xl m-6"></h2>
+    </>
+  );
 }

@@ -34,14 +34,14 @@ const data:SocialLink[] = [
 const Footer = ({bg}:FooterProps) => {
     return (
         <Card bgColor={bg}>
-            <div className="flex justify-between items-center text-white">
+            <div className="md:flex justify-between items-center text-white">
                 <Image 
                     src={'/paradox_logo_text.png'}
                     alt="Paradox Logo"
                     width={200}
                     height={150}
                 />
-                <div>
+                <div className="text-right">
                     <div className="flex justify-end mb-3">
                         {data.map(({url, icon}, ind) => {
                             return (
