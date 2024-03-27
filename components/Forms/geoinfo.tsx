@@ -7,7 +7,7 @@ import {
 import { Country, State, City } from "country-state-city";
 import { useState, useEffect } from "react";
 import { FormDataProps, formOptionsProps } from "@/lib/interfaces";
-import {selectClassNames} from './fest'
+import {inputClassNames} from './fest'
 
 export function GeoInfo({
   updateState,
@@ -116,6 +116,7 @@ export function GeoInfo({
         label="Select Country"
         placeholder="Country Name"
         className="overflow-hidden max"
+        inputProps={{classNames: {...inputClassNames}}}
       >
         {country.map((item) => (
           <AutocompleteItem
@@ -132,6 +133,7 @@ export function GeoInfo({
         label="Select State"
         placeholder="State Name"
         className="overflow-hidden max"
+        inputProps={{classNames: {...inputClassNames}}}
       >
         {state.map((item) => (
           <AutocompleteItem
@@ -148,6 +150,7 @@ export function GeoInfo({
         label="Select City"
         placeholder="City Name"
         className="overflow-hidden max"
+        inputProps={{classNames: {...inputClassNames}}}
       >
         {city.map((item) => (
           <AutocompleteItem

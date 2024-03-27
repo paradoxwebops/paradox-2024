@@ -30,6 +30,7 @@ export const inputClassNames = {
 
 export const selectClassNames = {
   trigger: [...inputClassNames.inputWrapper],
+  value: [...inputClassNames.input],
   ...inputClassNames,
 }
 
@@ -274,7 +275,7 @@ function RegistrationForm() {
       </Select>
       <Button
         type="submit"
-        className="font-bold bg-[#2D78A2] text-[#ECF4F8]"
+        className="w-full max-w-[200px] ml-auto font-bold bg-[#2D78A2] text-[#ECF4F8]"
         onClick={handleSubmit}
       >
         Register

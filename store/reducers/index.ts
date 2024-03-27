@@ -4,7 +4,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 // import storage from "redux-persist/lib/storage";
 import storage from "../storage";
 const persistConfig = {
-  key: "paradoxstudent",
+  key: "paradoxstudentmainsite",
   storage,
   // whitelist: ["authState"],
 };

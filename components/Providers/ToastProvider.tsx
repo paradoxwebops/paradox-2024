@@ -14,13 +14,12 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <toastContext.Provider value={{ toast, toastShow }}>
       {children}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {toastShow && (
           <motion.div
-            initial={{ right: "-200%" }}
-            animate={{ right: "4px" }}
-            exit={{ right: "200%" }}
-            transition={{ duration: 0.75, ease: [80.87, 1, 0.14, 1] }}
+            initial={{ marginRight: "-300px", opacity: 0 }}
+            animate={{ marginRight: "0px", opacity: 1 }}
+            exit={{ marginRight: "-300px", opacity: 0}}
           >
             <Toast
               title={toastShow?.title ?? ""}
