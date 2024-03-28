@@ -24,11 +24,11 @@ export default function AboutPage() {
       <div className="w-full flex flex-col gap-4">
         <div className="flex flex-col gap-4 relative text-xs lg:text-base">
           <Image
-            src={"/about_gaja.svg"}
+            src={"/about_gaja.png"}
             alt="About Gaja"
             height={1000}
             width={1000}
-            className="mx-auto mt-12 md:w-2/3 xl:w-1/2"
+            className="mx-auto md:w-2/3 xl:w-1/2"
           />
           <Card
             bgColor="#fff"
@@ -74,7 +74,7 @@ export default function AboutPage() {
             <div className="w-full font-semibold text-[#BB6969]">
               {`Paradox'24-il Gajaa-ai sandhikkavum`}
             </div>
-            <div className="w-full font-bold">Tamil illey ?</div>
+            <div className="w-full font-bold">Tamil theriyadha ?</div>
             <div className="w-full font-bold text-[#BB6969]">
               {`Meet Gaja at Paradox '24`}
             </div>

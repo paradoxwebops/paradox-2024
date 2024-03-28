@@ -18,11 +18,14 @@ const NavBar = () => {
   const showToggle = () => {
     setOpen((s) => !s);
   };
-  const maxHeightPx = 98
+  const maxHeightPx = 98;
   return (
-    <div className="w-full" style={{height: `${maxHeightPx}px`}}>
+    <div className="w-full" style={{ height: `${maxHeightPx}px` }}>
       <NavBarMenuFullScreen open={open} showToggle={showToggle} />
-      <nav className="flex justify-between p-6 items-center fixed w-full z-[99]" style={{maxHeight: `${maxHeightPx}px`}}>
+      <nav
+        className="flex justify-between p-6 items-center fixed w-full z-[99]"
+        style={{ maxHeight: `${maxHeightPx}px` }}
+      >
         <Link href={"/"}>
           <Image src={"/logo.webp"} alt="Logo" width={50} height={50} />
         </Link>
@@ -70,7 +73,7 @@ const NavBarMenuFullScreen = ({
             />
             <div className="flex flex-col h-full items-start justify-center p-8">
               <Image
-                src={"/navbar_paradox_text.svg"}
+                src={"/paradox_logo_text.webp"}
                 alt="Paradox"
                 width={400}
                 height={400}

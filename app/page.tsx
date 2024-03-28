@@ -132,6 +132,7 @@ const Cloud = ({
         alt={alt}
         width={1000}
         height={1000}
+        fetchPriority="high"
       />
     </motion.div>
   );
@@ -204,6 +205,7 @@ export default function Home() {
             className={`w-full scale-[250%] md:scale-150 lg:scale-100 origin-bottom`}
             width={2000}
             height={2000}
+            priority
           />
         </motion.div>
         <motion.div
@@ -220,6 +222,7 @@ export default function Home() {
             className="w-full  scale-[250%] md:scale-150 lg:scale-100 origin-bottom"
             width={2000}
             height={2000}
+            priority
           />
         </motion.div>
       </div>
@@ -272,6 +275,7 @@ export default function Home() {
             alt="Sun"
             width={1000}
             height={1000}
+            priority
           />
         </motion.div>
       </motion.div>
@@ -296,6 +300,7 @@ export default function Home() {
             }}
             width={1000}
             height={1000}
+            priority
           />
           <motion.div
             initial={{ height: "0%" }}
@@ -324,7 +329,13 @@ export default function Home() {
             })}px)`,
           }}
         >
-          <Image src="/bird.svg" alt="Bird" width={1000} height={1000} />
+          <Image
+            src="/bird.svg"
+            alt="Bird"
+            width={1000}
+            height={1000}
+            priority
+          />
         </motion.div>
       </div>
       <div className="h-screen relative">
@@ -357,7 +368,7 @@ export default function Home() {
           }}
         >
           <Image
-            src="/island.svg"
+            src="/island.webp"
             alt="Island"
             width={1000}
             height={1000}
