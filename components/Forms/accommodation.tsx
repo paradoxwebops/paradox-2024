@@ -1,5 +1,14 @@
 "use client";
-import { Select, SelectItem, Input, Button, Textarea } from "@nextui-org/react";
+import {
+  Select,
+  SelectItem,
+  Input,
+  Button,
+  Textarea,
+  Switch,
+  Checkbox,
+  Link,
+} from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
 import { GeoInfo } from "./geoinfo";
 import {
@@ -13,29 +22,15 @@ import { useToast, useAxios } from "@/contexts";
 import { useRouter } from "next/navigation";
 import { East_Sea_Dokdo } from "next/font/google";
 import ComponentLoading from "../LoadingForm";
+import { inputClassNames, selectClassNames } from ".";
 
 const eastSeaDokdo = East_Sea_Dokdo({ weight: "400", subsets: ["latin"] });
 
-export const inputClassNames = {
-  label: ["!text-[#000]", "font-semibold"],
-  input: [
-    "text-[#2D78A3]",
-    "font-bold",
-    "placeholder:text-[#2D78A3] placeholder:font-bold",
-  ],
-  inputWrapper: ["bg-[#B9D7DE]"],
-};
-
-export const selectClassNames = {
-  trigger: [...inputClassNames.inputWrapper],
-  value: [...inputClassNames.input],
-  ...inputClassNames,
-};
-
-export default function AccommodationForm() {
+function AccommodationForm() {
   const { axios } = useAxios();
   const [checkFest, setCheckFest] = useState(false);
   const [checkAccom, setCheckAccom] = useState(false);
+  const [agree, setAgree] = useState(false);
   const [pwd, setPWD] = useState(false);
   const [invalid, setInvalid] = useState<
     { name: string; invalid: boolean; message: string }[]
@@ -99,6 +94,11 @@ export default function AccommodationForm() {
       return {
         isValidated: false,
         message: "Departure Date is not selected",
+      };
+    } else if (!agree) {
+      return {
+        isValidated: false,
+        message: "Agree to terms & conditions",
       };
     } else {
       return {
@@ -388,27 +388,47 @@ export default function AccommodationForm() {
                   </Button>
                   <small ref={fileNameRef}></small>
                 </div>
+                <input
+                  onChange={(e) => {
+                    if (e.target.files !== null) {
+                      let temp = { ...formData };
+                      temp.pwd_certificate = e.target.files[0];
+                      setFormData(temp);
+                      finalForm.set("pwd_certificate", e.target.files[0]);
+                      if (fileNameRef.current) {
+                        fileNameRef.current.innerText = e.target.files[0].name;
+                      }
+                    }
+                  }}
+                  ref={fileRef}
+                  className="hidden"
+                  id="pwd_certificate"
+                  type="file"
+                />
               </>
             ) : (
               <></>
             )}
-            <input
-              onChange={(e) => {
-                if (e.target.files !== null) {
-                  let temp = { ...formData };
-                  temp.pwd_certificate = e.target.files[0];
-                  setFormData(temp);
-                  finalForm.set("pwd_certificate", e.target.files[0]);
-                  if (fileNameRef.current) {
-                    fileNameRef.current.innerText = e.target.files[0].name;
-                  }
-                }
-              }}
-              ref={fileRef}
-              className="hidden"
-              id="pwd_certificate"
-              type="file"
-            />
+
+            <div className="flex gap-1 px-2">
+              <Checkbox onValueChange={(e) => setAgree(e)} />{" "}
+              <div>
+                I hereby acknowledge having read and understood all the{" "}
+                <Link
+                  underline="always"
+                  href="https://drive.google.com/file/d/1_jIPJxbouBIQhP5wnXtruINLOuq00ug0/view?usp=sharing"
+                  target="_blank"
+                >
+                  guidelines
+                </Link>{" "}
+                provided. I accept and agree to adhere strictly to each
+                condition outlined. I take full responsibility for my actions
+                during Paradox and understand that any deviation from these
+                guidelines will result in actions taken by the respective
+                committees. I commit to upholding the standards expected of me
+                as a participant.
+              </div>
+            </div>
             <Button
               type="submit"
               className="w-full max-w-[200px] ml-auto font-bold bg-[#2D78A2] text-[#ECF4F8]"
@@ -434,3 +454,5 @@ export default function AccommodationForm() {
     </ComponentLoading>
   );
 }
+
+export { AccommodationForm };

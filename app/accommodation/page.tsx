@@ -1,6 +1,6 @@
 "use client";
 import { LoginButton } from "@/components";
-import AccommodationForm from "@/components/Forms/accommodation";
+import { AccommodationForm } from "@/components/Forms/accommodation";
 import { useSelector } from "@/store";
 
 export default function AccommodationPage() {

@@ -10,7 +10,7 @@ import ComponentLoading from "../LoadingForm";
 import { East_Sea_Dokdo } from "next/font/google";
 
 const eastSeaDokdo = East_Sea_Dokdo({ weight: "400", subsets: ["latin"] });
-export const inputClassNames = {
+const inputClassNames = {
   label: ["!text-[#000]", "font-semibold"],
   input: [
     "text-[#2D78A3]",
@@ -20,7 +20,7 @@ export const inputClassNames = {
   inputWrapper: ["bg-[#B9D7DE]"],
 };
 
-export const selectClassNames = {
+const selectClassNames = {
   trigger: [...inputClassNames.inputWrapper],
   value: [...inputClassNames.input],
   ...inputClassNames,
@@ -311,4 +311,4 @@ function RegistrationForm() {
   );
 }
 
-export { RegistrationForm };
+export { RegistrationForm, selectClassNames, inputClassNames };

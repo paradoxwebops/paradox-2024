@@ -1,2 +1,2 @@
-export * from './accommodation'
-export * from './fest'
+export * from "./accommodation";
+export * from "./fest";
