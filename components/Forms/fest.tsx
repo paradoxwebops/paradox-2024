@@ -1,41 +1,30 @@
-
 "use client";
-import {
-  Select,
-  SelectItem,
-  Input,
-  Button,
-} from "@nextui-org/react";
+import { Select, SelectItem, Input, Button } from "@nextui-org/react";
 import { useState } from "react";
-import {GeoInfo} from "./geoinfo";
+import { GeoInfo } from "./geoinfo";
 import { festRegister } from "@/lib/methods";
 import { FormDataProps } from "@/lib/interfaces";
 import { useToast, useAxios } from "@/contexts";
 import { useRouter } from "next/navigation";
 
 export const inputClassNames = {
-  label: [
-    "!text-[#000]",
-    "font-semibold",
-  ],
+  label: ["!text-[#000]", "font-semibold"],
   input: [
     "text-[#2D78A3]",
     "font-bold",
     "placeholder:text-[#2D78A3] placeholder:font-bold",
   ],
-  inputWrapper: [
-    "bg-[#B9D7DE]",
-  ],
-}
+  inputWrapper: ["bg-[#B9D7DE]"],
+};
 
 export const selectClassNames = {
   trigger: [...inputClassNames.inputWrapper],
   value: [...inputClassNames.input],
   ...inputClassNames,
-}
+};
 
 function RegistrationForm() {
-  const {axios} = useAxios()
+  const { axios } = useAxios();
   const [invalid, setInvalid] = useState<
     { name: string; invalid: boolean; message: string }[]
   >([]);
@@ -120,7 +109,7 @@ function RegistrationForm() {
         .then(({ data }) => {
           toast({
             title: "Registered",
-            description: "You have successfully registered for Paradox'24",
+            description: `You have successfully registered for Paradox'24`,
           });
           router.push("/");
         })
@@ -149,7 +138,6 @@ function RegistrationForm() {
     }
   };
 
-
   return (
     <div className="w-full flex flex-col gap-4">
       <Input
@@ -157,7 +145,7 @@ function RegistrationForm() {
         placeholder="DOB"
         type="date"
         isRequired
-        classNames={{...inputClassNames}}
+        classNames={{ ...inputClassNames }}
         onChange={(e) =>
           setFormData((prev) => ({
             ...prev,
@@ -179,7 +167,7 @@ function RegistrationForm() {
         placeholder="Whatsapp Number"
         isRequired
         type="tel"
-        classNames={{...inputClassNames}}
+        classNames={{ ...inputClassNames }}
         isInvalid={
           invalid.filter((e) => e.name == "phNo" && e.invalid).length > 0
         }
@@ -196,7 +184,7 @@ function RegistrationForm() {
         isRequired
         label="Select your gender"
         placeholder="Gender"
-        classNames={{...selectClassNames}}
+        classNames={{ ...selectClassNames }}
         onChange={(e) =>
           setFormData((prev) => ({ ...prev, gender: e.target.value }))
         }
@@ -213,7 +201,7 @@ function RegistrationForm() {
         label="Arrival Date "
         placeholder="Arrival"
         isRequired
-        classNames={{...inputClassNames}}
+        classNames={{ ...inputClassNames }}
         type="date"
         isInvalid={
           invalid.filter((e) => e.name == "arrival" && e.invalid).length > 0
@@ -233,7 +221,7 @@ function RegistrationForm() {
       <Input
         label="Departure Date"
         defaultValue={new Date("30-5-2024").toString()}
-        classNames={{...inputClassNames}}
+        classNames={{ ...inputClassNames }}
         placeholder="Departure"
         isRequired
         isInvalid={
@@ -257,7 +245,7 @@ function RegistrationForm() {
       <Select
         isRequired
         label="Likelihood of coming to paradox"
-        classNames={{...selectClassNames}}
+        classNames={{ ...selectClassNames }}
         placeholder="How likely are you to come to paradox"
         onChange={(e) =>
           setFormData((prev) => ({ ...prev, likelihood: e.target.value }))
@@ -284,5 +272,4 @@ function RegistrationForm() {
   );
 }
 
-
-export {RegistrationForm}
+export { RegistrationForm };

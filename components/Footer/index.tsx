@@ -1,65 +1,73 @@
-import Image from "next/image"
-import { Card } from ".."
-import Link from "next/link"
-import { Instagram, Linkedin, Youtube, Mail } from "lucide-react"
+import Image from "next/image";
+import { Card } from "..";
+import Link from "next/link";
+import { Instagram, Linkedin, Youtube, Mail } from "lucide-react";
 
 type FooterProps = {
-    bg: string
-}
+  bg: string;
+};
 
 type SocialLink = {
-    url: string,
-    icon: React.ReactNode
-}
+  id: number;
+  url: string;
+  icon: React.ReactNode;
+};
 
-const data:SocialLink[] = [
-    {
-        url: 'https://www.instagram.com/',
-        icon: <Instagram />
-    },
-    {
-        url: 'https://www.youtube.com/',
-        icon: <Youtube />
-    },
-    {
-        url: 'https://www.linkedin.com/',
-        icon: <Linkedin />
-    },
-    {
-        url: 'https://www.linkedin.com/',
-        icon: <Mail />
-    },
-]
+const data: SocialLink[] = [
+  {
+    id: 1,
+    url: "https://www.instagram.com/",
+    icon: <Instagram className="w-3 md:w-full" />,
+  },
+  {
+    id: 2,
+    url: "https://www.youtube.com/",
+    icon: <Youtube className="w-3 md:w-full" />,
+  },
+  {
+    id: 3,
+    url: "https://www.linkedin.com/",
+    icon: <Linkedin className="w-3 md:w-full" />,
+  },
+  {
+    id: 4,
+    url: "https://www.linkedin.com/",
+    icon: <Mail className="w-3 md:w-full" />,
+  },
+];
 
-const Footer = ({bg}:FooterProps) => {
-    return (
-        <Card bgColor={bg}>
-            <div className="md:flex justify-between items-center text-white">
-                <Image 
-                    src={'/paradox_logo_text.png'}
-                    alt="Paradox Logo"
-                    width={200}
-                    height={150}
-                />
-                <div className="text-right">
-                    <div className="flex justify-end mb-3">
-                        {data.map(({url, icon}, ind) => {
-                            return (
-                                <Link 
-                                    href={url} 
-                                    className="text-white text-xl p-4 bg-white/10 rounded-2xl mx-1 hover:bg-white/20" 
-                                    key={`${url}_${ind}`}
-                                    target="_blank"
-                                    children={icon}
-                                />
-                            )
-                        })}
-                    </div>
-                    Designed with &#9829; by Multimedia & WebOps Team
-                </div>
-            </div>
-        </Card>
-    )
-}
+const Footer = ({ bg }: FooterProps) => {
+  return (
+    <Card bgColor={bg} className="text-white">
+      <div className="flex justify-between items-center">
+        <Image
+          alt="paradox logo text"
+          src={"/paradox_logo_text.webp"}
+          width={1000}
+          height={1000}
+          className="w-24 md:w-48"
+        />
+        <div className="flex flex-col gap-2 text-right self-end">
+          <div className="flex gap-2 md:gap-4 justify-end">
+            {data.map(({ id, url, icon }) => {
+              return (
+                <Link
+                  key={id}
+                  href={url}
+                  className="bg-white/10 hover:bg-white/20 w-6 md:w-10 h-6 md:h-10 flex justify-center items-center  rounded-[20px]"
+                >
+                  {icon}
+                </Link>
+              );
+            })}
+          </div>
+          <small className="text-[6px] sm:text-[10px] md:text-base">
+            {`Designed with &#9829; by Multimedia & WebOps Team`}
+          </small>
+        </div>
+      </div>
+    </Card>
+  );
+};
 
-export {Footer}
+export { Footer };

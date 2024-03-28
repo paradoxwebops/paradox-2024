@@ -62,7 +62,7 @@ type ComponentProps = {
 export default function Template({ children }: { children: React.ReactNode }) {
   const p = usePathname();
   const n: ComponentProps & any = p.replace("/", "");
-
+  //@ts-ignore
   const headerData: any = { ...data[n] };
 
   return (
