@@ -23,10 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={bricolage.className}>
-        <NavBar />
-        <main>
-          <Providers>{children}</Providers>
-        </main>
+        <Providers>
+          <NavBar />
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   );

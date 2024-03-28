@@ -44,6 +44,11 @@ const data: PageHeaderData = {
     text: "PROFILE",
     image: "/paradox_logo_text.png",
   },
+  accommodation: {
+    bg: "#76CEE2",
+    text: "ACCOMMODATION",
+    image: "/paradox_logo_text.png",
+  },
 };
 
 type ComponentProps = {
@@ -56,6 +61,7 @@ type ComponentProps = {
     | "events"
     | "fest"
     | "profile"
+    | "accommodation"
     | (string & any);
 };
 

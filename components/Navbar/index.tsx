@@ -5,6 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { googleLogout } from "@react-oauth/google";
+import { useDispatch, useSelector } from "@/store";
+import { delAuth } from "@/store/actions";
 
 type NavbarLink = {
   name: string;
@@ -106,6 +109,8 @@ const NavBarMenuFullScreen = ({
 };
 
 const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
+  const dispatch = useDispatch();
+  const { access_token } = useSelector((state) => state.auth);
   const data: NavbarLink[] = [
     {
       href: "/about",
@@ -115,6 +120,11 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
     {
       href: "/fest",
       name: "FEST REGISTRATION",
+      target: "_self",
+    },
+    {
+      href: "/accommodation",
+      name: "ACCOMMODATION",
       target: "_self",
     },
     {
@@ -158,6 +168,18 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
           </Link>
         );
       })}
+      {access_token !== "" && (
+        <p
+          onClick={() => {
+            googleLogout();
+            dispatch(delAuth());
+            showToggle();
+          }}
+          className="p-3 milestone text-3xl tracking-wide text-[#6D878F] cursor-pointer"
+        >
+          LOGOUT
+        </p>
+      )}
     </>
   );
 };

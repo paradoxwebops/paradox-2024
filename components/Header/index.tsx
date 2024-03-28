@@ -19,6 +19,7 @@ export type PageHeaderData = {
   events: HeaderData;
   fest: HeaderData;
   profile: HeaderData;
+  accommodation: HeaderData;
 };
 
 const Header = ({ bg, text, image }: HeaderData) => {

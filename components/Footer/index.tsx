@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Card } from "..";
 import Link from "next/link";
-import { Instagram, Linkedin, Youtube, Mail } from "lucide-react";
+import { Instagram, Linkedin, Youtube, Mail, Heart } from "lucide-react";
 
 type FooterProps = {
   bg: string;
@@ -61,8 +61,10 @@ const Footer = ({ bg }: FooterProps) => {
               );
             })}
           </div>
-          <small className="text-[6px] sm:text-[10px] md:text-base">
-            {`Designed with &#9829; by Multimedia & WebOps Team`}
+          <small className="text-[6px] sm:text-[10px] md:text-base flex gap-1 md:gap-2 justify-center items-center">
+            Designed with{" "}
+            <Heart className="w-1 sm:w-2 md:w-4" fill="red" color="red" /> by
+            Multimedia & WebOps Team
           </small>
         </div>
       </div>

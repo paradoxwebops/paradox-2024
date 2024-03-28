@@ -330,7 +330,7 @@ export default function Home() {
           }}
         >
           <Image
-            src="/bird.svg"
+            src="/bird.png"
             alt="Bird"
             width={1000}
             height={1000}
