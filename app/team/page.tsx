@@ -29,16 +29,16 @@ const coresData = [
     img: "/manish_s.png",
   },
   {
+    name: "B Subash",
+    department: "Finance & Operations",
+    img: "/b_subash.png",
+  },
+  {
     name: "Shriprasad S",
     department: "Student Relations",
     img: "/shriprasad_s.png",
   },
 
-  {
-    name: "Vivek Vibhuti",
-    department: "Technicals",
-    img: "/vivek_vibhuti.png",
-  },
   {
     name: "Robin Justin",
     department: "Culturals",
@@ -49,11 +49,7 @@ const coresData = [
     department: "Sponsorship",
     img: "/mayank_jaiswal.png",
   },
-  {
-    name: "B Subash",
-    department: "Finance & Operations",
-    img: "/b_subash.png",
-  },
+
   {
     name: "Tanmay Srivastava",
     department: "Hospitality",
@@ -63,6 +59,12 @@ const coresData = [
     name: "Mithun Raj",
     department: "Merch & Stalls",
     img: "/mithun_raj.png",
+  },
+
+  {
+    name: "Vivek Vibhuti",
+    department: "Technicals",
+    img: "/vivek_vibhuti.png",
   },
 ];
 
