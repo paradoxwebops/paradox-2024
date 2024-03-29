@@ -12,8 +12,8 @@ const secretaryData = [
     img: "/shruthi_b.png",
   },
   {
-    name: "Anurag M.",
-    img: "/anurag_m.png",
+    name: "Farhat Qadri",
+    img: "/farhat_qadri.png",
   },
 ];
 
@@ -33,11 +33,7 @@ const coresData = [
     department: "Student Relations",
     img: "/shriprasad_s.png",
   },
-  {
-    name: "Farhat Qadri",
-    department: "Sports",
-    img: "/farhat_qadri.png",
-  },
+
   {
     name: "Vivek Vibhuti",
     department: "Technicals",
