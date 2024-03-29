@@ -1,9 +1,16 @@
 "use client";
 import Image from "next/image";
-import { useScroll, motion, useMotionValueEvent } from "framer-motion";
+import {
+  useScroll,
+  motion,
+  useMotionValueEvent,
+  AnimatePresence,
+} from "framer-motion";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-
+import Lottie, { useLottie } from "lottie-react";
+import { East_Sea_Dokdo } from "next/font/google";
+import animation from "./PRELOADER.json";
 interface CloudProps {
   top?: number | string;
   left?: number | string;
@@ -22,7 +29,7 @@ type ScrollValues = {
   px: number;
   percent: number;
 };
-
+const east_sea = East_Sea_Dokdo({ weight: ["400"], subsets: ["latin"] });
 // Utility functions
 const getRadianValue = (deg: number) => (deg * Math.PI) / 180;
 const getCurrentComponent = ({ height, px }: { height: number; px: number }) =>
@@ -141,6 +148,11 @@ const Cloud = ({
 export default function Home() {
   const [readyFn, setReady] = useState(false);
   const { scrollYProgress, scrollY } = useScroll();
+  const options = {
+    animationData: animation,
+    loop: true,
+  };
+  const { View } = useLottie(options);
   const [current, setCurrent] = useState<ScrollValues>({ px: 0, percent: 0 });
   const [d, setD] = useState<ScreenMeasurements>({
     vw: 0,
@@ -180,219 +192,235 @@ export default function Home() {
     setComp(getCurrentComponent({ height, px }));
   });
 
-  if (!readyFn) {
-    return (
-      <div className="h-screen w-screen fixed inset-0 flex justify-center items-center bg-black  text-white z-[100]">
-        <div className="flex gap-2">
-          <Loader2 size={18} className="animate-spin" /> Loading...
-        </div>
-      </div>
-    );
-  } else
-    return (
-      <main className="h-full relative">
-        {/* FIRST COMP */}
-        <div className="h-screen relative">
-          <div
-            className="flex flex-col justify-center items-center z-[20] relative"
-            style={{ paddingTop: d.dar < 1 ? "25%" : "5%" }}
-          >
-            <motion.h1 className="xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl text-4xl milestone tracking-wide text-[#289398]">
-              IITM BS
-            </motion.h1>
-            <p className="text-2xl font-thin my-3 milestone">presents</p>
-            <button
-              className="flex py-2 px-5 mt-3 text-xs items-center justify-center animate-bounce rounded bg-neutral-950/20 "
-              onClick={scrollToBottom}
-            >
-              SCROLL DOWN
-            </button>
-          </div>
-          <motion.div
-            style={{
-              transform: `translateX(-${current.px}px) translateY(${
-                current.percent * 150
-              }%)`,
-            }}
-            className={`fixed z-[14] w-full bottom-0`}
-          >
-            <Image
-              src="/chennai_blue.svg"
-              alt="Chennai Blue"
-              className={`w-full scale-[250%] md:scale-150 lg:scale-100 origin-bottom`}
-              width={2000}
-              height={2000}
-              priority
-            />
-          </motion.div>
-          <motion.div
-            style={{
-              transform: `translateX(${current.px}px) translateY(${
-                current.percent * 150
-              }%)`,
-            }}
-            className="fixed  z-[15] w-full bottom-0"
-          >
-            <Image
-              src="/chennai_color.svg"
-              alt="Chennai Color"
-              className="w-full  scale-[250%] md:scale-150 lg:scale-100 origin-bottom"
-              width={2000}
-              height={2000}
-              priority
-            />
-          </motion.div>
-        </div>
-
-        {/* SECOND COMP */}
-        <motion.div className="h-screen relative">
-          <Cloud
-            url="/cloud_left.svg"
-            alt="Left Cloud"
-            props={{
-              top: "20%",
-              bottom: "auto",
-              left: "-20%",
-            }}
-            comp={comp}
-            current={current}
-          />
-          <Cloud
-            url="/cloud_middle.svg"
-            alt="Middle Cloud"
-            props={{ top: 0, bottom: 0, left: 0, right: 0 }}
-            current={current}
-            comp={comp}
-          />
-          <Cloud
-            url="/cloud_right.svg"
-            alt="Right Cloud"
-            props={{
-              top: "10%",
-              bottom: "auto",
-              right: "-20%",
-            }}
-            current={current}
-            comp={comp}
-          />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            style={{
-              transform: `matrix(1, 0, 0, 1, ${calculateSunTranslateX({
-                ...current,
-                ...d,
-              })}, -${calculateSunTranslateY({ ...current, ...d })})`,
-            }}
-            className="fixed left-0 right-0 m-auto w-[40%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[4]"
-          >
-            <Image
-              src="sun.svg"
-              className=""
-              alt="Sun"
-              width={1000}
-              height={1000}
-              priority
-            />
-          </motion.div>
+  return (
+    <AnimatePresence>
+      {!readyFn ? (
+        <motion.div
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.75, ease: "linear" }}
+          className="h-screen w-screen fixed inset-0 flex flex-col justify-center items-center bg-[#f6f1ec]  text-black z-[100]"
+        >
+          <div className="flex gap-2 w-[300px]">{View}</div>
+          <p className={`${east_sea.className} text-2xl`}>
+            Hold on tight, we are almost there!
+          </p>
         </motion.div>
-        {/* THIRD COMP */}
-        <div className="h-screen   relative">
-          <motion.div
-            initial={{ marginBottom: "-10%" }}
-            animate={{
-              marginBottom:
-                current.percent > 0.2 ? 0 : `-${10 * (1 - current.percent)}%`,
-            }}
-            // style={{ height: current.px }}
-            className="fixed bottom-0 w-full z-[7] bg-[#70cbff]"
-          >
-            <Image
-              src={"/sea.svg"}
-              className="w-full"
-              alt="Sea"
+      ) : (
+        <motion.main
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.75, ease: "linear" }}
+          className="h-full relative"
+        >
+          {/* FIRST COMP */}
+          <div className="h-screen relative">
+            <div
+              className="flex flex-col justify-center items-center z-[20] relative"
+              style={{ paddingTop: d.dar < 1 ? "25%" : "5%" }}
+            >
+              <motion.h1 className="xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl text-4xl milestone tracking-wide text-[#289398]">
+                IITM BS
+              </motion.h1>
+              <p className="text-2xl font-thin my-3 milestone">presents</p>
+              <button
+                className="flex py-2 px-5 mt-3 text-xs items-center justify-center animate-bounce rounded bg-neutral-950/20 "
+                onClick={scrollToBottom}
+              >
+                SCROLL DOWN
+              </button>
+            </div>
+            <motion.div
               style={{
-                transform: `scale(${d.dar < 1 ? (1 + 1 / d.dar) * d.dpr : 1})`,
-                transformOrigin: "70% 50%",
+                transform: `translateX(-${current.px}px) translateY(${
+                  current.percent * 150
+                }%)`,
               }}
-              width={1000}
-              height={1000}
-              priority
+              className={`fixed z-[14] w-full bottom-0`}
+            >
+              <Image
+                src="/chennai_blue.svg"
+                alt="Chennai Blue"
+                className={`w-full scale-[250%] md:scale-150 lg:scale-100 origin-bottom`}
+                width={2000}
+                height={2000}
+                priority
+              />
+            </motion.div>
+            <motion.div
+              style={{
+                transform: `translateX(${current.px}px) translateY(${
+                  current.percent * 150
+                }%)`,
+              }}
+              className="fixed  z-[15] w-full bottom-0"
+            >
+              <Image
+                src="/chennai_color.svg"
+                alt="Chennai Color"
+                className="w-full  scale-[250%] md:scale-150 lg:scale-100 origin-bottom"
+                width={2000}
+                height={2000}
+                priority
+              />
+            </motion.div>
+          </div>
+
+          {/* SECOND COMP */}
+          <motion.div className="h-screen relative">
+            <Cloud
+              url="/cloud_left.svg"
+              alt="Left Cloud"
+              props={{
+                top: "20%",
+                bottom: "auto",
+                left: "-20%",
+              }}
+              comp={comp}
+              current={current}
+            />
+            <Cloud
+              url="/cloud_middle.svg"
+              alt="Middle Cloud"
+              props={{ top: 0, bottom: 0, left: 0, right: 0 }}
+              current={current}
+              comp={comp}
+            />
+            <Cloud
+              url="/cloud_right.svg"
+              alt="Right Cloud"
+              props={{
+                top: "10%",
+                bottom: "auto",
+                right: "-20%",
+              }}
+              current={current}
+              comp={comp}
             />
             <motion.div
-              initial={{ height: "0%" }}
-              animate={{
-                height:
-                  current.percent > 1
-                    ? `${1 - current.percent}%`
-                    : `${5 * (1 - current.percent)}%`,
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              style={{
+                transform: `matrix(1, 0, 0, 1, ${calculateSunTranslateX({
+                  ...current,
+                  ...d,
+                })}, -${calculateSunTranslateY({ ...current, ...d })})`,
               }}
-              className="fixed bottom-0 w-full z-[9] bg-[#f6e1aa]"
-            ></motion.div>
+              className="fixed left-0 right-0 m-auto w-[40%] sm:w-[40%] lg:w-[25%] object-cover bg-cover z-[4]"
+            >
+              <Image
+                src="sun.svg"
+                className=""
+                alt="Sun"
+                width={1000}
+                height={1000}
+                priority
+              />
+            </motion.div>
           </motion.div>
-          <motion.div
-            className="fixed -bottom-24 -left-24 w-[50%] md:w-[30%] lg:w-[20%] z-[10]"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            style={{
-              transform: `scale(${
-                current.percent * calculateScaleConstant(d) + BIRD_SCALE_K
-              }) translateX(${calculateBirdTranslateXPx({
-                ...current,
-                ...d,
-              })}px) translateY(-${calculateBirdTranslateYPx({
-                ...current,
-                ...d,
-              })}px)`,
-            }}
-          >
-            <Image
-              src="/bird.png"
-              alt="Bird"
-              width={1000}
-              height={1000}
-              priority
-            />
-          </motion.div>
-        </div>
-        <div className="h-screen relative">
-          <div
-            className="w-[80%] md:w-[40%] h-auto z-[6] relative m-auto"
-            style={{
-              paddingTop: `${(1 / d.dar) * 10}%`,
-              zIndex:
-                current.percent >= 0.95
-                  ? Math.floor(6 + current.percent * 10)
-                  : 6,
-              opacity: current.percent >= 0.9 ? current.percent : 0,
-              transition: ".3s ease opacity",
-            }}
-          >
-            <Image
-              src={"/paradox_title.svg"}
-              alt="Paradox"
-              width={1000}
-              height={1000}
-            />
+          {/* THIRD COMP */}
+          <div className="h-screen   relative">
+            <motion.div
+              initial={{ marginBottom: "-10%" }}
+              animate={{
+                marginBottom:
+                  current.percent > 0.2 ? 0 : `-${10 * (1 - current.percent)}%`,
+              }}
+              // style={{ height: current.px }}
+              className="fixed bottom-0 w-full z-[7] bg-[#70cbff]"
+            >
+              <Image
+                src={"/sea.svg"}
+                className="w-full"
+                alt="Sea"
+                style={{
+                  transform: `scale(${
+                    d.dar < 1 ? (1 + 1 / d.dar) * d.dpr : 1
+                  })`,
+                  transformOrigin: "70% 50%",
+                }}
+                width={1000}
+                height={1000}
+                priority
+              />
+              <motion.div
+                initial={{ height: "0%" }}
+                animate={{
+                  height:
+                    current.percent > 1
+                      ? `${1 - current.percent}%`
+                      : `${5 * (1 - current.percent)}%`,
+                }}
+                className="fixed bottom-0 w-full z-[9] bg-[#f6e1aa]"
+              ></motion.div>
+            </motion.div>
+            <motion.div
+              className="fixed -bottom-24 -left-24 w-[50%] md:w-[30%] lg:w-[20%] z-[10]"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              style={{
+                transform: `scale(${
+                  current.percent * calculateScaleConstant(d) + BIRD_SCALE_K
+                }) translateX(${calculateBirdTranslateXPx({
+                  ...current,
+                  ...d,
+                })}px) translateY(-${calculateBirdTranslateYPx({
+                  ...current,
+                  ...d,
+                })}px)`,
+              }}
+            >
+              <Image
+                src="/bird.png"
+                alt="Bird"
+                width={1000}
+                height={1000}
+                priority
+              />
+            </motion.div>
           </div>
-          <motion.div
-            className="fixed bottom-[12%] left-0 right-0 m-auto w-[50%] md:w-[30%] lg:w-[20%] z-[9]"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            style={{
-              transform: `scale(${calculateIslandScale({ current, d })})`,
-              transformOrigin: d.dar >= 1 ? "bottom left" : "bottom center",
-            }}
-          >
-            <Image
-              src="/island.webp"
-              alt="Island"
-              width={1000}
-              height={1000}
-              style={{ marginLeft: d.dar >= 1 ? "10vw" : 0 }}
-            />
-          </motion.div>
-        </div>
-      </main>
-    );
+          <div className="h-screen relative">
+            <div
+              className="w-[80%] md:w-[40%] h-auto z-[6] relative m-auto"
+              style={{
+                paddingTop: `${(1 / d.dar) * 10}%`,
+                zIndex:
+                  current.percent >= 0.95
+                    ? Math.floor(6 + current.percent * 10)
+                    : 6,
+                opacity: current.percent >= 0.9 ? current.percent : 0,
+                transition: ".3s ease opacity",
+              }}
+            >
+              <Image
+                src={"/paradox_title.svg"}
+                alt="Paradox"
+                width={1000}
+                height={1000}
+              />
+            </div>
+            <motion.div
+              className="fixed bottom-[12%] left-0 right-0 m-auto w-[50%] md:w-[30%] lg:w-[20%] z-[9]"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              style={{
+                transform: `scale(${calculateIslandScale({ current, d })})`,
+                transformOrigin: d.dar >= 1 ? "bottom left" : "bottom center",
+              }}
+            >
+              <Image
+                src="/island.webp"
+                alt="Island"
+                width={1000}
+                height={1000}
+                style={{ marginLeft: d.dar >= 1 ? "10vw" : 0 }}
+              />
+            </motion.div>
+          </div>
+        </motion.main>
+      )}
+    </AnimatePresence>
+  );
 }
