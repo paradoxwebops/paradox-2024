@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Card } from "..";
 import Link from "next/link";
 import { Instagram, Linkedin, Youtube, Mail, Heart } from "lucide-react";
+import Whatsapp from "@/public/whatsapp";
 
 type FooterProps = {
   bg: string;
@@ -15,23 +16,28 @@ type SocialLink = {
 
 const data: SocialLink[] = [
   {
+    id: 6,
+    url: "https://whatsapp.com/channel/0029Va5uyDEFMqrXgIpcjS2B",
+    icon: <Whatsapp className="w-3 md:w-full" fill="white" />,
+  },
+  {
     id: 1,
-    url: "https://www.instagram.com/",
+    url: "https://www.instagram.com/paradox_iitmadras",
     icon: <Instagram className="w-3 md:w-full" />,
   },
   {
     id: 2,
-    url: "https://www.youtube.com/",
+    url: "https://www.youtube.com/@paradox_iitmadras",
     icon: <Youtube className="w-3 md:w-full" />,
   },
   {
     id: 3,
-    url: "https://www.linkedin.com/",
+    url: "https://in.linkedin.com/company/paradox-iitmadras",
     icon: <Linkedin className="w-3 md:w-full" />,
   },
   {
     id: 4,
-    url: "https://www.linkedin.com/",
+    url: "mailto:support@iitmparadox.org",
     icon: <Mail className="w-3 md:w-full" />,
   },
 ];
@@ -54,6 +60,7 @@ const Footer = ({ bg }: FooterProps) => {
                 <Link
                   key={id}
                   href={url}
+                  target="_blank"
                   className="bg-white/10 hover:bg-white/20 w-6 md:w-10 h-6 md:h-10 flex justify-center items-center  rounded-[20px]"
                 >
                   {icon}

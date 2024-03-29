@@ -45,6 +45,11 @@ const coresData = [
     img: "/robin_justin.png",
   },
   {
+    name: "Faiz Ali",
+    department: "Sports",
+    img: "/faiz.png",
+  },
+  {
     name: "Mayank Jaiswal",
     department: "Sponsorship",
     img: "/mayank_jaiswal.png",
@@ -71,7 +76,7 @@ const coresData = [
 export default function EventsPage() {
   return (
     <>
-      <div className="w-full md:px-20 lg:px-40 xl:px-48">
+      <div className="w-full md:px-28 lg:px-48 xl:px-72">
         <h2
           className={`${eastSeaDokdo.className} text-8xl text-center my-12`}
           style={{ color: "#EA9C41" }}
@@ -82,12 +87,15 @@ export default function EventsPage() {
         <div className="grid md:grid-cols-3 gap-8">
           {secretaryData.map(({ img, name }, ind) => {
             return (
-              <div className="flex flex-col" key={`${name}_${ind}`}>
-                <div className="w-full border-4 border-white bg-[#FFBB6C] rounded-2xl">
+              <div
+                className="flex flex-col justify-center items-center"
+                key={`${name}_${ind}`}
+              >
+                <div className="w-full  max-w-[250px] border-4 border-white bg-[#FFBB6C] rounded-2xl overflow-hidden">
                   <img className="w-full h-auto" src={img} />
                 </div>
-                <div className="w-full bg-[#FFF8E8] text-center p-3 mt-6 rounded-2xl">
-                  <div className="uppercase font-semibold text-black text-xl">
+                <div className="w-full max-w-[250px]  text-center">
+                  <div className="uppercase bg-[#FFF8E8] font-semibold  p-3 mt-6 rounded-2xl border-3 border-[#ffbb6c] text-black text-xl">
                     {name}
                   </div>
                 </div>
@@ -107,10 +115,10 @@ export default function EventsPage() {
           {coresData.map(({ img, name, department }, ind) => {
             return (
               <div className="flex flex-col" key={`${name}_${ind}`}>
-                <div className="w-full border-4 border-white bg-[#FFBB6C] rounded-2xl">
+                <div className="w-full border-4 border-white bg-[#FFBB6C] rounded-2xl overflow-hidden">
                   <img className="w-full h-auto" src={img} />
                 </div>
-                <div className="w-full bg-[#FFF8E8] text-center p-3 mt-6 rounded-2xl">
+                <div className="w-full bg-[#FFF8E8] text-center p-3  border-3 border-[#ffbb6c] mt-6 rounded-2xl">
                   <div className="uppercase font-semibold text-black text-base md:text-lg">
                     {name}
                   </div>
