@@ -92,7 +92,7 @@ export default function AboutPage() {
                 <p>
                   <b>{`"Paradox"`}</b> is a unique and immersive fest
                   celebrating the pioneering Bachelor of Science (BS) Degree in
-                  Data Science.
+                  Data Science and Electronic science offered by IIT Madras
                 </p>
               </div>
               <Image

@@ -1,5 +1,12 @@
 "use client";
-import { Select, SelectItem, Input, Button } from "@nextui-org/react";
+import {
+  Select,
+  SelectItem,
+  Input,
+  Button,
+  Checkbox,
+  Link,
+} from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { GeoInfo } from "./geoinfo";
 import { checkFestRegistration, festRegister } from "@/lib/methods";
@@ -28,6 +35,7 @@ const selectClassNames = {
 
 function RegistrationForm() {
   const { axios } = useAxios();
+  const [agree, setAgree] = useState(false);
   const [checkFest, setCheckFest] = useState(false);
   const [invalid, setInvalid] = useState<
     { name: string; invalid: boolean; message: string }[]
@@ -99,6 +107,11 @@ function RegistrationForm() {
           isValidated: false,
           message: "City is not selected",
         };
+    } else if (!agree) {
+      return {
+        isValidated: false,
+        message: "Agree to terms & conditions",
+      };
     } else {
       return {
         isValidated: true,
@@ -288,6 +301,24 @@ function RegistrationForm() {
               Unsure
             </SelectItem>
           </Select>
+          <div className="flex gap-1 px-2">
+            <Checkbox onValueChange={(e) => setAgree(e)} />{" "}
+            <div>
+              I hereby acknowledge having read and understood all the{" "}
+              <Link
+                underline="always"
+                href="https://drive.google.com/file/d/1_jIPJxbouBIQhP5wnXtruINLOuq00ug0/view?usp=sharing"
+                target="_blank"
+              >
+                guidelines
+              </Link>{" "}
+              provided. I accept and agree to adhere strictly to each condition
+              outlined. I take full responsibility for my actions during Paradox
+              and understand that any deviation from these guidelines will
+              result in actions taken by the respective committees. I commit to
+              upholding the standards expected of me as a participant.
+            </div>
+          </div>
           <Button
             type="submit"
             className="w-full max-w-[200px] ml-auto font-bold bg-[#2D78A2] text-[#ECF4F8]"

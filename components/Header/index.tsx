@@ -8,6 +8,7 @@ export type HeaderData = {
   bg: string;
   text: string;
   image: string;
+  gif?: string;
 };
 
 export type PageHeaderData = {
@@ -22,7 +23,7 @@ export type PageHeaderData = {
   accommodation: HeaderData;
 };
 
-const Header = ({ bg, text, image }: HeaderData) => {
+const Header = ({ bg, text, image, gif }: HeaderData) => {
   const circleMajorStyles: React.CSSProperties = {
     width: "200px",
     height: "200px",
@@ -39,7 +40,7 @@ const Header = ({ bg, text, image }: HeaderData) => {
   };
 
   return (
-    <Card bgColor={bg} className="overflow-hidden">
+    <Card bgColor={bg} className="overflow-hidden relative">
       <div className="flex w-full justify-between items-start">
         <motion.div
           style={{ backgroundColor: "rgba(0, 0, 0,0.25" }}
@@ -55,22 +56,25 @@ const Header = ({ bg, text, image }: HeaderData) => {
           alt="Paradox logo"
           width={200}
           height={150}
-          className="w-16 sm:w-20 md:w-32 lg:w-48"
+          className="w-16 sm:w-20 md:w-32 lg:w-48 z-[2] relative"
         />
       </div>
-      <div className="flex w-full justify-start items-center px-4 md:px-6">
+      <div className="flex w-full justify-start items-center px-4 md:px-6 xl:mt-20">
         <h1
           className="milestone text-3xl md:text-5xl lg:text-8xl mb-0 text-white"
           style={{ letterSpacing: "2px" }}
         >
           {text}
         </h1>
-        {/* <Image 
-                    src={image}
-                    alt="Header image"
-                    height={100}
-                    width={200}
-                /> */}
+        <div className="absolute right-4 md:right-14 lg:right-18 xl:right-0 bottom-0 xl:bottom-[-250px]  z-1">
+          {gif && (
+            <img
+              src={gif}
+              alt="about_gif"
+              className="h-full   max-w-[150px] md:max-w-[200px] lg:max-w-[300px] xl:max-w-[800px] xl:w-[800px]"
+            />
+          )}
+        </div>
       </div>
     </Card>
   );
