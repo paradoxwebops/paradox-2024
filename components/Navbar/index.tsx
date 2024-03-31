@@ -23,7 +23,11 @@ const NavBar = () => {
   };
   const maxHeightPx = 98;
   return (
-    <div className="w-full" style={{ height: `${maxHeightPx}px` }}>
+    <div
+      id="navbar-menu"
+      className="w-full"
+      style={{ height: `${maxHeightPx}px` }}
+    >
       <NavBarMenuFullScreen open={open} showToggle={showToggle} />
       <nav
         className="flex justify-between p-6 items-center fixed w-full z-[99]"

@@ -8,7 +8,6 @@ const data: PageHeaderData = {
     bg: "#FEA500",
     text: "OUR TEAM",
     image: "/paradox_logo_text.png",
-    gif: "/event.gif",
   },
   about: {
     bg: "#D4555C",
@@ -20,43 +19,39 @@ const data: PageHeaderData = {
     bg: "#740D47",
     text: "PAST SPONSORS",
     image: "/paradox_logo_text.png",
-    gif: "/event.gif",
   },
   contact: {
     bg: "#03190F",
     text: "CONTACT US",
     image: "/paradox_logo_text.png",
-    gif: "/contact.gif",
+    gif: "/contact.mp4",
   },
   faq: {
     bg: "#FF8B8D",
     text: "FAQs",
     image: "/paradox_logo_text.png",
-    gif: "/event.gif",
+    gif: "/faq.gif",
   },
   events: {
     bg: "#9700E9",
     text: "EVENTS",
     image: "/paradox_logo_text.png",
-    gif: "/event.gif",
+    gif: "/event.mp4",
   },
   fest: {
     bg: "#76CEE2",
     text: "FEST",
     image: "/paradox_logo_text.png",
-    gif: "/event.gif",
   },
   profile: {
     bg: "#65376B",
     text: "PROFILE",
     image: "/paradox_logo_text.png",
-    gif: "/event.gif",
   },
   accommodation: {
     bg: "#76CEE2",
     text: "ACCOMMODATION",
     image: "/paradox_logo_text.png",
-    gif: "/event.gif",
   },
 };
 

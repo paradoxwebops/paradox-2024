@@ -61,19 +61,23 @@ const Header = ({ bg, text, image, gif }: HeaderData) => {
       </div>
       <div className="flex w-full justify-start items-center px-4 md:px-6 xl:mt-20">
         <h1
-          className="milestone text-3xl md:text-5xl lg:text-8xl mb-0 text-white"
+          className="milestone text-3xl md:text-5xl lg:text-8xl mb-0 text-white w-full"
           style={{ letterSpacing: "2px" }}
         >
           {text}
         </h1>
-        <div className="absolute right-4 md:right-14 lg:right-18 xl:right-0 bottom-0 xl:bottom-[-250px]  z-1">
-          {gif && (
-            <img
-              src={gif}
-              alt="about_gif"
-              className="h-full   max-w-[150px] md:max-w-[200px] lg:max-w-[300px] xl:max-w-[800px] xl:w-[800px]"
-            />
-          )}
+        <div
+          style={{ transform: "rotateY(180deg)" }}
+          className=" absolute right-0 scale-150 bottom-[140px] xl:bottom-[-140px] w-1/2 rounded-l-xl"
+        >
+          {gif &&
+            (text == "ABOUT" || text == "FAQs" ? (
+              <img className="" src={gif} />
+            ) : (
+              <video loop autoPlay className="rounded-l-xl min-h-full">
+                <source src={gif} />
+              </video>
+            ))}
         </div>
       </div>
     </Card>

@@ -6,11 +6,13 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
 import Lottie, { useLottie } from "lottie-react";
 import { East_Sea_Dokdo } from "next/font/google";
 import animation from "./PRELOADER.json";
+import Link from "next/link";
+import { Button } from "@nextui-org/react";
 interface CloudProps {
   top?: number | string;
   left?: number | string;
@@ -162,7 +164,7 @@ export default function Home() {
   });
   const [comp, setComp] = useState<number>(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTimeout(() => {
       scrollToBottom();
       setReady(true);
@@ -221,9 +223,15 @@ export default function Home() {
               className="flex flex-col justify-center items-center z-[20] relative"
               style={{ paddingTop: d.dar < 1 ? "25%" : "5%" }}
             >
-              <motion.h1 className="xl:text-8xl lg:text-7xl md:text-6xl sm:text-5xl text-4xl milestone tracking-wide text-[#289398]">
-                IITM BS
-              </motion.h1>
+              <Link href={"https://study.iitm.ac.in"} target="_blank">
+                <motion.h1 className="xl:text-8xl relative z-1 lg:text-7xl md:text-6xl sm:text-5xl text-4xl milestone tracking-wide text-[#289398]">
+                  <span>IITM BS</span>{" "}
+                  <span className="absolute">
+                    {" "}
+                    <ExternalLink size={16} />{" "}
+                  </span>
+                </motion.h1>
+              </Link>
               <p className="text-2xl font-thin my-3 milestone">presents</p>
               <button
                 className="flex py-2 px-5 mt-3 text-xs items-center justify-center animate-bounce rounded bg-neutral-950/20 "
@@ -381,7 +389,7 @@ export default function Home() {
               />
             </motion.div>
           </div>
-          <div className="h-screen relative">
+          <div className="h-screen">
             <div
               className="w-[80%] md:w-[40%] h-auto z-[6] relative m-auto"
               style={{
@@ -400,6 +408,10 @@ export default function Home() {
                 width={1000}
                 height={1000}
               />
+              <div className="fixed animate-pulse top-9 right-14 flex justify-center items-center text-[#ff9e68]">
+                Click here
+                <ArrowRight />
+              </div>
             </div>
             <motion.div
               className="fixed bottom-[12%] left-0 right-0 m-auto w-[50%] md:w-[30%] lg:w-[20%] z-[9]"
