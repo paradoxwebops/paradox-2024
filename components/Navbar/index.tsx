@@ -123,11 +123,11 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
       name: "FEST REGISTRATION",
       target: "_self",
     },
-    {
-      href: "/accommodation",
-      name: "ACCOMMODATION",
-      target: "_self",
-    },
+    // {
+    //   href: "/accommodation",
+    //   name: "ACCOMMODATION",
+    //   target: "_self",
+    // },
     {
       href: "/team",
       name: "TEAM",
@@ -138,17 +138,11 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
       name: "EVENTS",
       target: "_self",
     },
-
     {
       href: "/sponsors",
       name: "PAST SPONSORS",
       target: "_self",
     },
-    // {
-    //   href: "/sponsors",
-    //   name: "PAST SPONSORS",
-    //   target: "_self",
-    // },
     {
       href: "/faq",
       name: "FAQs",

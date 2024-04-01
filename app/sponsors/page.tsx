@@ -367,7 +367,7 @@ export default function SponsorsPage() {
         >
           Other Sponsors
         </h3>
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 max-w-[200px] lg:max-w-[600px]">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 max-w-[200px] lg:max-w-[800px]">
           <div className="flex flex-col gap-4 col-span-3">
             <Image
               src={"/event-partners.png"}

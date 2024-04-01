@@ -416,7 +416,7 @@ function AccommodationForm() {
                 I hereby acknowledge having read and understood all the{" "}
                 <Link
                   underline="always"
-                  href="https://drive.google.com/file/d/1_jIPJxbouBIQhP5wnXtruINLOuq00ug0/view?usp=sharing"
+                  href="https://drive.google.com/file/d/11AP1L2wP5MwQcJmiy4esbTPs08iAsYUp/view?usp=drive_link"
                   target="_blank"
                 >
                   guidelines
