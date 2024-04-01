@@ -23,11 +23,7 @@ const NavBar = () => {
   };
   const maxHeightPx = 98;
   return (
-    <div
-      id="navbar-menu"
-      className="w-full"
-      style={{ height: `${maxHeightPx}px` }}
-    >
+    <div className="w-full" style={{ height: `${maxHeightPx}px` }}>
       <NavBarMenuFullScreen open={open} showToggle={showToggle} />
       <nav
         className="flex justify-between p-6 items-center fixed w-full z-[99]"
@@ -82,6 +78,7 @@ const NavBarMenuFullScreen = ({
               <Image
                 src={"/paradox_logo_text.webp"}
                 alt="Paradox"
+                className="hidden md:block"
                 width={400}
                 height={400}
               />
@@ -139,6 +136,12 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
     {
       href: "/events",
       name: "EVENTS",
+      target: "_self",
+    },
+
+    {
+      href: "/sponsors",
+      name: "PAST SPONSORS",
       target: "_self",
     },
     // {
