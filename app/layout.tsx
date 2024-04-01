@@ -4,6 +4,7 @@ import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import { NavBar } from "@/components/Navbar";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Paradox '24",
@@ -26,6 +27,7 @@ export default function RootLayout({
         <Providers>
           <NavBar />
           <main>{children}</main>
+          <Analytics />
         </Providers>
       </body>
     </html>
