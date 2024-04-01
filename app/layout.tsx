@@ -7,8 +7,11 @@ import { NavBar } from "@/components/Navbar";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
-  title: "Paradox '24",
-  description: "Paradox '24",
+  title: "Paradox '24 | IIT Madras | BS Degree",
+  description:
+    "Paradox is the annual techno-cultural fest of the IIT Madras BS Degree.",
+  keywords:
+    "Paradox 2024, Paradox 24, IIT Madras, BS Degree, IITMBS, IITM BS, Paradox",
 };
 
 const bricolage = Bricolage_Grotesque({
