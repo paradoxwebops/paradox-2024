@@ -29,7 +29,10 @@ const eastSeaDokdo = East_Sea_Dokdo({ weight: "400", subsets: ["latin"] });
 function AccommodationForm() {
   const { axios } = useAxios();
   const [checkFest, setCheckFest] = useState(false);
-  const [checkAccom, setCheckAccom] = useState(false);
+  const [checkAccom, setCheckAccom] = useState({
+    registered: false,
+    paid: false,
+  });
   const [agree, setAgree] = useState(false);
   const [pwd, setPWD] = useState(false);
   const [invalid, setInvalid] = useState<
@@ -122,7 +125,10 @@ function AccommodationForm() {
     try {
       const res = await checkAccomRegistration(axios);
       if (res && res.data) {
-        setCheckAccom(res.data.registered);
+        setCheckAccom({
+          registered: res.data.registered,
+          paid: res.data.paid,
+        });
       }
       setLoading(false);
     } catch (err) {
@@ -200,249 +206,266 @@ function AccommodationForm() {
   return (
     <ComponentLoading loading={loading}>
       {checkFest ? (
-        !checkAccom ? (
-          <div className="w-full flex flex-col gap-4">
-            <Input
-              label="Arrival Date "
-              placeholder="Arrival"
-              isRequired
-              classNames={{ ...inputClassNames }}
-              type="date"
-              isInvalid={
-                invalid.filter((e) => e.name == "arrival" && e.invalid).length >
-                0
-              }
-              errorMessage={
-                invalid.filter((e) => e.name == "arrival")[0]
-                  ? invalid.filter((e) => e.name == "arrival")[0].message
-                  : ""
-              }
-              onChange={(e: any) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  arrival_date: new Date(e.target.value)
-                    ?.toISOString()
-                    .split(":")[0],
-                }));
-                finalForm.set(
-                  "arrival_date",
-                  new Date(e.target.value)?.toISOString().split(":")[0]
-                );
-              }}
-            />
-            <Input
-              label="Departure Date"
-              defaultValue={new Date("30-5-2024").toString()}
-              classNames={{ ...inputClassNames }}
-              placeholder="Departure"
-              isRequired
-              isInvalid={
-                invalid.filter((e) => e.name == "departure" && e.invalid)
-                  .length > 0
-              }
-              errorMessage={
-                invalid.filter((e) => e.name == "departure")[0]
-                  ? invalid.filter((e) => e.name == "departure")[0].message
-                  : ""
-              }
-              type="date"
-              onChange={(e: any) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  departure_date: new Date(e.target.value)
-                    .toISOString()
-                    .split(":")[0],
-                }));
-                finalForm.set(
-                  "departure_date",
-                  new Date(e.target.value)?.toISOString().split(":")[0]
-                );
-              }}
-            />
-            <Input
-              label="Emergency contact name"
-              classNames={{ ...inputClassNames }}
-              placeholder="Name of emergency contact"
-              isRequired
-              type="text"
-              onChange={(e) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  emergency_name: e.target.value,
-                }));
-                finalForm.set("emergency_contact_name", e.target.value);
-              }}
-            />
-            <Input
-              label="Emergency contact number"
-              classNames={{ ...inputClassNames }}
-              placeholder="Phone number of emergency contact"
-              isRequired
-              type="number"
-              onChange={(e) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  emergency_contact: e.target.value,
-                }));
-                finalForm.set("emergency_contact", e.target.value);
-              }}
-            />
-
-            <Select
-              isRequired
-              label="Emergency contact relationship"
-              placeholder="Relationship with emergency contact"
-              classNames={{ ...selectClassNames }}
-              onChange={(e) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  emergency_relationship: e.target.value,
-                }));
-                finalForm.set("emergency_contact_relation", e.target.value);
-              }}
-            >
-              <SelectItem key="spouse" value={"spouse"}>
-                Spouse
-              </SelectItem>
-              <SelectItem key="parent" value={"parent"}>
-                Parent
-              </SelectItem>
-              <SelectItem key="child" value={"child"}>
-                Child
-              </SelectItem>
-              <SelectItem key="sibling" value={"sibling"}>
-                Sibling
-              </SelectItem>
-              <SelectItem
-                key="other_family_member"
-                value={"other_family_member"}
-              >
-                Other Family Member
-              </SelectItem>
-              <SelectItem key="legal_guardian" value={"legal_guardian"}>
-                Legal Guardian
-              </SelectItem>
-              <SelectItem key="other" value={"other"}>
-                Other
-              </SelectItem>
-            </Select>
-            <Select
-              isRequired
-              label="Do you require Jain Food?"
-              placeholder="Jain Food"
-              classNames={{ ...selectClassNames }}
-              onChange={(e) => {
-                setFormData((prev) => ({ ...prev, jain_food: e.target.value }));
-                finalForm.set("jain_food", e.target.value);
-              }}
-            >
-              <SelectItem key="true" value={"true"}>
-                Yes
-              </SelectItem>
-              <SelectItem key="false" value={"false"}>
-                No
-              </SelectItem>
-            </Select>
-            <Textarea
-              label="Do you have any medical issues?"
-              classNames={{ ...inputClassNames }}
-              placeholder="State your medical issues. Skip this question if you don't have any."
-              type="text"
-              onChange={(e) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  medical_issues: e.target.value,
-                }));
-                finalForm.set("medical_issues", e.target.value);
-              }}
-            />
-
-            <Select
-              isRequired
-              label="Are you a person with disabilities (PWD)?"
-              classNames={{ ...selectClassNames }}
-              placeholder="PWD"
-              onChange={(e) => {
-                if (e.target.value == "true") {
-                  setPWD(true);
-                } else {
-                  setPWD(false);
+        checkAccom.paid ? (
+          !checkAccom.registered ? (
+            <div className="w-full flex flex-col gap-4">
+              <Input
+                label="Arrival Date "
+                placeholder="Arrival"
+                isRequired
+                classNames={{ ...inputClassNames }}
+                type="date"
+                isInvalid={
+                  invalid.filter((e) => e.name == "arrival" && e.invalid)
+                    .length > 0
                 }
-                setFormData((prev) => ({ ...prev, pwd: e.target.value }));
-                finalForm.set("pwd", e.target.value);
-              }}
-            >
-              <SelectItem key="true" value={"true"}>
-                Yes
-              </SelectItem>
-              <SelectItem key="false" value={"false"}>
-                No
-              </SelectItem>
-            </Select>
-            {pwd ? (
-              <>
-                <div className="flex justify-start items-center gap-4">
-                  <Button className="w-full max-w-[200px] font-bold bg-[#2D78A2] text-[#ECF4F8]">
-                    {" "}
-                    <label htmlFor="pwd_certificate">Upload certificate</label>
-                  </Button>
-                  <small ref={fileNameRef}></small>
-                </div>
-                <input
-                  onChange={(e) => {
-                    if (e.target.files !== null) {
-                      let temp = { ...formData };
-                      temp.pwd_certificate = e.target.files[0];
-                      setFormData(temp);
-                      finalForm.set("pwd_certificate", e.target.files[0]);
-                      if (fileNameRef.current) {
-                        fileNameRef.current.innerText = e.target.files[0].name;
-                      }
-                    }
-                  }}
-                  ref={fileRef}
-                  className="hidden"
-                  id="pwd_certificate"
-                  type="file"
-                />
-              </>
-            ) : (
-              <></>
-            )}
+                errorMessage={
+                  invalid.filter((e) => e.name == "arrival")[0]
+                    ? invalid.filter((e) => e.name == "arrival")[0].message
+                    : ""
+                }
+                onChange={(e: any) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    arrival_date: new Date(e.target.value)
+                      ?.toISOString()
+                      .split(":")[0],
+                  }));
+                  finalForm.set(
+                    "arrival_date",
+                    new Date(e.target.value)?.toISOString().split(":")[0]
+                  );
+                }}
+              />
+              <Input
+                label="Departure Date"
+                defaultValue={new Date("30-5-2024").toString()}
+                classNames={{ ...inputClassNames }}
+                placeholder="Departure"
+                isRequired
+                isInvalid={
+                  invalid.filter((e) => e.name == "departure" && e.invalid)
+                    .length > 0
+                }
+                errorMessage={
+                  invalid.filter((e) => e.name == "departure")[0]
+                    ? invalid.filter((e) => e.name == "departure")[0].message
+                    : ""
+                }
+                type="date"
+                onChange={(e: any) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    departure_date: new Date(e.target.value)
+                      .toISOString()
+                      .split(":")[0],
+                  }));
+                  finalForm.set(
+                    "departure_date",
+                    new Date(e.target.value)?.toISOString().split(":")[0]
+                  );
+                }}
+              />
+              <Input
+                label="Emergency contact name"
+                classNames={{ ...inputClassNames }}
+                placeholder="Name of emergency contact"
+                isRequired
+                type="text"
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    emergency_name: e.target.value,
+                  }));
+                  finalForm.set("emergency_contact_name", e.target.value);
+                }}
+              />
+              <Input
+                label="Emergency contact number"
+                classNames={{ ...inputClassNames }}
+                placeholder="Phone number of emergency contact"
+                isRequired
+                type="number"
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    emergency_contact: e.target.value,
+                  }));
+                  finalForm.set("emergency_contact", e.target.value);
+                }}
+              />
 
-            <div className="flex gap-1 px-2">
-              <Checkbox onValueChange={(e) => setAgree(e)} />{" "}
-              <div>
-                I hereby acknowledge having read and understood all the{" "}
-                <Link
-                  underline="always"
-                  href="https://drive.google.com/file/d/11AP1L2wP5MwQcJmiy4esbTPs08iAsYUp/view?usp=drive_link"
-                  target="_blank"
+              <Select
+                isRequired
+                label="Emergency contact relationship"
+                placeholder="Relationship with emergency contact"
+                classNames={{ ...selectClassNames }}
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    emergency_relationship: e.target.value,
+                  }));
+                  finalForm.set("emergency_contact_relation", e.target.value);
+                }}
+              >
+                <SelectItem key="spouse" value={"spouse"}>
+                  Spouse
+                </SelectItem>
+                <SelectItem key="parent" value={"parent"}>
+                  Parent
+                </SelectItem>
+                <SelectItem key="child" value={"child"}>
+                  Child
+                </SelectItem>
+                <SelectItem key="sibling" value={"sibling"}>
+                  Sibling
+                </SelectItem>
+                <SelectItem
+                  key="other_family_member"
+                  value={"other_family_member"}
                 >
-                  guidelines
-                </Link>{" "}
-                provided. I accept and agree to adhere strictly to each
-                condition outlined. I take full responsibility for my actions
-                during Paradox and understand that any deviation from these
-                guidelines will result in actions taken by the respective
-                committees. I commit to upholding the standards expected of me
-                as a participant.
+                  Other Family Member
+                </SelectItem>
+                <SelectItem key="legal_guardian" value={"legal_guardian"}>
+                  Legal Guardian
+                </SelectItem>
+                <SelectItem key="other" value={"other"}>
+                  Other
+                </SelectItem>
+              </Select>
+              <Select
+                isRequired
+                label="Do you require Jain Food?"
+                placeholder="Jain Food"
+                classNames={{ ...selectClassNames }}
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    jain_food: e.target.value,
+                  }));
+                  finalForm.set("jain_food", e.target.value);
+                }}
+              >
+                <SelectItem key="true" value={"true"}>
+                  Yes
+                </SelectItem>
+                <SelectItem key="false" value={"false"}>
+                  No
+                </SelectItem>
+              </Select>
+              <Textarea
+                label="Do you have any medical issues?"
+                classNames={{ ...inputClassNames }}
+                placeholder="State your medical issues. Skip this question if you don't have any."
+                type="text"
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    medical_issues: e.target.value,
+                  }));
+                  finalForm.set("medical_issues", e.target.value);
+                }}
+              />
+
+              <Select
+                isRequired
+                label="Are you a person with disabilities (PWD)?"
+                classNames={{ ...selectClassNames }}
+                placeholder="PWD"
+                onChange={(e) => {
+                  if (e.target.value == "true") {
+                    setPWD(true);
+                  } else {
+                    setPWD(false);
+                  }
+                  setFormData((prev) => ({ ...prev, pwd: e.target.value }));
+                  finalForm.set("pwd", e.target.value);
+                }}
+              >
+                <SelectItem key="true" value={"true"}>
+                  Yes
+                </SelectItem>
+                <SelectItem key="false" value={"false"}>
+                  No
+                </SelectItem>
+              </Select>
+              {pwd ? (
+                <>
+                  <div className="flex justify-start items-center gap-4">
+                    <Button className="w-full max-w-[200px] font-bold bg-[#2D78A2] text-[#ECF4F8]">
+                      {" "}
+                      <label htmlFor="pwd_certificate">
+                        Upload certificate
+                      </label>
+                    </Button>
+                    <small ref={fileNameRef}></small>
+                  </div>
+                  <input
+                    onChange={(e) => {
+                      if (e.target.files !== null) {
+                        let temp = { ...formData };
+                        temp.pwd_certificate = e.target.files[0];
+                        setFormData(temp);
+                        finalForm.set("pwd_certificate", e.target.files[0]);
+                        if (fileNameRef.current) {
+                          fileNameRef.current.innerText =
+                            e.target.files[0].name;
+                        }
+                      }
+                    }}
+                    ref={fileRef}
+                    className="hidden"
+                    id="pwd_certificate"
+                    type="file"
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+
+              <div className="flex gap-1 px-2">
+                <Checkbox onValueChange={(e) => setAgree(e)} />{" "}
+                <div>
+                  I hereby acknowledge having read and understood all the{" "}
+                  <Link
+                    underline="always"
+                    href="https://drive.google.com/file/d/11AP1L2wP5MwQcJmiy4esbTPs08iAsYUp/view?usp=drive_link"
+                    target="_blank"
+                  >
+                    guidelines
+                  </Link>{" "}
+                  provided. I accept and agree to adhere strictly to each
+                  condition outlined. I take full responsibility for my actions
+                  during Paradox and understand that any deviation from these
+                  guidelines will result in actions taken by the respective
+                  committees. I commit to upholding the standards expected of me
+                  as a participant.
+                </div>
               </div>
+              <Button
+                type="submit"
+                className="w-full max-w-[200px] ml-auto font-bold bg-[#2D78A2] text-[#ECF4F8]"
+                onClick={handleSubmit}
+              >
+                Register
+              </Button>
             </div>
-            <Button
-              type="submit"
-              className="w-full max-w-[200px] ml-auto font-bold bg-[#2D78A2] text-[#ECF4F8]"
-              onClick={handleSubmit}
-            >
-              Register
-            </Button>
-          </div>
+          ) : (
+            <div className="flex flex-col gap-2 justify-center items-center">
+              <p
+                className={`${eastSeaDokdo.className} text-4xl text-center`}
+              >{`Don't be greedy son. You done registered already 🤠`}</p>
+            </div>
+          )
         ) : (
-          <div className="flex flex-col gap-2 justify-center items-center">
-            <p
-              className={`${eastSeaDokdo.className} text-4xl text-center`}
-            >{`Don't be greedy son. You done registered already 🤠`}</p>
-          </div>
+          <>
+            <p className={`${eastSeaDokdo.className} text-center text-4xl`}>
+              {`Before visiting our website, please ensure that you have made the
+              payment through the student dashboard. If you've already paid,
+              please note that it may take upto 5 business days for the payment to
+              be reflected here.`}{" "}
+            </p>
+          </>
         )
       ) : (
         <div className="flex flex-col gap-2 justify-center items-center">

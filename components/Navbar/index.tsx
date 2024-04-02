@@ -123,11 +123,11 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
       name: "FEST REGISTRATION",
       target: "_self",
     },
-    // {
-    //   href: "/accommodation",
-    //   name: "ACCOMMODATION",
-    //   target: "_self",
-    // },
+    {
+      href: "/accommodation",
+      name: "ACCOMMODATION",
+      target: "_self",
+    },
     {
       href: "/team",
       name: "TEAM",
