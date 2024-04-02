@@ -55,3 +55,12 @@ h6 {
   font-family: "Milestone";
   font-weight: normal;
 }
+
+.parent-sponsor:hover {
+  position: static;
+  transition: all 300ms ease;
+}
+
+.parent-sponsor:hover .child {
+  position: static !important;
+}

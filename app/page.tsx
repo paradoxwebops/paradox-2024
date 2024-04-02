@@ -225,7 +225,7 @@ export default function Home() {
             >
               <Link href={"https://study.iitm.ac.in"} target="_blank">
                 <motion.h1 className="xl:text-8xl relative z-1 lg:text-7xl md:text-6xl sm:text-5xl text-4xl milestone tracking-wide text-[#289398]">
-                  <span>IITM BS</span>{" "}
+                  <span>IIT Madras BS</span>{" "}
                   <span className="absolute">
                     {" "}
                     <ExternalLink size={16} />{" "}

@@ -16,7 +16,7 @@ const data: PageHeaderData = {
     gif: "/about.gif",
   },
   sponsors: {
-    bg: "#740D47",
+    bg: "#a7688d",
     text: "PAST SPONSORS",
     image: "/paradox_logo_text.png",
   },

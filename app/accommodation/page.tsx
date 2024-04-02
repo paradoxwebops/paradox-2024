@@ -19,9 +19,5 @@ export default function AccommodationPage() {
     );
   }
 
-  return (
-    <>
-      <AccommodationForm />
-    </>
-  );
+  return <AccommodationForm />;
 }
