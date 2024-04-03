@@ -233,7 +233,7 @@ function AccommodationForm() {
                 placeholder="Arrival"
                 isRequired
                 classNames={{ ...inputClassNames }}
-                type="date"
+                type="datetime-local"
                 isInvalid={
                   invalid.filter((e) => e.name == "arrival" && e.invalid)
                     .length > 0
@@ -247,12 +247,12 @@ function AccommodationForm() {
                   setFormData((prev) => ({
                     ...prev,
                     arrival_date: new Date(e.target.value)
-                      ?.toISOString()
-                      .split(":")[0],
+                      ?.getTime()
+                      .toString(),
                   }));
                   finalForm.set(
                     "arrival_date",
-                    new Date(e.target.value)?.toISOString().split(":")[0]
+                    new Date(e.target.value)?.getTime().toString()
                   );
                 }}
               />
@@ -271,17 +271,17 @@ function AccommodationForm() {
                     ? invalid.filter((e) => e.name == "departure")[0].message
                     : ""
                 }
-                type="date"
+                type="datetime-local"
                 onChange={(e: any) => {
                   setFormData((prev) => ({
                     ...prev,
                     departure_date: new Date(e.target.value)
-                      .toISOString()
-                      .split(":")[0],
+                      ?.getTime()
+                      .toString(),
                   }));
                   finalForm.set(
                     "departure_date",
-                    new Date(e.target.value)?.toISOString().split(":")[0]
+                    new Date(e.target.value)?.getTime().toString()
                   );
                 }}
               />
