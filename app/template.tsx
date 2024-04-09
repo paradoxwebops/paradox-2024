@@ -75,15 +75,23 @@ export default function Template({ children }: { children: React.ReactNode }) {
   //@ts-ignore
   const headerData: any = { ...data[n] };
 
+  console.log(headerData);
+
   return (
     <>
       {p === "/" ? (
         children
       ) : (
         <div className="flex flex-col p-6 pt-0 items-center justify-between min-h-screen">
-          <Header {...headerData} />
-          <div className="w-full py-6">{children}</div>
-          <Footer bg={headerData.bg} />
+          {(Object.keys(headerData).length === 0) ? 
+            (children)
+          :
+            <>
+              <Header {...headerData} />
+              <div className="w-full py-6">{children}</div>
+              <Footer bg={headerData.bg} />
+            </>
+          }
         </div>
       )}
     </>
