@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Card } from "..";
 import { motion } from "framer-motion"
 import { rgba } from "@/lib/utils";
+import Link from "next/link";
 
 export type HeaderData = {
   bg: string;
@@ -13,6 +14,7 @@ export type HeaderData = {
   isEvent?: boolean;
   eventImage?: string;
   eventCategory?: string;
+  eventId?: number | string;
 };
 
 export type PageHeaderData = {
@@ -39,7 +41,7 @@ const HeaderHeading1 = ({text, style, className, ...props}:{text: string, classN
   )
 }
 
-const Header = ({ bg, text, image, gif, eventCategory, eventImage, isEvent }: HeaderData) => {
+const Header = ({ bg, text, image, gif, eventCategory, eventImage, isEvent, eventId }: HeaderData) => {
   const circleMajorStyles: React.CSSProperties = {
     width: "200px",
     height: "200px",
@@ -85,10 +87,19 @@ const Header = ({ bg, text, image, gif, eventCategory, eventImage, isEvent }: He
           />
 
           <HeaderHeading1 text={text} className="text-center !my-6" />
+
           <div className="px-12 py-2 rounded-full font-bold mb-6" style={{color: bg, backgroundColor: rgba('#ffffff', 0.75)}}>
             {eventCategory}
           </div>
 
+          <motion.div 
+            className="py-2 fixed bottom-6 z-[10] mix-blend-difference"
+            initial={{marginBottom: '-50px', opacity: 0}}
+            animate={{marginBottom: 0, opacity: 1}}
+            transition={{duration: 2}}
+          >
+            <a href={`/events/register/${eventId}`} className="rounded-2xl text-white border-3 border-[rgba(255,255,255,.3)] px-8 py-2 hover:text-black hover:border-[#000] hover:bg-white transition">Register</a>
+          </motion.div>
         </div>
         </>)
       :

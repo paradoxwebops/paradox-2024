@@ -53,7 +53,7 @@ const checkAccomRegistration = (axios: AxiosInstance) => {
 };
 
 const getEventById = (axios:AxiosInstance, id: number | string) => {
-  return axios.get('/')
+  return axios.get('/emp/events/', {params: {event_id: id}})
 }
 
 export {

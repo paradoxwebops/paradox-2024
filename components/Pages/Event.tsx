@@ -66,31 +66,65 @@ export type EventData = {
     id: number,
     name: string,
     description: null | string,
+    is_approved: boolean,
+    department: EventDepartment,
+    open: boolean,
+    max_team_size: null | string | number,
+    min_team_size: null | string | number,
+    max_participants: null | string | number,
     header_image: null | string,
     start_date: null | string | number,
     end_date: null | string | number,
     registration_start_date: null | string | number,
     registration_end_date: null | string | number,
-    location: null | string,
-    location_link: null | string,
-    is_approved: boolean,
-    open: boolean,
-    is_team_event: boolean,
-    max_team_size: null | string | number,
-    min_team_size: null | string | number,
-    max_participants: null | string | number,
     fee: number,
-    head: string,
-    members: EventMember[],
-    status: string,
-    department: EventDepartment,
-    sponsors: EventSponsor[],
-    faqs: EventFAQ[],
+    location: null | string,
     rounds: EventRound[],
     some_dudes: EventPerson[],
-    messages: [],
     social_links: EventSocialLink[],
-    rules: null | string
+    sponsors: EventSponsor[],
+    faqs: EventFAQ[],
+    is_team_event: boolean,
+    location_link?: null | string,
+    head?: string,
+    members?: EventMember[],
+    status?: string,
+    messages?: any[],
+    rules?: null | string
+}
+
+export const defaultEventValues = {
+    id: 1,
+    name: '',
+    description: null,
+    is_approved: false,
+    department: {
+        id: 0,
+        name: ''
+    },
+    open: false,
+    max_team_size: null,
+    min_team_size: null,
+    max_participants: null,
+    header_image: null,
+    start_date: null,
+    end_date: null,
+    registration_start_date: null,
+    registration_end_date: null,
+    fee: 0,
+    location: null,
+    rounds: [],
+    some_dudes: [],
+    social_links: [],
+    sponsors: [],
+    faqs: [],
+    is_team_event: false,
+    location_link: null,
+    head: '',
+    members: [],
+    status: '',
+    messages: [],
+    rules: null
 }
 
 const EventSubHeading = ({children}:{children:React.ReactNode}) => {
@@ -130,11 +164,11 @@ const EventJudgeCard = ({name, email, dude_type}: EventPerson) => {
 const EventSponsorCard = ({name, url, title, logo}: EventSponsor) => {
     return (
         <Card bgColor={rgba('#230137', 1)} className="">
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
                 <div className="w-1/2">
                     <img className="w-full h-auto rounded-2xl" src={logo} alt={name} />
                 </div>
-                <div>
+                <div className="w-full">
                     <h3 className="text-xl mt-3 text-white">
                         {name}
                     </h3>
@@ -157,18 +191,16 @@ const EventDetailCard = ({title, children, rounds}:{title:string, children?: Rea
         <Card bgColor={rgba('#230137', 1)} className="mt-6">
             <h3 className="font-bold text-xl text-[#6C3A8C] mb-4">{title}</h3>
             <div className="text-white">
-                {((rounds?.length === 0) ?? true) ? 
-                    children
-                :
+                {(!!rounds && (rounds?.length !== 0)) ? 
                     rounds?.map(({name, description, start_time, end_time, location}, ind) => {
                         const pills = [
                             {
                                 t: 'Start time',
-                                v: (moment(start_time).format('Do MMMM YYYY - h:mm a'))
+                                v: (moment(start_time).format('Do MMMM YYYY h:mm A'))
                             },
                             {
                                 t: 'End time',
-                                v: (moment(end_time).format('Do MMMM YYYY - h:mm a'))
+                                v: (moment(end_time).format('Do MMMM YYYY h:mm A'))
                             },
                             {
                                 t: 'Location',
@@ -177,18 +209,18 @@ const EventDetailCard = ({title, children, rounds}:{title:string, children?: Rea
                         ]
 
                         return (
-                            <div key={`${start_time}_${end_time}`} className="pl-12">
+                            <div key={`${start_time}_${end_time}_${ind}`} className="pl-12">
                                 <h4 className="font-semibold text-white text-lg mb-3" style={{display: 'list-item', listStyleImage: 'url("/eventHeadingPrefix.png")', listStylePosition: 'outside'}}>{name}</h4>
 
-                                <div className="flex gap-4">
-                                    {pills.map(({t, v}) => {
+                                <div className="flex max-md:flex-col gap-4">
+                                    {pills.map(({t, v}, index) => {
                                         return (
-                                            <EventPill className="!text-white">
-                                                <div className="flex items-center justify-between w-full">
-                                                    <div className="w-1/2">
+                                            <EventPill className="!text-white" key={`${start_time}_${end_time}_${ind}_${index}`}>
+                                                <div className="lg:flex items-center justify-between w-full">
+                                                    <div className="lg:w-1/2">
                                                         <b>{t}</b>:
                                                     </div>
-                                                    <div className="w-1/2 text-right">
+                                                    <div className="lg:w-1/2 text-right max-lg:text-sm">
                                                         {v}
                                                     </div>
                                                 </div>
@@ -203,6 +235,8 @@ const EventDetailCard = ({title, children, rounds}:{title:string, children?: Rea
                             </div>
                         )
                     })
+                :
+                    <>{children}</>
                 }
             </div>
         </Card>
@@ -210,13 +244,16 @@ const EventDetailCard = ({title, children, rounds}:{title:string, children?: Rea
 }
 
 const EventPageMainBody = ({description, rounds, rules, faqs, some_dudes, start_date, registration_start_date, registration_end_date, end_date, min_team_size, max_participants, max_team_size, is_team_event, fee, sponsors}: EventData) => {
+
     return (
         <Card bgColor='#230137' className="p-12 my-6">
             <Card bgColor="" style={{backgroundColor: rgba('#d9d9d9', 0.1), backdropFilter: 'blur(2px)'}}>
                 
                 <EventSubHeading>Details</EventSubHeading>
-                <div className="flex gap-4">
-                    <EventPill className="font-bold" small={true}><Users2 className="mr-3" /> {is_team_event ? 'Team' : 'Solo'} Event</EventPill>
+                <div className="flex max-md:flex-col gap-4">
+                    <EventPill className="font-bold" small={true}>
+                        <Users2 className="mr-3" /> {is_team_event ? 'Team' : 'Solo'} Event
+                    </EventPill>
                     {is_team_event ? 
                     <>
                         <EventPill small={true}><b>Max</b>: {max_team_size}</EventPill>
@@ -231,18 +268,36 @@ const EventPageMainBody = ({description, rounds, rules, faqs, some_dudes, start_
                     <EventPill small={true}><b>Fees</b>: {fee}</EventPill>
                 </div>
                 <div className="flex gap-4 mt-4">
-                    <EventPill className="!text-white"><b>Event Dates</b>: {moment(start_date).format('Do MMMM YYYY')} - {moment(end_date).format('Do MMMM YYYY')}</EventPill>
-                    <EventPill className="!text-white"><b>Registration Dates</b>: {moment(registration_start_date).format('Do MMMM YYYY')} - {moment(registration_end_date).format('Do MMMM YYYY')}</EventPill>
+                    <EventPill className="!text-white max-md:flex-col justify-between">
+                        <span><b>Event Dates</b>:</span>
+                        <span>
+                            {moment(start_date).format('Do MMMM YYYY')} - {moment(end_date).format('Do MMMM YYYY')}
+                        </span> 
+                    </EventPill>
+                    <EventPill className="!text-white max-md:flex-col justify-between">
+                        <span>
+                            <b>Registration Dates</b>: 
+                        </span>
+                        <span>
+                            {moment(registration_start_date).format('Do MMMM YYYY')} - {moment(registration_end_date).format('Do MMMM YYYY')}
+                        </span>
+                    </EventPill>
                 </div>
-                <EventDetailCard title="Description">{description}</EventDetailCard>
+                <EventDetailCard title="Description">
+                    {description}
+                </EventDetailCard>
+
                 <EventDetailCard title="Rounds" rounds={rounds} />
-                {!!rules && <EventDetailCard title="Rules & Regulations"><a href={`${rules}`} target="_blank">{rules}</a></EventDetailCard>}
+
+                {!!rules && <EventDetailCard title="Rules & Regulations">
+                    <a href={`${rules}`} target="_blank">{rules}</a>
+                </EventDetailCard>}
 
 
 
 
                 <EventSubHeading>Sponsors</EventSubHeading>
-                <div className="grid grid-cols-3 px-12 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 md:px-12 gap-4">
                     {sponsors?.map((sponsor, ind) => {
                         return (
                             <EventSponsorCard {...sponsor} key={ind} />
@@ -251,7 +306,7 @@ const EventPageMainBody = ({description, rounds, rules, faqs, some_dudes, start_
                 </div>
 
                 <EventSubHeading>Judges</EventSubHeading>
-                <div className="grid grid-cols-4 px-12 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 md:px-12 gap-4">
                     {some_dudes?.map((person, ind) => {
                         return (
                             <EventJudgeCard {...person} key={ind} />
@@ -287,10 +342,11 @@ const EventPage = ({...props}: EventData) => {
         <>
         <Header 
             bg={'#230137'}
-            text={props.name ?? 'Hello'} 
+            text={props.name} 
             isEvent
-            eventCategory="Technicals"
-            eventImage="https://placehold.co/200"
+            eventCategory={props.department.name}
+            eventImage={props.header_image ?? "https://placehold.co/200"}
+            eventId={props.id}
         />
 
         <EventPageMainBody 

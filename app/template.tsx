@@ -75,8 +75,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
   //@ts-ignore
   const headerData: any = { ...data[n] };
 
-  console.log(headerData);
-
   return (
     <>
       {p === "/" ? (
