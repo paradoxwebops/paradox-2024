@@ -23,7 +23,7 @@ const cardsData = [
           <b>Paradox</b> is a unique and immersive fest celebrating the pioneering Bachelor of Science (BS) Degree in Data Science and Applications and Electronics Science offered by IIT Madras . This annual on-campus gathering embodies the very essence of its name - a program that bridges the gap between the flexibility of online learning and the richness of on-campus interactions.
         </p>
         <p>
-          Paradox 2024 is the ultimate Techno-Cultural-sports fest, brought to you by the students of IIT Madras BS Degree Program . It's a celebration of innovation, art, and culture, where you can unleash your potential, ignite your passion, and explore the diversity of India.
+          Paradox 2024 is the ultimate Techno-Cultural-sports fest, brought to you by the students of IIT Madras BS Degree Program . It&apos;s a celebration of innovation, art, and culture, where you can unleash your potential, ignite your passion, and explore the diversity of India.
         </p>
         </>
       ),
@@ -72,14 +72,14 @@ const cardsData = [
       shortText: () => (
         <>
         <p>
-          <b>Absolutely!</b> Whether you're a student, a professional, or just someone who loves to explore new things, Paradox welcomes you with open arms.
+          <b>Absolutely!</b> Whether you&apos;re a student, a professional, or just someone who loves to explore new things, Paradox welcomes you with open arms.
         </p>
         </>
       ),
       longText: () => (
         <>
         <p>
-          <b>Absolutely!</b> Whether you're a student, a professional, or just someone who loves to explore new things, Paradox welcomes you with open arms. Bring your passion, your curiosity, and your willingness to be amazed.
+          <b>Absolutely!</b> Whether you&apos;re a student, a professional, or just someone who loves to explore new things, Paradox welcomes you with open arms. Bring your passion, your curiosity, and your willingness to be amazed.
         </p>
         <p>
           From May 30<sup>th</sup> to 02<sup>nd</sup> June, 2024, Paradox will offer you a range of exciting events, workshops, competitions and shows, covering various domains of technology, science, literature, music, dance, drama, and more. You will get a chance to compete with the best minds, learn from the experts, network with peers, and have a blast.
@@ -96,14 +96,14 @@ const cardsData = [
       shortText: () => (
         <>
         <p>
-          Paradox is more than just a fest , it's an experience. Let's Level up your network beyond your DMs!
+          Paradox is more than just a fest , it&apos;s an experience. Let&apos;s Level up your network beyond your DMs!
         </p>
         </>
       ),
       longText: () => (
         <>
         <p>
-          Paradox is more than just a fest , it's an experience. Let's Level up your network beyond your DMs! Meet fellow tech enthusiasts, innovators, and inspiring minds in real life. Join us at Paradox 2024, and make Paradox 2024 the grandest, most unforgettable edition yet!
+          Paradox is more than just a fest , it&apos;s an experience. Let&apos;s Level up your network beyond your DMs! Meet fellow tech enthusiasts, innovators, and inspiring minds in real life. Join us at Paradox 2024, and make Paradox 2024 the grandest, most unforgettable edition yet!
         </p>
         </>
       ),
@@ -189,7 +189,7 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-6">
             {cardsData.map((item, index) => {
               return (
-                <div className="flex flex-col">
+                <div className="flex flex-col" key={index}>
                   {item.map(({heading, shortText, longText, imageUrl, imageAlt, bg, id}, ind) => {
                     return (
                       <AnimatePresence mode="wait" key={`${ind}_${id}`}>
