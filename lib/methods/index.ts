@@ -52,9 +52,17 @@ const checkAccomRegistration = (axios: AxiosInstance) => {
   return axios.get("/fest/check_accom/");
 };
 
-const getEventById = (axios:AxiosInstance, id: number | string) => {
-  return axios.get('/emp/events/', {params: {event_id: id}})
+const getEventById = (axios: AxiosInstance, id: number | string) => {
+  return axios.get("/emp/events/", { params: { event_id: id } });
+};
+
+function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+const correctText = (text: string) => {
+  return capitalizeFirstLetter(text.split("_").join(" "));
+};
 
 export {
   loginUser,
@@ -65,4 +73,5 @@ export {
   accomRegister,
   checkAccomRegistration,
   getEventById,
+  correctText,
 };
