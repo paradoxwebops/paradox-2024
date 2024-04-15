@@ -304,7 +304,7 @@ const EventDetailCard = ({
                     })}
                   </div>
 
-                  <div className="my-4">{description}</div>
+                  <div className="my-4 whitespace-pre-line">{description}</div>
                 </div>
               );
             }
@@ -412,7 +412,9 @@ const EventPageMainBody = ({
         </EventPill>
         <EventDetailCard title="Description">{description}</EventDetailCard>
 
-        <EventDetailCard title="Rounds" rounds={rounds} />
+        {rounds.length > 0 && (
+          <EventDetailCard title="Rounds" rounds={rounds} />
+        )}
 
         {!!rules && (
           <EventDetailCard title="Rules & Regulations">

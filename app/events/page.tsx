@@ -20,7 +20,7 @@ export default function EventsPage() {
   const { axios } = useAxios();
   const [loading, setLoading] = useState(false);
   const { access_token } = useSelector((s) => s.auth);
-  const [selected, setSelected] = useState("WebOps");
+  const [selected, setSelected] = useState("Technicals");
   const [events, setEvents] = useState<allEventData[]>([]);
   const getAllEvents = async () => {
     setLoading(true);
@@ -58,7 +58,7 @@ export default function EventsPage() {
     return <LoadingEventCards />;
   }
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 ">
       {events.length == 0 && (
         <h2
           className={`${eastSeaDokdo.className} text-7xl text-center`}
@@ -108,12 +108,14 @@ export default function EventsPage() {
               department.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-4">
-            {events
-              .filter((event) => event.department == selected)
-              .map((event, ind) => {
-                return <EventCard event={event} key={event.id} />;
-              })}
+          <div className=" w-full flex justify-center items-center gap-4">
+            <div className=" max-w-[1000px] grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-3 w-full">
+              {events
+                .filter((event) => event.department == selected)
+                .map((event, ind) => {
+                  return <EventCard event={event} key={event.id} />;
+                })}
+            </div>
           </div>
         </div>
       )}
