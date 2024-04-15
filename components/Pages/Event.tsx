@@ -419,7 +419,7 @@ const EventPageMainBody = ({
         {!!rules && (
           <EventDetailCard title="Rules & Regulations">
             <a href={`${rules}`} target="_blank">
-              {rules}
+              <p className=" text-ellipsis overflow-hidden">{rules}</p>
             </a>
           </EventDetailCard>
         )}
