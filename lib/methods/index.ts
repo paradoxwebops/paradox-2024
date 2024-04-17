@@ -17,7 +17,7 @@ const doRefreshToken = (axios: AxiosInstance, data: any) => {
   return axios.post("/auth/token/", payload).then((res) =>
     axios
       .get("/base/profile/", {
-        headers: { Authorization: "Bearer " + res.data.access_token },
+        headers: { Authorization: "Bearer " + res?.data?.access_token },
       })
       .then((res2) => ({
         user: { ...res2.data },
@@ -31,7 +31,7 @@ const loginUser = (axios: AxiosInstance, data: any) => {
   return axios.post("/auth/convert-token/", data).then((res) =>
     axios
       .get("/base/profile/", {
-        headers: { Authorization: "Bearer " + res.data.access_token },
+        headers: { Authorization: "Bearer " + res?.data?.access_token },
       })
       .then((res2) => ({ user: { ...res2.data }, ...res.data }))
   );
@@ -52,6 +52,18 @@ const checkAccomRegistration = (axios: AxiosInstance) => {
   return axios.get("/fest/check_accom/");
 };
 
+const getEventById = (axios: AxiosInstance, id: number | string) => {
+  return axios.get("/emp/events/", { params: { event_id: id } });
+};
+
+function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+const correctText = (text: string) => {
+  return capitalizeFirstLetter(text.split("_").join(" "));
+};
+
 export {
   loginUser,
   doRefreshToken,
@@ -60,4 +72,6 @@ export {
   checkFestRegistration,
   accomRegister,
   checkAccomRegistration,
+  getEventById,
+  correctText,
 };
