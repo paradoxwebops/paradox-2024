@@ -41,7 +41,7 @@ export default function EventsPage() {
   };
   useEffect(() => {
     getAllEvents();
-  }, []);
+  }, [access_token]);
   if (!!!access_token) {
     return (
       <>

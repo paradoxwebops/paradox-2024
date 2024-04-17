@@ -4,27 +4,38 @@ import Loading from "@/app/loading";
 import RegistrationFormPage from "@/components/RegistrationPage";
 import { useAxios } from "@/contexts";
 import { FormType } from "@/lib/interfaces/Event";
+import { useSelector } from "@/store";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function EventRegistrationMainPage() {
   const [loading, setLoading] = useState(true);
+  const { user } = useSelector((state) => state.auth);
   const [data, setData] = useState<FormType>({} as FormType);
   const [failed, setFailed] = useState(false);
+  const [err, setErr] = useState({
+    error: false,
+    message: "",
+  });
   const { id } = useParams();
   const { axios } = useAxios();
   const getForm = async (id: string) => {
     setLoading(true);
     setFailed(true);
-    axios
+
+    await axios
       .get("/fest/events/form/?event_id=" + id)
       .then((res) => {
+        console.log(res);
+
         if (res.data) {
           setData(res.data);
           setFailed(false);
         }
       })
       .catch((err) => {
+        setErr({ error: true, message: "Registrations not open" });
+        console.log();
         console.log(err);
       })
       .finally(() => {
@@ -36,6 +47,8 @@ export default function EventRegistrationMainPage() {
   }, [id]);
   if (loading) {
     return <Loading />;
+  } else if (err.error) {
+    return <p>{err.message}</p>;
   } else
     return (
       <>
