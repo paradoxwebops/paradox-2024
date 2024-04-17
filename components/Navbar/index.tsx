@@ -161,7 +161,7 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
     },
   ];
   return (
-    <div data-lenis-prevent className="overflow-y-scroll flex flex-col">
+    <div data-lenis-prevent className=" flex flex-col">
       {data.map((item) => {
         const { name } = item;
         return (
