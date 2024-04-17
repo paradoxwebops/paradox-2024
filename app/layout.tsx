@@ -5,7 +5,7 @@ import "./globals.css";
 import Providers from "@/components/Providers";
 import { NavBar } from "@/components/Navbar";
 import { Analytics } from "@vercel/analytics/react";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 export const metadata: Metadata = {
   title: "Paradox '24 | IIT Madras | BS Degree",
   description:
@@ -30,6 +30,7 @@ export default function RootLayout({
         <Providers>
           <NavBar />
           <main>{children}</main>
+          <SpeedInsights />
           <Analytics />
         </Providers>
       </body>

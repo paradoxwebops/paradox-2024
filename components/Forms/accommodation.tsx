@@ -35,6 +35,7 @@ function AccommodationForm() {
   });
   const [agree, setAgree] = useState(false);
   const [pwd, setPWD] = useState(false);
+  const [passport, setPassport] = useState(false);
   const [invalid, setInvalid] = useState<
     { name: string; invalid: boolean; message: string }[]
   >([]);
@@ -42,7 +43,9 @@ function AccommodationForm() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const passportRef = useRef<HTMLInputElement>(null);
   const fileNameRef = useRef<HTMLElement | null>(null);
+  const passportNameRef = useRef<HTMLElement | null>(null);
   const finalForm = new FormData();
   const [formData, setFormData] = useState<AccommodationProps>({
     arrival_date: "",
@@ -54,6 +57,8 @@ function AccommodationForm() {
     medical_issues: "",
     pwd: "",
     pwd_certificate: null,
+    outside_india: "",
+    passport: null,
   });
 
   const validate = () => {
@@ -77,6 +82,11 @@ function AccommodationForm() {
         isValidated: false,
         message: "PWD field is not selected",
       };
+    } else if (formData.outside_india.length <= 0) {
+      return {
+        isValidated: false,
+        message: "Outside India field is not selected",
+      };
     } else if (formData.emergency_relationship.length <= 0) {
       return {
         isValidated: false,
@@ -88,10 +98,16 @@ function AccommodationForm() {
         message: "Arrival Date is not selected",
       };
       //@ts-ignore
-    } else if (fileRef.current?.files?.length <= 0) {
+    } else if (pwd && fileRef.current?.files?.length <= 0) {
       return {
         isValidated: false,
         message: "PWD certificate is not uploaded",
+      };
+      //@ts-ignore
+    } else if (passportRef.current?.files?.length <= 0) {
+      return {
+        isValidated: false,
+        message: "Passport is not uploaded",
       };
     } else if (formData.departure_date.length <= 0) {
       return {
@@ -159,6 +175,9 @@ function AccommodationForm() {
       finalForm.set("pwd", formData.pwd);
       //@ts-ignore
       finalForm.set("pwd_certificate", formData.pwd_certificate);
+      finalForm.set("outside_india", formData.outside_india);
+      //@ts-ignore
+      finalForm.set("passport", formData.passport);
       console.log(finalForm);
 
       axios
@@ -214,7 +233,7 @@ function AccommodationForm() {
                 placeholder="Arrival"
                 isRequired
                 classNames={{ ...inputClassNames }}
-                type="date"
+                type="datetime-local"
                 isInvalid={
                   invalid.filter((e) => e.name == "arrival" && e.invalid)
                     .length > 0
@@ -228,12 +247,12 @@ function AccommodationForm() {
                   setFormData((prev) => ({
                     ...prev,
                     arrival_date: new Date(e.target.value)
-                      ?.toISOString()
-                      .split(":")[0],
+                      ?.getTime()
+                      .toString(),
                   }));
                   finalForm.set(
                     "arrival_date",
-                    new Date(e.target.value)?.toISOString().split(":")[0]
+                    new Date(e.target.value)?.getTime().toString()
                   );
                 }}
               />
@@ -252,17 +271,17 @@ function AccommodationForm() {
                     ? invalid.filter((e) => e.name == "departure")[0].message
                     : ""
                 }
-                type="date"
+                type="datetime-local"
                 onChange={(e: any) => {
                   setFormData((prev) => ({
                     ...prev,
                     departure_date: new Date(e.target.value)
-                      .toISOString()
-                      .split(":")[0],
+                      ?.getTime()
+                      .toString(),
                   }));
                   finalForm.set(
                     "departure_date",
-                    new Date(e.target.value)?.toISOString().split(":")[0]
+                    new Date(e.target.value)?.getTime().toString()
                   );
                 }}
               />
@@ -366,7 +385,61 @@ function AccommodationForm() {
                   finalForm.set("medical_issues", e.target.value);
                 }}
               />
-
+              <Select
+                isRequired
+                label="Do you reside outside India?"
+                classNames={{ ...selectClassNames }}
+                placeholder="NRI"
+                onChange={(e) => {
+                  if (e.target.value == "true") {
+                    setPassport(true);
+                  } else {
+                    setPassport(false);
+                  }
+                  setFormData((prev) => ({
+                    ...prev,
+                    outside_india: e.target.value,
+                  }));
+                  finalForm.set("outside_india", e.target.value);
+                }}
+              >
+                <SelectItem key="true" value={"true"}>
+                  Yes
+                </SelectItem>
+                <SelectItem key="false" value={"false"}>
+                  No
+                </SelectItem>
+              </Select>
+              {passport && (
+                <>
+                  <div className="flex justify-start items-center gap-4">
+                    <Button className="w-full max-w-[200px] font-bold bg-[#2D78A2] text-[#ECF4F8]">
+                      {" "}
+                      <label htmlFor="outside_india">Upload passport</label>
+                    </Button>
+                    <small ref={passportNameRef}></small>
+                  </div>
+                  <input
+                    accept="application/pdf"
+                    onChange={(e) => {
+                      if (e.target.files !== null) {
+                        let temp = { ...formData };
+                        temp.passport = e.target.files[0];
+                        setFormData(temp);
+                        finalForm.set("outside_india", e.target.files[0]);
+                        if (passportNameRef.current) {
+                          passportNameRef.current.innerText =
+                            e.target.files[0].name;
+                        }
+                      }
+                    }}
+                    ref={passportRef}
+                    className="hidden"
+                    id="outside_india"
+                    type="file"
+                  />
+                </>
+              )}
               <Select
                 isRequired
                 label="Are you a person with disabilities (PWD)?"
@@ -389,7 +462,8 @@ function AccommodationForm() {
                   No
                 </SelectItem>
               </Select>
-              {pwd ? (
+
+              {pwd && (
                 <>
                   <div className="flex justify-start items-center gap-4">
                     <Button className="w-full max-w-[200px] font-bold bg-[#2D78A2] text-[#ECF4F8]">
@@ -401,6 +475,7 @@ function AccommodationForm() {
                     <small ref={fileNameRef}></small>
                   </div>
                   <input
+                    accept="application/pdf"
                     onChange={(e) => {
                       if (e.target.files !== null) {
                         let temp = { ...formData };
@@ -419,8 +494,6 @@ function AccommodationForm() {
                     type="file"
                   />
                 </>
-              ) : (
-                <></>
               )}
 
               <div className="flex gap-1 px-2">

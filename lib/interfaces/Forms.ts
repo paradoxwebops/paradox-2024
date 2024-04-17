@@ -19,6 +19,8 @@ export interface AccommodationProps {
   medical_issues: string | null;
   pwd: string;
   pwd_certificate: File | null;
+  outside_india: string;
+  passport: File | null;
 }
 export interface formOptionsProps {
   value: string;

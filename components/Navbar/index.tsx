@@ -30,7 +30,13 @@ const NavBar = () => {
         style={{ maxHeight: `${maxHeightPx}px` }}
       >
         <Link href={"/"}>
-          <Image src={"/logo.webp"} alt="Logo" width={50} height={50} />
+          <Image
+            priority
+            src={"/logo.webp"}
+            alt="Logo"
+            width={50}
+            height={50}
+          />
         </Link>
         <button onClick={showToggle}>
           <Menu />

@@ -6,13 +6,11 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
-import Lottie, { useLottie } from "lottie-react";
 import { East_Sea_Dokdo } from "next/font/google";
-import animation from "./PRELOADER.json";
 import Link from "next/link";
-import { Button } from "@nextui-org/react";
+import LoaderAnimation from "@/components/LottieAnimation";
 interface CloudProps {
   top?: number | string;
   left?: number | string;
@@ -150,11 +148,6 @@ const Cloud = ({
 export default function Home() {
   const [readyFn, setReady] = useState(false);
   const { scrollYProgress, scrollY } = useScroll();
-  const options = {
-    animationData: animation,
-    loop: true,
-  };
-  const { View } = useLottie(options);
   const [current, setCurrent] = useState<ScrollValues>({ px: 0, percent: 0 });
   const [d, setD] = useState<ScreenMeasurements>({
     vw: 0,
@@ -168,7 +161,6 @@ export default function Home() {
     setTimeout(() => {
       scrollToBottom();
       setReady(true);
-      console.log(current);
     }, 1500);
 
     if (window) {
@@ -204,7 +196,10 @@ export default function Home() {
           transition={{ duration: 0.75, ease: "linear" }}
           className="h-screen w-screen fixed inset-0 flex flex-col justify-center items-center bg-[#f6f1ec]  text-black z-[100]"
         >
-          <div className="flex gap-2 w-[300px]">{View}</div>
+          <div className="flex gap-2 w-[300px]">
+            {" "}
+            <LoaderAnimation />{" "}
+          </div>
           <p className={`${east_sea.className} text-2xl`}>
             Hold on tight, we are almost there!
           </p>
