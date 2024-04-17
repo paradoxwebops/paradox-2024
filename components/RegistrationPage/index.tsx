@@ -149,10 +149,10 @@ export default function RegistrationFormPage({
           }
         })
         .catch((err) => {
-          toast({
-            title: "Error",
-            description: "Form submission failed",
-          });
+          // toast({
+          //   title: "Error",
+          //   description: "Form submission failed",
+          // });
         })
         .finally(() => setLoading(false));
     }
@@ -254,7 +254,7 @@ export default function RegistrationFormPage({
             </p>
             <Select
               aria-label={newData.label}
-              label=""
+              placeholder="Select an option"
               onChange={(event) => {
                 onChange(
                   temp3.inputs[parseInt(event.target.value)],
@@ -264,7 +264,7 @@ export default function RegistrationFormPage({
               }}
               required={temp3.required}
             >
-              <SelectSection>
+              <SelectSection data-lenis-prevent>
                 {temp3.inputs.map((item, index) => {
                   return (
                     <SelectItem key={index} value={item}>
@@ -288,14 +288,13 @@ export default function RegistrationFormPage({
             </p>
             <Input
               aria-label={newData.label}
-              label=""
+              placeholder="Enter value"
               onChange={(event) => {
                 onChange(event.target.value, blockId, elementId);
               }}
               type={newData.inputType}
               defaultValue={inputData.value}
               isRequired={inputData.required}
-              placeholder={inputData.placeholder}
               max={inputData.max}
               min={inputData.min}
               maxLength={inputData.maxLength}
