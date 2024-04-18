@@ -41,7 +41,7 @@ export default function ProfilePage() {
       <>
         <div className="flex justify-center align-center h-full">
           <div className="text-center">
-            <h2 className="text-2xl mb-6">Please login first.</h2>
+            <h2 className="text-2xl mb-6">Please login to continue.</h2>
             <LoginButton />
           </div>
         </div>
