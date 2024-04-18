@@ -6,7 +6,8 @@ import { useToast } from "@/contexts";
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { axios } from "@/lib/axios";
 import { doRefreshToken } from "@/lib/methods";
-import { setAuth } from "@/store/actions";
+import { delAuth, setAuth } from "@/store/actions";
+import { googleLogout } from "@react-oauth/google";
 
 const useAxios = () => {
   const [isSet, setisSet] = useState(false);
@@ -49,10 +50,13 @@ const useAxios = () => {
         switch (error?.status) {
           case 401:
             if (!!refresh_token) {
-              console.log("doing refresh");
-              doRefreshToken({ axios, data: refresh_token }).then((tokens) =>
-                dispatch(setAuth({ ...tokens }))
-              );
+              // doRefreshToken({ axios, data: refresh_token }).then((tokens) => {
+              //   console.log(tokens, "token");
+
+              //   dispatch(setAuth({ ...tokens }));
+              // });
+              dispatch(delAuth());
+              googleLogout();
             }
 
             break;
