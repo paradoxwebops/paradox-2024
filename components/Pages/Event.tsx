@@ -390,12 +390,9 @@ const EventPageMainBody = ({
           </EventPill>
           <EventPill className="!text-white max-md:flex-col justify-between">
             <span>
-              <b>Registration Dates</b>:
+              <b>Registration End Date</b>:
             </span>
-            <span>
-              {moment(registration_start_date).format("Do MMMM YYYY")} -{" "}
-              {moment(registration_end_date).format("Do MMMM YYYY")}
-            </span>
+            <span>{moment(registration_end_date).format("Do MMMM YYYY")}</span>
           </EventPill>
         </div>
         <EventPill className="!text-white max-md:flex-col justify-between mt-4">
