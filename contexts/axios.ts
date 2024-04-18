@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "@/store";
 import { useToast } from "@/contexts";
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { axios } from "@/lib/axios";
-import {doRefreshToken} from '@/lib/methods'
-import { setAuth } from '@/store/actions'
+import { doRefreshToken } from "@/lib/methods";
+import { setAuth } from "@/store/actions";
 
 const useAxios = () => {
   const [isSet, setisSet] = useState(false);
   const auth = useSelector((state) => state.auth);
-  const { toast } = useToast()
-  const dispatch = useDispatch()
-  
+  const { toast } = useToast();
+  const dispatch = useDispatch();
+
   const { access_token, refresh_token } = auth;
 
   const callbacks = {
@@ -45,26 +45,26 @@ const useAxios = () => {
         const error = err.response;
         // console.log('Error from axios')
         // console.log(error);
-        
+
         switch (error?.status) {
           case 401:
-
             if (!!refresh_token) {
-              console.log('doing refresh');
-              doRefreshToken(axios, {refresh_token}).then((tokens) => dispatch(setAuth({...tokens})))
+              console.log("doing refresh");
+              doRefreshToken({ axios, data: refresh_token }).then((tokens) =>
+                dispatch(setAuth({ ...tokens }))
+              );
             }
 
             break;
 
           default:
-              toast({
-                title: `Status ${error?.status}: Something went wrong`,
-                description: error?.data?.message,
-                variant: "destructive",
-              });
+            toast({
+              title: `Status ${error?.status}: Something went wrong`,
+              description: error?.data?.message,
+              variant: "destructive",
+            });
             break;
         }
-
 
         return null;
       },
@@ -88,8 +88,8 @@ const useAxios = () => {
       // setisSet(true);
     };
   }, [access_token]);
-  
-  return {axios};
+
+  return { axios };
 };
 
 export { useAxios };

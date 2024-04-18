@@ -6,13 +6,19 @@ const getSelfProfile = (axios: AxiosInstance) => {
   return axios.get("/base/profile/");
 };
 
-const doRefreshToken = (axios: AxiosInstance, data: any) => {
+const doRefreshToken = ({
+  axios,
+  data,
+}: {
+  axios: AxiosInstance;
+  data: any;
+}) => {
   const payload = {
     backend: "google-identity",
     grant_type: "refresh_token",
     client_id: DJANGO_CLIENT_ID,
     client_secret: GOOGLE_CLIENT_SECRET,
-    ...data,
+    refresh_token: data,
   };
   return axios.post("/auth/token/", payload).then((res) =>
     axios
