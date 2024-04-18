@@ -18,6 +18,14 @@ import {
   SelectItem,
   SelectSection,
 } from "@nextui-org/react";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
 import { RadioGroup, Radio } from "@nextui-org/react";
 
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
@@ -27,10 +35,61 @@ import { useEffect, useState } from "react";
 import { useSelector } from "@/store";
 import { useAxios, useToast } from "@/contexts";
 
+const UnregisterModal = ({
+  deleteRegistration,
+}: {
+  deleteRegistration: () => void;
+}) => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  return (
+    <>
+      <Button
+        variant="bordered"
+        className="text-red-500 font-bold border-red-500 hover:bg-red-600 hover:text-white"
+        onClick={onOpen}
+      >
+        Unregister
+      </Button>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        isDismissable={false}
+        isKeyboardDismissDisabled={true}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Are you sure you want to unregister?
+              </ModalHeader>
+              <ModalFooter>
+                <Button color="primary" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button
+                  color="danger"
+                  onClick={() => {
+                    deleteRegistration();
+                    onClose();
+                  }}
+                >
+                  Unregister
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
+  );
+};
+
 export default function RegistrationFormPage({
+  edit,
   event_id,
   data,
 }: {
+  edit?: boolean;
   event_id: number | string;
   data: FormType;
 }) {
@@ -146,6 +205,7 @@ export default function RegistrationFormPage({
               title: "Success",
               description: "Form submitted successfully",
             });
+            window.location.href = "/events";
           }
         })
         .catch((err) => {
@@ -158,6 +218,68 @@ export default function RegistrationFormPage({
     }
     setLoading(false);
   };
+
+  const editForm = async () => {
+    const { validated, message } = validate();
+    setLoading(true);
+    if (!validated) {
+      toast({
+        title: "Error",
+        description: message,
+      });
+    } else {
+      const payload = {
+        event_id,
+        form: newState,
+      };
+      axios
+        .put("/fest/events/form/edit/", payload)
+        .then((res) => {
+          if (res.data) {
+            console.log(res.data);
+
+            toast({
+              title: "Success",
+              description: res.data.message,
+            });
+          }
+        })
+        .catch((err) => {
+          // toast({
+          //   title: "Error",
+          //   description: "Form submission failed",
+          // });
+          console.log(err);
+        })
+        .finally(() => setLoading(false));
+    }
+  };
+
+  const deleteRegistration = async () => {
+    setLoading(true);
+    await axios
+      .delete("/fest/events/registered/" + event_id + "/delete/")
+      .then((res) => {
+        if (res.data) {
+          console.log(res.data);
+          toast({
+            title: "Success",
+            description: res.data.message,
+          });
+          window.location.href = "/profile";
+        }
+      })
+      .catch((err) => {
+        // toast({
+        //   title: "Error",
+        //   description: "Form submission failed",
+        // });
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+    setLoading(false);
+  };
+
   const ChangeInputElement = (
     type: string,
     data: ElementType,
@@ -179,6 +301,7 @@ export default function RegistrationFormPage({
               onValueChange={(event) => {
                 onChange(event, blockId, elementId);
               }}
+              defaultValue={edit ? temp.value : ""}
               isRequired={temp.required}
               className="p-2"
             >
@@ -200,6 +323,7 @@ export default function RegistrationFormPage({
             <CheckboxGroup
               aria-label={newData.label}
               label={`${index}. ${newData.label}`}
+              defaultValue={edit ? temp2.values : []}
               onValueChange={(event) => {
                 let temp = newState.blocks.map((b) => {
                   if (b.id === blockId) {
@@ -274,6 +398,7 @@ export default function RegistrationFormPage({
                 })}
               </SelectSection>
             </Select>
+            <p>Selected Value : {temp3.value}</p>
           </div>
         );
 
@@ -293,7 +418,7 @@ export default function RegistrationFormPage({
                 onChange(event.target.value, blockId, elementId);
               }}
               type={newData.inputType}
-              defaultValue={inputData.value}
+              defaultValue={edit ? inputData.value : ""}
               isRequired={inputData.required}
               max={inputData.max}
               min={inputData.min}
@@ -308,8 +433,11 @@ export default function RegistrationFormPage({
   return (
     <div className=" md:p-6 lg:p-8 xl:p-12 flex flex-col gap-4 justify-center items-center w-full">
       <div className="w-full max-w-[1000px] justify-between flex">
-        <h3 className="text-xl font-bold">Registration Form</h3>
-        {/* <Button onClick={() => publishForm()}>Save</Button> */}
+        <h3 className="text-xl font-bold">
+          {" "}
+          {edit && "Edit"} Registration Form
+        </h3>
+        {edit && <UnregisterModal deleteRegistration={deleteRegistration} />}
       </div>
       <Card className="w-full max-w-[1000px]">
         {/* {newState.bg_img?.length > 0 ? (
@@ -365,7 +493,9 @@ export default function RegistrationFormPage({
                 let valid = validate();
 
                 if (valid.validated) {
-                  registerForm();
+                  if (edit) {
+                    editForm();
+                  } else registerForm();
                 } else {
                   return toast({
                     title: "Fill all required fields",

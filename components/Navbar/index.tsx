@@ -81,13 +81,13 @@ const NavBarMenuFullScreen = ({
               showToggle={showToggle}
             />
             <div className="flex flex-col h-full items-start justify-center p-8">
-              <Image
+              {/* <Image
                 src={"/paradox_logo_text.webp"}
                 alt="Paradox"
                 className="hidden md:block"
                 width={400}
                 height={400}
-              />
+              /> */}
               <NavBarLinks showToggle={showToggle} />
             </div>
             <motion.div
@@ -162,13 +162,22 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
   ];
   return (
     <div data-lenis-prevent className=" flex flex-col">
+      {access_token !== "" && (
+        <Link
+          href={"/profile"}
+          onClick={showToggle}
+          className="p-3 milestone text-3xl tracking-wide text-[#6D878F] cursor-pointer"
+        >
+          PROFILE
+        </Link>
+      )}
       {data.map((item) => {
         const { name } = item;
         return (
           <Link
             {...item}
             key={name}
-            className="p-3 milestone text-2xl tracking-wide text-[#6D878F] "
+            className="p-3 milestone text-3xl tracking-wide text-[#6D878F] "
             onClick={showToggle}
           >
             {name}
@@ -182,7 +191,7 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
             dispatch(delAuth());
             showToggle();
           }}
-          className="p-3 milestone text-2xl tracking-wide text-[#6D878F] cursor-pointer"
+          className="p-3 milestone text-3xl tracking-wide text-[#6D878F] cursor-pointer"
         >
           LOGOUT
         </p>

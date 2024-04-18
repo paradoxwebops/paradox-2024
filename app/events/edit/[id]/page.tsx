@@ -8,7 +8,7 @@ import { useSelector } from "@/store";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function EventRegistrationMainPage() {
+export default function EditRegistrationForm() {
   const [loading, setLoading] = useState(true);
   const { user } = useSelector((state) => state.auth);
   const [data, setData] = useState<FormType>({} as FormType);
@@ -24,22 +24,17 @@ export default function EventRegistrationMainPage() {
     setFailed(true);
 
     await axios
-      .get("/fest/events/form/?event_id=" + id)
+      .get("/fest/events/registered/" + id)
       .then((res) => {
         console.log(res);
 
         if (res.data) {
-          setData(res.data);
+          setData(res.data.form);
           setFailed(false);
         }
       })
       .catch((err) => {
-        setErr({
-          error: true,
-          message:
-            "Something went wrong. Read the toast messages that appear quick 😉.",
-        });
-        console.log();
+        setErr({ error: true, message: "Registrations not open" });
         console.log(err);
       })
       .finally(() => {
@@ -58,6 +53,7 @@ export default function EventRegistrationMainPage() {
       <>
         {typeof id == "string" && !failed && data && (
           <RegistrationFormPage
+            edit
             event_id={parseInt(id.toString())}
             data={data}
           />

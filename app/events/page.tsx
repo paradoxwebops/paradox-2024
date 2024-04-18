@@ -20,7 +20,9 @@ export default function EventsPage() {
   const { axios } = useAxios();
   const [loading, setLoading] = useState(false);
   const { access_token } = useSelector((s) => s.auth);
-  const [selected, setSelected] = useState("Technicals");
+  const [selected, setSelected] = useState(
+    window.localStorage.getItem("selected") || "Technicals"
+  );
   const [events, setEvents] = useState<allEventData[]>([]);
   const getAllEvents = async () => {
     setLoading(true);
@@ -42,6 +44,9 @@ export default function EventsPage() {
   useEffect(() => {
     getAllEvents();
   }, [access_token]);
+  useEffect(() => {
+    window.localStorage.setItem("selected", selected);
+  }, [selected]);
   if (!!!access_token) {
     return (
       <>
