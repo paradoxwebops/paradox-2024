@@ -26,8 +26,6 @@ export default function EventRegistrationMainPage() {
     await axios
       .get("/fest/events/form/?event_id=" + id)
       .then((res) => {
-        console.log(res);
-
         if (res.data) {
           setData(res.data);
           setFailed(false);
