@@ -30,9 +30,6 @@ export default function EventMainPage() {
       }
     });
   }, [access_token]);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   if (!!!access_token) {
     return (
       <>

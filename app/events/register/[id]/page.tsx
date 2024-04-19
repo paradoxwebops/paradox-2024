@@ -37,7 +37,6 @@ export default function EventRegistrationMainPage() {
           message:
             "Something went wrong. Read the toast messages that appear quick 😉.",
         });
-        console.log();
         console.log(err);
       })
       .finally(() => {
