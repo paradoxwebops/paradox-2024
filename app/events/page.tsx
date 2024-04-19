@@ -30,8 +30,6 @@ export default function EventsPage() {
       .get("/fest/events/all/")
       .then((res) => {
         if (res.data) {
-          console.log(res.data);
-
           setEvents(res.data);
           setLoading(false);
         }

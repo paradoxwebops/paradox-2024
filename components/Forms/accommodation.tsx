@@ -178,7 +178,6 @@ function AccommodationForm() {
       finalForm.set("outside_india", formData.outside_india);
       //@ts-ignore
       finalForm.set("passport", formData.passport);
-      console.log(finalForm);
 
       axios
         .post("/fest/accom_register/", finalForm, {
@@ -188,7 +187,6 @@ function AccommodationForm() {
         })
         .then((res) => {
           setLoading(false);
-          console.log(res.data);
 
           toast({
             title: "Success",

@@ -199,8 +199,6 @@ export default function RegistrationFormPage({
         .post("/fest/events/form/submit/", payload)
         .then((res) => {
           if (res.data) {
-            console.log(res.data);
-
             toast({
               title: "Success",
               description: "Form submitted successfully",
@@ -236,8 +234,6 @@ export default function RegistrationFormPage({
         .put("/fest/events/form/edit/", payload)
         .then((res) => {
           if (res.data) {
-            console.log(res.data);
-
             toast({
               title: "Success",
               description: res.data.message,
@@ -261,7 +257,6 @@ export default function RegistrationFormPage({
       .delete("/fest/events/registered/" + event_id + "/delete/")
       .then((res) => {
         if (res.data) {
-          console.log(res.data);
           toast({
             title: "Success",
             description: res.data.message,
