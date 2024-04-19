@@ -23,7 +23,6 @@ export default function ProfilePage() {
     await axios
       .get("/fest/events/registered/")
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           setRegisteredEvents(res.data);
         }

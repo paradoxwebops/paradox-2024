@@ -189,6 +189,7 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
           onClick={() => {
             googleLogout();
             dispatch(delAuth());
+            window.localStorage.clear();
             showToggle();
           }}
           className="p-3 milestone text-3xl tracking-wide text-[#6D878F] cursor-pointer"

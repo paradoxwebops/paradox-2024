@@ -26,8 +26,6 @@ export default function EditRegistrationForm() {
     await axios
       .get("/fest/events/registered/" + id)
       .then((res) => {
-        console.log(res);
-
         if (res.data) {
           setData(res.data.form);
           setFailed(false);
