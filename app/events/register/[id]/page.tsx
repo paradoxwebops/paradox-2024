@@ -1,6 +1,7 @@
 "use client";
 
 import Loading from "@/app/loading";
+import { LoginButton } from "@/components";
 import RegistrationFormPage from "@/components/RegistrationPage";
 import { useAxios } from "@/contexts";
 import { FormType } from "@/lib/interfaces/Event";
@@ -10,7 +11,7 @@ import { useEffect, useState } from "react";
 
 export default function EventRegistrationMainPage() {
   const [loading, setLoading] = useState(true);
-  const { user } = useSelector((state) => state.auth);
+  const { access_token } = useSelector((state) => state.auth);
   const [data, setData] = useState<FormType>({} as FormType);
   const [failed, setFailed] = useState(false);
   const [err, setErr] = useState({
@@ -32,12 +33,10 @@ export default function EventRegistrationMainPage() {
         }
       })
       .catch((err) => {
-        setErr({
-          error: true,
-          message:
-            "Something went wrong. Read the toast messages that appear quick 😉.",
-        });
-        console.log();
+        // setErr({
+        //   error: true,
+        //   message: JSON.parse(err),
+        // });
         console.log(err);
       })
       .finally(() => {
@@ -46,11 +45,20 @@ export default function EventRegistrationMainPage() {
   };
   useEffect(() => {
     getForm(id.toString());
-  }, [id]);
+  }, [id, access_token]);
   if (loading) {
     return <Loading />;
-  } else if (err.error) {
-    return <p>{err.message}</p>;
+  } else if (!!!access_token) {
+    return (
+      <>
+        <div className="flex justify-center items-center h-[70vh] w-full">
+          <div className="text-center">
+            <h2 className="text-2xl mb-6">Please login to continue.</h2>
+            <LoginButton />
+          </div>
+        </div>
+      </>
+    );
   } else
     return (
       <>
