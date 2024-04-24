@@ -82,7 +82,7 @@ const cardsData = [
           <b>Absolutely!</b> Whether you&apos;re a student, a professional, or just someone who loves to explore new things, Paradox welcomes you with open arms. Bring your passion, your curiosity, and your willingness to be amazed.
         </p>
         <p>
-          From May 30<sup>th</sup> to 02<sup>nd</sup> June, 2024, Paradox will offer you a range of exciting events, workshops, competitions and shows, covering various domains of technology, science, literature, music, dance, drama, and more. You will get a chance to compete with the best minds, learn from the experts, network with peers, and have a blast.
+          From May 30<sup>th</sup> to 03<sup>rd</sup> June, 2024, Paradox will offer you a range of exciting events, workshops, competitions and shows, covering various domains of technology, science, literature, music, dance, drama, and more. You will get a chance to compete with the best minds, learn from the experts, network with peers, and have a blast.
         </p>
         </>
       ),
@@ -92,7 +92,7 @@ const cardsData = [
     },
     {
       id: 4,
-      heading: '30th MAY - 02nd JUNE',
+      heading: '30th MAY - 03rd JUNE',
       shortText: () => (
         <>
         <p>
