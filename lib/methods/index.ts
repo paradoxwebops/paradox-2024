@@ -6,13 +6,19 @@ const getSelfProfile = (axios: AxiosInstance) => {
   return axios.get("/base/profile/");
 };
 
-const doRefreshToken = (axios: AxiosInstance, data: any) => {
+const doRefreshToken = ({
+  axios,
+  data,
+}: {
+  axios: AxiosInstance;
+  data: any;
+}) => {
   const payload = {
     backend: "google-identity",
     grant_type: "refresh_token",
     client_id: DJANGO_CLIENT_ID,
     client_secret: GOOGLE_CLIENT_SECRET,
-    ...data,
+    refresh_token: data,
   };
   return axios.post("/auth/token/", payload).then((res) =>
     axios
@@ -52,9 +58,17 @@ const checkAccomRegistration = (axios: AxiosInstance) => {
   return axios.get("/fest/check_accom/");
 };
 
-const getEventById = (axios:AxiosInstance, id: number | string) => {
-  return axios.get('/emp/events/', {params: {event_id: id}})
+const getEventById = (axios: AxiosInstance, id: number | string) => {
+  return axios.get("/emp/events/", { params: { event_id: id } });
+};
+
+function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+const correctText = (text: string) => {
+  return capitalizeFirstLetter(text.split("_").join(" "));
+};
 
 export {
   loginUser,
@@ -65,4 +79,5 @@ export {
   accomRegister,
   checkAccomRegistration,
   getEventById,
+  correctText,
 };
