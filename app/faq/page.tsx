@@ -24,7 +24,7 @@ export default function FAQPage() {
     {
       question: "Q: When and where will Paradox 2024 take place?",
       answer:
-        "A: Paradox 2024 is scheduled from 30th May to 3rd June, 2024 at the IIT Madras campus.",
+        "A: Paradox 2024 is scheduled from 30th May to 2nd June, 2024 at the IIT Madras campus.",
     },
     {
       question:
@@ -38,7 +38,7 @@ export default function FAQPage() {
     {
       question: "Q: What is the duration of the stay?",
       answer:
-        "A: Accommodation will be provided for the duration of Paradox, i.e., from May 29th to June 3rd, totaling 5 days. The check out must be completed before 8:00 pm on 3rd June.",
+        "A: Accommodation will be provided for the duration of Paradox, i.e., from May 29th to June 2nd, totaling 5 days. The check out must be completed before 8:00 pm on 3rd June.",
     },
   ];
 
@@ -100,7 +100,7 @@ export default function FAQPage() {
       question:
         "Q: My Flight/Train will reach chennai late at night. Will I be allowed to check-in?",
       answer:
-        "A: The accommodation check-in desk will be operational from 8:00 am to 8:00 pm, spanning the period from May 29th to June 3rd. Students can check in anytime during the operational hours. Early or late accommodation is not possible. ",
+        "A: The accommodation check-in desk will be operational from 8:00 am to 8:00 pm, spanning the period from May 29th to June 2nd. Students can check in anytime during the operational hours. Early or late accommodation is not possible. ",
     },
     {
       question:
