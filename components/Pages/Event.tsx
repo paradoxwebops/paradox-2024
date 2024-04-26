@@ -416,7 +416,7 @@ const EventPageMainBody = ({
         {!!rules && (
           <EventDetailCard title="Rules & Regulations">
             <a href={`${rules}`} target="_blank">
-              <p className=" text-ellipsis overflow-hidden">{rules}</p>
+              <p className=" text-ellipsis overflow-hidden">Click Here</p>
             </a>
           </EventDetailCard>
         )}

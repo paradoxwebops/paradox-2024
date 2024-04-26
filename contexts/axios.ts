@@ -60,7 +60,18 @@ const useAxios = () => {
             }
 
             break;
+          case 403:
+            if (!!refresh_token) {
+              // doRefreshToken({ axios, data: refresh_token }).then((tokens) => {
+              //   console.log(tokens, "token");
 
+              //   dispatch(setAuth({ ...tokens }));
+              // });
+              dispatch(delAuth());
+              googleLogout();
+            }
+
+            break;
           default:
             toast({
               title: `Status ${error?.status}: Something went wrong`,

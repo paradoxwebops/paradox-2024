@@ -59,7 +59,7 @@ const checkAccomRegistration = (axios: AxiosInstance) => {
 };
 
 const getEventById = (axios: AxiosInstance, id: number | string) => {
-  return axios.get("/emp/events/", { params: { event_id: id } });
+  return axios.get("/fest/events?event_id=" + id);
 };
 
 function capitalizeFirstLetter(str: string) {

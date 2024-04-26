@@ -45,18 +45,9 @@ export default function EventsPage() {
   useEffect(() => {
     window.localStorage.setItem("selected", selected);
   }, [selected]);
-  if (!!!access_token) {
-    return (
-      <>
-        <div className="flex justify-center align-center h-full">
-          <div className="text-center">
-            <h2 className="text-2xl mb-6">Please login to continue.</h2>
-            <LoginButton />
-          </div>
-        </div>
-      </>
-    );
-  }
+  useEffect(() => {
+    console.log(loading);
+  }, [loading]);
   if (loading) {
     return <LoadingEventCards />;
   }
