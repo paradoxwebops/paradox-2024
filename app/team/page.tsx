@@ -56,9 +56,9 @@ const coresData = [
   },
 
   {
-    name: "Tanmay Srivastava",
-    department: "Hospitality",
-    img: "/tanmay_srivastava.png",
+    name: "Aditya Kumar",
+    department: "Accommodation",
+    img: "/aditya_kumar.jpeg",
   },
   {
     name: "Mithun Raj",

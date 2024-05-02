@@ -17,7 +17,7 @@ const data: PageHeaderData = {
   },
   sponsors: {
     bg: "#a7688d",
-    text: "PAST SPONSORS",
+    text: "OUR SPONSORS",
     image: "/paradox_logo_text.png",
   },
   contact: {

@@ -38,6 +38,14 @@ export default function ContactPage() {
       },
       description: "All the queries regarding payment issues and failure.",
     },
+    {
+      title: "Sponsorship Queries",
+      img: "/con_pay.svg",
+      info: {
+        email: ["partnership@iitmparadox.org"],
+      },
+      description: "All the queries regarding sponsorships.",
+    },
   ];
 
   return (

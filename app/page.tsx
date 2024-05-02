@@ -398,7 +398,7 @@ export default function Home() {
               }}
             >
               <Image
-                src={"/paradox_title.svg"}
+                src={"/paradox_title.webp"}
                 alt="Paradox"
                 width={1000}
                 height={1000}

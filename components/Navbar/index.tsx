@@ -13,6 +13,7 @@ type NavbarLink = {
   name: string;
   href: string;
   target: "_self" | "_target";
+  onClick?: Function
 };
 
 const NavBar = () => {
@@ -66,7 +67,7 @@ const NavBarMenuFullScreen = ({
       <AnimatePresence mode="wait">
         {open && (
           <motion.div
-            className="w-full h-screen fixed bottom-0 top-0 left-0 right-0 z-[100]"
+            className="w-full h-screen overflow-y-auto fixed bottom-0 top-0 left-0 right-0 z-[100]"
             style={{ backgroundColor: "#D7F1F9" }}
             initial={{ top: "-100%" }}
             animate={{ top: "0" }}
@@ -80,14 +81,14 @@ const NavBarMenuFullScreen = ({
               mainAnimationDuration={showAnimationDuration}
               showToggle={showToggle}
             />
-            <div className="flex flex-col h-full items-start justify-center p-8">
-              {/* <Image
+            <div className="h-full items-start justify-center p-8">
+              <Image
                 src={"/paradox_logo_text.webp"}
                 alt="Paradox"
                 className="hidden md:block"
                 width={400}
                 height={400}
-              /> */}
+              />
               <NavBarLinks showToggle={showToggle} />
             </div>
             <motion.div
@@ -118,7 +119,35 @@ const NavBarMenuFullScreen = ({
 const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
   const dispatch = useDispatch();
   const { access_token } = useSelector((state) => state.auth);
+
+  const beforeData:NavbarLink[] = []
+
+  const afterData:NavbarLink[] = []
+
+  if (access_token !== "") {
+
+    afterData.push({
+      href: "/",
+      name: "LOGOUT",
+      target: "_self",
+      onClick: () => {
+        googleLogout();
+        dispatch(delAuth());
+        window.localStorage.clear();
+        showToggle();
+      }
+    })
+
+    beforeData.push({
+      href: "/profile",
+      name: "PROFILE",
+      target: "_self",
+    })
+
+  }
+
   const data: NavbarLink[] = [
+    ...beforeData,
     {
       href: "/about",
       name: "ABOUT",
@@ -159,44 +188,34 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
       name: "CONTACT US",
       target: "_self",
     },
+    ...afterData
   ];
   return (
-    <div data-lenis-prevent className=" flex flex-col">
-      {access_token !== "" && (
-        <Link
-          href={"/profile"}
-          onClick={showToggle}
-          className="p-3 milestone text-3xl tracking-wide text-[#6D878F] cursor-pointer"
-        >
-          PROFILE
-        </Link>
-      )}
+    <div data-lenis-prevent className="">
       {data.map((item) => {
         const { name } = item;
+
+        const callback = () => {
+          if (item.onClick) {
+            item.onClick()
+          }
+          showToggle()
+        }
+
         return (
-          <Link
-            {...item}
-            key={name}
+          <div
             className="p-3 milestone text-3xl tracking-wide text-[#6D878F] "
-            onClick={showToggle}
           >
-            {name}
-          </Link>
+            <Link
+              {...item}
+              key={name}
+              onClick={callback}
+            >
+              {name}
+            </Link>
+          </div>
         );
       })}
-      {access_token !== "" && (
-        <p
-          onClick={() => {
-            googleLogout();
-            dispatch(delAuth());
-            window.localStorage.clear();
-            showToggle();
-          }}
-          className="p-3 milestone text-3xl tracking-wide text-[#6D878F] cursor-pointer"
-        >
-          LOGOUT
-        </p>
-      )}
     </div>
   );
 };
