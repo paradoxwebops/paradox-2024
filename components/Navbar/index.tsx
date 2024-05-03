@@ -82,13 +82,6 @@ const NavBarMenuFullScreen = ({
               showToggle={showToggle}
             />
             <div className="h-full items-start justify-center p-8">
-              <Image
-                src={"/paradox_logo_text.webp"}
-                alt="Paradox"
-                className="hidden md:block"
-                width={400}
-                height={400}
-              />
               <NavBarLinks showToggle={showToggle} />
             </div>
             <motion.div
@@ -107,6 +100,21 @@ const NavBarMenuFullScreen = ({
                 alt="Navbar boat"
                 width={1000}
                 height={1000}
+              />
+            </motion.div>
+            <motion.div 
+              className="fixed bottom-0 right-0 z-[100]" 
+              style={{transform: 'rotate(-90deg)', transformOrigin: 'top'}}
+              // initial={{ opacity: "0" }}
+              // animate={{ opacity: "1" }}
+              // exit={{ opacity: "0" }}
+            >
+              <Image
+                src={"/paradox_logo_text_black.webp"}
+                alt="Paradox"
+                className="hidden md:block"
+                width={200}
+                height={200}
               />
             </motion.div>
           </motion.div>

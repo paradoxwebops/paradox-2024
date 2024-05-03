@@ -77,7 +77,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {p === "/" ? (
+      {(p === "/") || (p.split('/')[1] === 'flagship') ? (
         children
       ) : (
         <div className="flex flex-col p-6 pt-0 items-start justify-between gap-6 min-h-screen">

@@ -57,7 +57,7 @@ const coresData = [
 
   {
     name: "Aditya Kumar",
-    department: "Accommodation",
+    department: "Accommodation & Hospitality",
     img: "/aditya_kumar.jpeg",
   },
   {
