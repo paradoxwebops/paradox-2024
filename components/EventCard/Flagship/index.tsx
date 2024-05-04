@@ -98,7 +98,7 @@ const FlagshipEventCard = ({ url, name, image }: FlagshipEventDetails) => {
             className="flex flex-col w-full rounded-xl shadow-[0_0_21px_10px_rgba(255,255,255,0.25)]"
         >
             <div className="rounded-xl wrap container wrap--1 w-full h-full flex flex-col gap-2">
-                <img
+                <Image
                     src={image}
                     alt={name}
                     className="w-full h-auto object-cover rounded-xl"

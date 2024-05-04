@@ -213,10 +213,10 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
         return (
           <div
             className="p-3 milestone text-3xl tracking-wide text-[#6D878F] "
+            key={name}
           >
             <Link
               {...item}
-              key={name}
               onClick={callback}
             >
               {name}

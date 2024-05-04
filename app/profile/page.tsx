@@ -4,6 +4,7 @@ import { LoginButton } from "@/components";
 import EventCard from "@/components/EventCard";
 import { useAxios } from "@/contexts";
 import { useSelector } from "@/store";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -51,7 +52,7 @@ export default function ProfilePage() {
       <div className="flex flex-col gap-8 p-2 md:p-4 lg:p-8 xl:p-16">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="p-4 rounded-xl flex justify-center items-center bg-gradient-radial from-[#764b76] to-[#845d84]">
-            <img className=" rounded-full" src={user?.picture} alt="profile" />
+            <Image className=" rounded-full" src={user?.picture} alt="profile" />
           </div>
           <div className="flex flex-col gap-4 w-full">
             <p className="p-2 px-4 bg-[#c7b2cc] rounded-xl flex flex-col">
@@ -76,7 +77,7 @@ export default function ProfilePage() {
                     className=" border-[#6140E2] text-black from-[#AD2FFF] flex flex-col  w-48 h-48 to-[#230137] rounded-xl p-4"
                   >
                     <div className="rounded-xl wrap container wrap--1 w-full h-full flex flex-col gap-2">
-                      <img
+                      <Image
                         src={event.header_image}
                         alt={event.name}
                         className="w-full h-[300px] border-[#6140E2] box object-cover rounded-xl"

@@ -1,5 +1,6 @@
 "use client";
 import { Card } from "@/components";
+import Image from "next/image";
 
 export default function ContactPage() {
   const data = [
@@ -74,7 +75,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="">
-                <img src={img} className="w-full h-auto" />
+                <Image src={img} alt="" className="w-full h-auto" />
               </div>
             </Card>
           );
