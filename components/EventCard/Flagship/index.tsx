@@ -1,12 +1,50 @@
 import { Card } from "@/components/Card"
+import { rgba } from "@/lib/utils"
 
-import { Zen_Dots } from 'next/font/google'
+import { Zen_Dots, Zilla_Slab } from 'next/font/google'
 import Image from "next/image"
 import Link from "next/link"
 
 const zen_font = Zen_Dots({ weight: ['400'], subsets: ['latin'] })
+const zilla_font = Zilla_Slab({weight: ["300", "400", "500"], subsets: ["latin"]})
 
 type FlagshipEventDetails = { url: string, name: string, image: string }
+
+export type GenAIPrizeCardProps = {
+    main: boolean,
+    prize: string,
+    amount: string | number,
+    color: 'gold' | 'silver' | 'bronze',
+}
+
+const GenAIPrizeCard = ({main, prize, amount, color}: GenAIPrizeCardProps) => {
+    return (
+        <>
+        {main && (
+            <div className="w-[1px] h-[1px] shadow-[0_0_100px_200px_rgba(220,164,254,0.35)] rounded-full z-[0] absolute" />
+        )}
+        <Card bgColor={rgba('#ffffff', 0.1)} className="text-center flex flex-col items-center lg:max-w-[300px] !p-8" style={{transform: `scale(${main ? '1.1' : '1'})`}}>
+            <div className={`${zilla_font.className} text-xl`}>
+                {prize}
+            </div>
+            <div className="py-6">
+                <Image 
+                    src={`/${color}.svg`}
+                    width={100}
+                    height={100}
+                    alt={`${prize} prize ${color} trophy`}
+                />
+            </div>
+            <div className={`${zilla_font.className} text-2xl`}>
+                &#8377;
+            </div>
+            <div className={`${zen_font.className}`}>
+                <h3 className="tracking-wide">{amount}</h3>
+            </div>
+        </Card>
+        </>
+    )
+}
 
 const FlagshipContainerCard = () => {
 
@@ -72,5 +110,6 @@ const FlagshipEventCard = ({ url, name, image }: FlagshipEventDetails) => {
 
 export {
     FlagshipContainerCard,
-    FlagshipEventCard
+    FlagshipEventCard,
+    GenAIPrizeCard,
 }
