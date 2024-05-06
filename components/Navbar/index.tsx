@@ -3,7 +3,7 @@
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, delay } from "framer-motion";
 import { useState } from "react";
 import { googleLogout } from "@react-oauth/google";
 import { useDispatch, useSelector } from "@/store";
@@ -105,12 +105,12 @@ const NavBarMenuFullScreen = ({
             <motion.div 
               className="fixed bottom-0 right-0 z-[100]" 
               style={{transform: 'rotate(-90deg)', transformOrigin: 'top'}}
-              // initial={{ opacity: "0" }}
-              // animate={{ opacity: "1" }}
-              // exit={{ opacity: "0" }}
+              initial={{ bottom: -500 }}
+              animate={{ bottom: 0, transition: {delay: 1}}}
+              exit={{ bottom: -500 }}
             >
               <Image
-                src={"/paradox_logo_text_black.webp"}
+                src={"/paradox_logo_text.webp"}
                 alt="Paradox"
                 className="hidden md:block"
                 width={200}
