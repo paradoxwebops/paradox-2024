@@ -17,13 +17,51 @@ export type GenAIPrizeCardProps = {
     color: 'gold' | 'silver' | 'bronze',
 }
 
+export type GenAIRoundCardProps = {
+    round: number,
+    title: string
+}
+
+export type GenAIPersonCardProps = {
+    name: string,
+    description: string,
+}
+
+const GenAIMentorCard = ({name, description}: GenAIPersonCardProps) => {
+    return (
+        <Card bgColor={rgba('#ffffff', .1)} className="!p-8">
+            <h6>{name}</h6>
+            <div>{description}</div>
+        </Card>
+    )
+}
+
+const GenAIInstructorCard = ({...props}: GenAIPersonCardProps) => {
+    return (
+        <GenAIMentorCard {...props} />
+    )
+}
+
+const GenAIRoundCard =  ({round, title}:GenAIRoundCardProps) => {
+    return (
+        <Card bgColor={rgba('#ffffff', 0.1)} className={`w-full max-w-[1000px] tracking-wide mx-auto my-12 flex items-center gap-6`}>
+            <Card bgColor={rgba('#ffffff', 0.1)} className={`${zen_font.className} text-xl w-full max-w-[75px] text-center`}>
+                {round}
+            </Card>
+            <div className="w-full">
+                {title}
+            </div>
+        </Card>
+    )
+}
+
 const GenAIPrizeCard = ({main, prize, amount, color}: GenAIPrizeCardProps) => {
     return (
         <>
         {main && (
             <div className="w-[1px] h-[1px] shadow-[0_0_100px_200px_rgba(220,164,254,0.35)] rounded-full z-[0] absolute" />
         )}
-        <Card bgColor={rgba('#ffffff', 0.1)} className="text-center flex flex-col items-center lg:max-w-[300px] !p-8" style={{transform: `scale(${main ? '1.1' : '1'})`}}>
+        <Card bgColor={rgba('#ffffff', 0.1)} className="text-center flex flex-col items-center lg:max-w-[300px] !p-8 !max-md:scale-100" style={{transform: `scale(${main ? '1.1' : '1'})`}}>
             <div className={`${zilla_font.className} text-xl`}>
                 {prize}
             </div>
@@ -112,4 +150,7 @@ export {
     FlagshipContainerCard,
     FlagshipEventCard,
     GenAIPrizeCard,
+    GenAIRoundCard,
+    GenAIMentorCard,
+    GenAIInstructorCard,
 }
