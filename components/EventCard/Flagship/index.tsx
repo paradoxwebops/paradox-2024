@@ -90,7 +90,7 @@ const FlagshipContainerCard = () => {
         {
             name: '',
             url: 'genai',
-            image: ''
+            image: '/genai_bot.svg'
         },
         {
             name: '',
@@ -140,6 +140,8 @@ const FlagshipEventCard = ({ url, name, image }: FlagshipEventDetails) => {
                     src={image}
                     alt={name}
                     className="w-full h-auto object-cover rounded-xl"
+                    width={100}
+                    height={100}
                 />
             </div>
         </Link>
