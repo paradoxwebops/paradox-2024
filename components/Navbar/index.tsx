@@ -39,8 +39,8 @@ const NavBar = () => {
             height={50}
           />
         </Link>
-        <button onClick={showToggle}>
-          <Menu />
+        <button className="flex text-[#ff9e68] items-center justify-between" onClick={showToggle}>
+          MENU <Menu className="ml-3" />
         </button>
         {/* <button
           className="px-5 py-1 bg-neutral-950/20 rounded"
@@ -110,7 +110,7 @@ const NavBarMenuFullScreen = ({
               exit={{ bottom: -500 }}
             >
               <Image
-                src={"/paradox_logo_text.webp"}
+                src={"/paradox_title.webp"}
                 alt="Paradox"
                 className="hidden md:block"
                 width={200}

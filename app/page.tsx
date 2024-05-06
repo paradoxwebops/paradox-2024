@@ -403,10 +403,6 @@ export default function Home() {
                 width={1000}
                 height={1000}
               />
-              <div className="fixed animate-pulse top-9 right-14 flex justify-center items-center text-[#ff9e68]">
-                Click here
-                <ArrowRight />
-              </div>
             </div>
             <motion.div
               className="fixed bottom-[12%] left-0 right-0 m-auto w-[50%] md:w-[30%] lg:w-[20%] z-[9]"
