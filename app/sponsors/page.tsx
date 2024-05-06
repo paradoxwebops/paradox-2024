@@ -53,7 +53,7 @@ export default function SponsorsPage() {
         <div className="grid lg:grid-cols-4 gap-6 mx-auto w-full max-w-[1200px]">
           {associate_data.map((item, ind) => {
             return (
-              <div>
+              <div key={ind}>
                 <Image 
                   src={item.img}
                   alt=""
@@ -73,7 +73,7 @@ export default function SponsorsPage() {
         <div className="grid lg:grid-cols-4 gap-6 mx-auto w-full max-w-[1200px]">
           {event_sponsors_data.map((item, ind) => {
             return (
-              <div>
+              <div key={ind}>
                 <Image 
                   src={item.img}
                   alt=""
