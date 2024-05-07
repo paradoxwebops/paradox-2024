@@ -183,7 +183,7 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
     },
     {
       href: "/sponsors",
-      name: "PAST SPONSORS",
+      name: "SPONSORS",
       target: "_self",
     },
     {

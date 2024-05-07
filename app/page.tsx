@@ -388,7 +388,7 @@ export default function Home() {
             <div
               className="w-[80%] md:w-[40%] h-auto z-[6] relative m-auto"
               style={{
-                paddingTop: `${(1 / d.dar) * 10}%`,
+                paddingTop: `${(1 / d.dar) * 13.5}%`,
                 zIndex:
                   current.percent >= 0.95
                     ? Math.floor(6 + current.percent * 10)
