@@ -1,5 +1,6 @@
 "use client";
 import { Card } from "@/components";
+import Image from "next/image";
 
 export default function ContactPage() {
   const data = [
@@ -38,6 +39,14 @@ export default function ContactPage() {
       },
       description: "All the queries regarding payment issues and failure.",
     },
+    {
+      title: "Sponsorship Queries",
+      img: "/con_pay.svg",
+      info: {
+        email: ["partnership@iitmparadox.org"],
+      },
+      description: "All the queries regarding sponsorships.",
+    },
   ];
 
   return (
@@ -66,7 +75,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="">
-                <img src={img} className="w-full h-auto" />
+                <Image src={img} alt="" className="w-full h-auto" />
               </div>
             </Card>
           );

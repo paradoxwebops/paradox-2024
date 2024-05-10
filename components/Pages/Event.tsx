@@ -11,6 +11,7 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import moment from "moment";
 import Link from "next/link";
 import { correctText } from "@/lib/methods";
+import Image from "next/image";
 
 const inter = Inter({
   weight: ["300", "400", "500", "600", "700"],
@@ -195,7 +196,7 @@ const EventSponsorCard = ({ name, url, title, logo }: EventSponsor) => {
     <Card bgColor={rgba("#230137", 1)} className="">
       <div className="flex items-center gap-4">
         <div className="w-1/2">
-          <img className="w-full h-auto rounded-2xl" src={logo} alt={name} />
+          <Image className="w-full h-auto rounded-2xl" src={logo} alt={name} width={300} height={300} />
         </div>
         <div className="w-full">
           <h3 className="text-xl mt-3 text-white">{name}</h3>

@@ -219,13 +219,13 @@ export default function Home() {
               style={{ paddingTop: d.dar < 1 ? "25%" : "5%" }}
             >
               <Link href={"https://study.iitm.ac.in"} target="_blank">
-                <motion.h1 className="xl:text-8xl relative z-1 lg:text-7xl md:text-6xl sm:text-5xl text-4xl milestone tracking-wide text-[#289398]">
-                  <span>IIT Madras BS</span>{" "}
-                  <span className="absolute">
-                    {" "}
-                    <ExternalLink size={16} />{" "}
-                  </span>
-                </motion.h1>
+                <Image 
+                  src={'/homepage_intro.webp'}
+                  alt=""
+                  width={500}
+                  height={500}
+                  className="w-full h-auto max-w-[300px]"
+                />
               </Link>
               <p className="text-2xl font-thin my-3 milestone">presents</p>
               <button
@@ -388,7 +388,7 @@ export default function Home() {
             <div
               className="w-[80%] md:w-[40%] h-auto z-[6] relative m-auto"
               style={{
-                paddingTop: `${(1 / d.dar) * 10}%`,
+                paddingTop: `${(1 / d.dar) * 13.5}%`,
                 zIndex:
                   current.percent >= 0.95
                     ? Math.floor(6 + current.percent * 10)
@@ -398,15 +398,11 @@ export default function Home() {
               }}
             >
               <Image
-                src={"/paradox_title.svg"}
+                src={"/paradox_title.webp"}
                 alt="Paradox"
                 width={1000}
                 height={1000}
               />
-              <div className="fixed animate-pulse top-9 right-14 flex justify-center items-center text-[#ff9e68]">
-                Click here
-                <ArrowRight />
-              </div>
             </div>
             <motion.div
               className="fixed bottom-[12%] left-0 right-0 m-auto w-[50%] md:w-[30%] lg:w-[20%] z-[9]"

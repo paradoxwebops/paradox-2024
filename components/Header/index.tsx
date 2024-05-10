@@ -98,10 +98,10 @@ const Header = ({
       {!!isEvent ? (
         <>
           <div className="flex flex-col w-full justify-center items-center px-4 md:px-6 xl:mt-20">
-            <img
+            <Image
               className="w-full h-auto md:max-w-[30%] rounded-2xl shadow-2xl"
               alt={text}
-              src={eventImage}
+              src={eventImage ?? ''}
             />
 
             <HeaderHeading1 text={text} className="text-center !my-6" />
@@ -138,7 +138,7 @@ const Header = ({
             >
               {gif &&
                 (text == "ABOUT" || text == "FAQs" ? (
-                  <img className="" src={gif} />
+                  <img className="" src={gif} alt="" />
                 ) : (
                   <video loop autoPlay className="rounded-l-xl min-h-full">
                     <source src={gif} />

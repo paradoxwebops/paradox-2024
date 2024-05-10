@@ -1,4 +1,5 @@
 import { East_Sea_Dokdo, Bricolage_Grotesque } from "next/font/google";
+import Image from "next/image";
 
 const eastSeaDokdo = East_Sea_Dokdo({ weight: "400", subsets: ["latin"] });
 
@@ -56,9 +57,9 @@ const coresData = [
   },
 
   {
-    name: "Tanmay Srivastava",
-    department: "Hospitality",
-    img: "/tanmay_srivastava.png",
+    name: "Aditya Kumar",
+    department: "Accommodation & Hospitality",
+    img: "/aditya_kumar.jpeg",
   },
   {
     name: "Mithun Raj",
@@ -92,7 +93,7 @@ export default function EventsPage() {
                 key={`${name}_${ind}`}
               >
                 <div className="w-full  max-w-[250px] border-4 border-white bg-[#FFBB6C] rounded-2xl overflow-hidden">
-                  <img className="w-full h-auto" src={img} />
+                  <img className="w-full h-auto" src={img} alt={name} />
                 </div>
                 <div className="w-full max-w-[250px]  text-center">
                   <div className="uppercase bg-[#FFF8E8] font-semibold  p-3 mt-6 rounded-2xl border-3 border-[#ffbb6c] text-black text-xl">
@@ -116,7 +117,7 @@ export default function EventsPage() {
             return (
               <div className="flex flex-col" key={`${name}_${ind}`}>
                 <div className="w-full border-4 border-white bg-[#FFBB6C] rounded-2xl overflow-hidden">
-                  <img className="w-full h-auto" src={img} />
+                  <img className="w-full h-auto" src={img} alt={name} />
                 </div>
                 <div className="w-full bg-[#FFF8E8] text-center p-3  border-3 border-[#ffbb6c] mt-6 rounded-2xl">
                   <div className="uppercase font-semibold text-black text-base md:text-lg">

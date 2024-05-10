@@ -1,5 +1,6 @@
 "use client";
 import { allEventData } from "@/app/events/page";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 
