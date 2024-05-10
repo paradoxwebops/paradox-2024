@@ -50,7 +50,7 @@ export default function SponsorsPage() {
       <Card bgColor={rgba('#000000', 0)} className="bg-[url(/bg.svg)] bg-cover bg-no-repeat">
 
         <h2 className={`${inika.className} text-white text-center tracking-wide my-3`}>ASSOCIATE</h2>
-        <div className="grid lg:grid-cols-4 gap-6 mx-auto w-full max-w-[1200px]">
+        <div className="grid gap-6 mx-auto w-full max-w-[1200px]">
           {associate_data.map((item, ind) => {
             return (
               <div key={ind}>
