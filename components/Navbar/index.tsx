@@ -62,7 +62,7 @@ const NavbarAnnouncements = ({open, showToggle}:ToggleableProps) => {
                 return (
                   <Card bgColor={rgba('#000000', 0.35)} key={id} className="text-white w-full h-[fit-content]">
                     <h6 className="tracking-wide">{title}</h6>
-                    <p className="my-3">{body}</p>
+                    <p className="my-3 whitespace-pre-line">{body}</p>
                     <div className="flex items-center justify-between">
                       <span className="italic">~ {created_by}</span>
                       <span className="bg-[#3E5DAB] px-4 py-2 rounded-2xl">{moment(created_at).format('DD MMMM YYYY')}</span>
