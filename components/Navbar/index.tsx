@@ -4,13 +4,16 @@ import { Megaphone, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, delay } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { googleLogout } from "@react-oauth/google";
 import { useDispatch, useSelector } from "@/store";
 import { delAuth } from "@/store/actions";
 import { rgba } from "@/lib/utils";
 import { Card } from "../Card";
 import moment from "moment";
+import { getAnnouncements } from "@/lib/methods";
+import { AnnouncementData } from "@/lib/types";
+import { useAxios } from "@/contexts";
 
 type NavbarLink = {
   name: string;
@@ -24,81 +27,29 @@ type ToggleableProps = {
   showToggle: () => void;
 }
 
-type AnnouncementData = {
-  id: number | string;
-  title: string;
-  body: string;
-  created_by: string;
-  author: any
-  created_at: string;
-  updated_at: string;
-}
-
 const NavbarAnnouncements = ({open, showToggle}:ToggleableProps) => {
+
+  const [data, setData] = useState<AnnouncementData[]>([])
+  const {axios} = useAxios()
 
   const showAnimationDuration = 1
 
-  const announcement_data:AnnouncementData[] = [
-    {
-      id: 1,
-      title: 'Some important announcement',
-      body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate iste quaerat ut hic ex temporibus culpa rem? Autem dolorem porro vel dignissimos. Eum exercitationem, eveniet quod natus temporibus beatae quos?',
-      author: null,
-      created_by: 'Secretaries',
-      created_at: (new Date()).toISOString(),
-      updated_at: (new Date()).toISOString(),
-    },
-    {
-      id: 2,
-      title: 'Some important announcement',
-      body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate iste quaerat ut hic ex temporibus culpa rem? Autem dolorem porro vel dignissimos. Eum exercitationem, eveniet quod natus temporibus beatae quos?',
-      author: null,
-      created_by: 'Secretaries',
-      created_at: (new Date()).toISOString(),
-      updated_at: (new Date()).toISOString(),
-    },
-    {
-      id: 3,
-      title: 'Some important announcement',
-      body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate iste quaerat ut hic ex temporibus culpa rem? Autem dolorem porro vel dignissimos. Eum exercitationem, eveniet quod natus temporibus beatae quos?',
-      author: null,
-      created_by: 'Secretaries',
-      created_at: (new Date()).toISOString(),
-      updated_at: (new Date()).toISOString(),
-    },
-    {
-      id: 4,
-      title: 'Some important announcement',
-      body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate iste quaerat ut hic ex temporibus culpa rem? Autem dolorem porro vel dignissimos. Eum exercitationem, eveniet quod natus temporibus beatae quos?',
-      author: null,
-      created_by: 'Secretaries',
-      created_at: (new Date()).toISOString(),
-      updated_at: (new Date()).toISOString(),
-    },
-    {
-      id: 5,
-      title: 'Some important announcement',
-      body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate iste quaerat ut hic ex temporibus culpa rem? Autem dolorem porro vel dignissimos. Eum exercitationem, eveniet quod natus temporibus beatae quos?',
-      author: null,
-      created_by: 'Secretaries',
-      created_at: (new Date()).toISOString(),
-      updated_at: (new Date()).toISOString(),
-    },
-  ]
+  useEffect(() => {
+    getAnnouncements(axios)
+    .then((res) => {
+      setData((s) => [...res.data])
+    })
+  }, [])
 
   return (
     <AnimatePresence mode="wait">
         {open && (
           <motion.div
-            className="w-full h-screen lg:max-w-[400px] fixed top-0 right-0 lg:right-[50px] lg:top-[90px] z-[100] rounded-2xl p-2 flex flex-col justify-evenly"
-            style={{ backgroundColor: rgba('#000000', .45) }}
-            initial={{ opacity: "0" }}
-            animate={{ opacity: "1" }}
-            exit={{ opacity: "0" }}
-            transition={{
-              duration: showAnimationDuration,
-              ease: [0.87, 0, 0.25, 1],
-            }}
+            className="w-full h-screen lg:max-w-[400px] lg:max-h-[500px] fixed top-0 right-0 lg:right-[50px] lg:top-[90px] z-[100] lg:rounded-2xl p-2 flex flex-col justify-evenly max-lg:!bg-[#eeeeee]"
+            style={{ backgroundColor: rgba('#aaaaaa', .45), transformOrigin: 'top right' }}
+            initial={{ transform: 'scale(0)' }}
+            animate={{ transform: 'scale(1)' }}
+            exit={{ transform: 'scale(0)' }}
           >
             <div className="flex items-center justify-between px-6 py-3">
               <h4 className={`milestone text-[#15253E] tracking-wide`}>Announcement</h4>
@@ -106,10 +57,10 @@ const NavbarAnnouncements = ({open, showToggle}:ToggleableProps) => {
                 <X className="w-6 h-6" />
               </button>
             </div>
-            <Card bgColor={rgba('#031248', 0.5)} className="max-h-[600px] lg:h-[500px] overflow-y-scroll grid gap-4">
-              {announcement_data.map(({title, id, body, created_by, created_at}) => {
+            <Card bgColor={rgba('#031248', 0.5)} className="h-[600px] lg:h-[500px] overflow-y-scroll grid gap-4">
+              {data.map(({title, id, body, created_by, created_at}) => {
                 return (
-                  <Card bgColor={rgba('#000000', 0.35)} key={id} className="text-white">
+                  <Card bgColor={rgba('#000000', 0.35)} key={id} className="text-white w-full h-[fit-content]">
                     <h6 className="tracking-wide">{title}</h6>
                     <p className="my-3">{body}</p>
                     <div className="flex items-center justify-between">
@@ -157,9 +108,9 @@ const NavBar = () => {
           />
         </Link>
         <div className="flex items-center justify-between">
-          {/* <button className="mr-3 lg:mr-6" onClick={announcementToggle}>
+          <button className="mr-3 lg:mr-6" onClick={announcementToggle}>
             <Megaphone />
-          </button> */}
+          </button>
           <button className="flex text-[#ff9e68] items-center justify-between" onClick={showToggle}>
             MENU <Menu className="ml-3" />
           </button>

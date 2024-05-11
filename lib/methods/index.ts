@@ -1,6 +1,7 @@
 // import { axios } from "./axios";
 import { DJANGO_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@/lib/constants";
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosResponse } from "axios";
+import { AnnouncementData } from "../types";
 
 const getSelfProfile = (axios: AxiosInstance) => {
   return axios.get("/base/profile/");
@@ -70,6 +71,11 @@ const correctText = (text: string) => {
   return capitalizeFirstLetter(text.split("_").join(" "));
 };
 
+
+const getAnnouncements = (axios: AxiosInstance):Promise<AxiosResponse<AnnouncementData[], any>> => {
+  return axios.get('/fest/announcements/')
+}
+
 export {
   loginUser,
   doRefreshToken,
@@ -80,4 +86,5 @@ export {
   checkAccomRegistration,
   getEventById,
   correctText,
+  getAnnouncements,
 };
