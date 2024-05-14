@@ -13,7 +13,8 @@ export default function SponsorsPage() {
 
   const associate_data = [
     {
-      img: '/sponsors/french_essence.png'
+      img: '/sponsors/french_essence.png',
+      title: 'Fragrance Partner'
     }
   ]
 
@@ -53,7 +54,7 @@ export default function SponsorsPage() {
         <div className="grid gap-6 mx-auto w-full max-w-[1200px]">
           {associate_data.map((item, ind) => {
             return (
-              <div key={ind}>
+              <div key={ind} className="text-center">
                 <Image 
                   src={item.img}
                   alt=""
@@ -61,6 +62,9 @@ export default function SponsorsPage() {
                   width={500}
                   className="w-full h-auto max-w-[500px] mx-auto"
                 />
+                <div className="font-bold mt-3">
+                  {item.title}
+                </div>
               </div>
             )
           })}
