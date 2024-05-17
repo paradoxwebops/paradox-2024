@@ -27,6 +27,7 @@ export type PageHeaderData = {
   fest: HeaderData;
   profile: HeaderData;
   accommodation: HeaderData;
+  schedule: HeaderData;
 };
 
 const HeaderHeading1 = ({
