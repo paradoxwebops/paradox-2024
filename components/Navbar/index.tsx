@@ -266,6 +266,11 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
       name: "CONTACT US",
       target: "_self",
     },
+    {
+      href: "/schedule",
+      name: "SCHEDULE",
+      target: "_self",
+    },
     ...afterData
   ];
   return (
