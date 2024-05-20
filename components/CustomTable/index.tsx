@@ -40,7 +40,7 @@ type TableRowProps = {
 
 const TableHeadingCell = ({children, isOdd, color}:TableCellProps) => {
     return (
-        <th scope="col" className="px-6 py-4 text-4xl font-normal" style={{color: color ?? "#222", backgroundColor: isOdd ? 'transparent' : rgba("#ffffff", 0.25)}}>
+        <th scope="col" className="px-6 py-4 text-xl lg:text-4xl font-normal" style={{color: color ?? "#222", backgroundColor: isOdd ? 'transparent' : rgba("#ffffff", 0.25)}}>
             {children}
         </th>
     )
@@ -48,7 +48,7 @@ const TableHeadingCell = ({children, isOdd, color}:TableCellProps) => {
 
 const TableDataCell = ({children, isOdd}:TableCellProps) => {
     return (
-        <td scope="row" className="px-6 py-4 text-3xl" style={{backgroundColor: isOdd ? 'transparent' : rgba("#ffffff", 0.25)}}>
+        <td scope="row" className="px-6 py-4 text-md lg:text-3xl" style={{backgroundColor: isOdd ? 'transparent' : rgba("#ffffff", 0.25)}}>
             {children}
         </td>
     )
@@ -76,7 +76,7 @@ const Table = ({title, headings, data, color, headingColor}:TableProps) => {
     return (
         <div className={`${mirza.className} relative overflow-x-auto shadow-md sm:rounded-lg`}>
             <table className="w-full text-left rtl:text-right" style={{backgroundColor: rgba(color, 0.55)}}>
-                <caption className="p-5 text-4xl text-center text-white" style={{backgroundColor: color}}>
+                <caption className="p-5 text-xl lg:text-4xl text-center text-white" style={{backgroundColor: color}}>
                     {title}
                 </caption>
                 <thead>
