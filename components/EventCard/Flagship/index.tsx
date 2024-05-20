@@ -87,19 +87,19 @@ const GenAIPrizeCard = ({main, prize, amount, color}: GenAIPrizeCardProps) => {
 const FlagshipContainerCard = () => {
 
     const events:FlagshipEventDetails[] = [
+        // {
+        //     name: '',
+        //     url: 'genai',
+        //     image: '/genai_bot.svg'
+        // },
         {
-            name: '',
-            url: 'genai',
-            image: '/genai_bot.svg'
-        },
-        {
-            name: '',
-            url: '2',
+            name: 'Laser Tag',
+            url: 'lasertag',
             image: ''
         },
         {
-            name: '',
-            url: '3',
+            name: 'Prom Night',
+            url: 'promnight',
             image: ''
         },
     ]
@@ -118,7 +118,7 @@ const FlagshipContainerCard = () => {
                     <h2 className="border-2 border-white text-white p-1 px-3 rounded-2xl lg:pl-12">FLAGSHIP EVENTS</h2>
                 </div>
             </div>
-            <div className="grid grid-cols-3 gap-12">
+            <div className="grid grid-cols-2 gap-12">
                 {events.map((item) => {
                     return (
                         <FlagshipEventCard {...item} key={item.url} />
