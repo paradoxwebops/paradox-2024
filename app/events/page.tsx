@@ -58,7 +58,7 @@ export default function EventsPage() {
     <div>
       <div className="flex flex-col gap-4 ">
         {/* FLAGSHIP EVENTS */}
-        <FlagshipContainerCard />
+        {/* <FlagshipContainerCard /> */}
         {events.length == 0 && (
           <h2
             className={`${eastSeaDokdo.className} text-7xl text-center`}

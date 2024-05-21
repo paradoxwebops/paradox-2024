@@ -108,11 +108,11 @@ const NavBar = () => {
           />
         </Link>
         <div className="flex items-center justify-between">
-          <button className="mr-3 lg:mr-6 flex" onClick={announcementToggle}>
+          <button className="mr-3 lg:mr-6 flex bg-[#AAD4D4] px-5 py-3 rounded-2xl" onClick={announcementToggle}>
             <Megaphone />
             <div className="w-[10px] h-[10px] rounded-full bg-[#fa2417] ml-[-7px]"></div>
-          </button>
-          <button className="flex text-[#ff9e68] items-center justify-between" onClick={showToggle}>
+          </button>          
+          <button className="flex text-[#4b2009] items-center justify-between bg-[#F1D4E2] px-5 py-3 rounded-2xl" onClick={showToggle}>
             MENU <Menu className="ml-3" />
           </button>
         </div>
