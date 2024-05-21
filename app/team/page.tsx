@@ -59,18 +59,22 @@ const coresData = [
   {
     name: "Aditya Kumar",
     department: "Accommodation & Hospitality",
-    img: "/aditya_kumar.jpeg",
+    img: "/aditya_kumar.png",
   },
   {
     name: "Mithun Raj",
     department: "Merch & Stalls",
     img: "/mithun_raj.png",
   },
-
   {
     name: "Vivek Vibhuti",
     department: "Technicals",
     img: "/vivek_vibhuti.png",
+  },
+  {
+    name: "Amit Kumar Gupta",
+    department: "Security",
+    img: "/amit_kumar_gupta.png",
   },
 ];
 
