@@ -108,8 +108,9 @@ const NavBar = () => {
           />
         </Link>
         <div className="flex items-center justify-between">
-          <button className="mr-3 lg:mr-6" onClick={announcementToggle}>
+          <button className="mr-3 lg:mr-6 flex" onClick={announcementToggle}>
             <Megaphone />
+            <div className="w-[10px] h-[10px] rounded-full bg-[#fa2417] ml-[-7px]"></div>
           </button>
           <button className="flex text-[#ff9e68] items-center justify-between" onClick={showToggle}>
             MENU <Menu className="ml-3" />
