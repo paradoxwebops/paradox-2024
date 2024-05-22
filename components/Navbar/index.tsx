@@ -13,7 +13,7 @@ import { Card } from "../Card";
 import moment from "moment";
 import { getAnnouncements } from "@/lib/methods";
 import { AnnouncementData } from "@/lib/types";
-import { useAxios } from "@/contexts";
+import { useAxios, useNavbar } from "@/contexts";
 
 type NavbarLink = {
   name: string;
@@ -78,11 +78,11 @@ const NavbarAnnouncements = ({open, showToggle}:ToggleableProps) => {
 }
 
 const NavBar = () => {
-  const [open, setOpen] = useState<boolean>(false);
   const [openAnnouncements, setOpenAnnouncements] = useState<boolean>(false)
+  const {navbarShow, setNavbarShow} = useNavbar()
 
   const showToggle = () => {
-    setOpen((s) => !s);
+    setNavbarShow((s) => !s);
   };
 
   const announcementToggle = () => {
@@ -92,7 +92,7 @@ const NavBar = () => {
   const maxHeightPx = 98;
   return (
     <div className="w-full" style={{ height: `${maxHeightPx}px` }}>
-      <NavBarMenuFullScreen open={open} showToggle={showToggle} />
+      <NavBarMenuFullScreen open={navbarShow} showToggle={showToggle} />
       <NavbarAnnouncements open={openAnnouncements} showToggle={announcementToggle} />
       <nav
         className="flex justify-between p-6 items-center fixed w-full z-[99]"
@@ -116,12 +116,6 @@ const NavBar = () => {
             MENU <Menu className="ml-3" />
           </button>
         </div>
-        {/* <button
-          className="px-5 py-1 bg-neutral-950/20 rounded"
-          onClick={showToggle}
-        >
-          Menu
-        </button> */}
       </nav>
     </div>
   );
