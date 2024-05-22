@@ -411,7 +411,7 @@ export default function Home() {
               />
 
               {/* NAV MENU BUTTON */}
-              <button className="flex text-[#4b2009] items-center justify-between bg-[#F1D4E2] px-5 py-3 rounded-2xl mx-auto" onClick={showToggle}>
+              <button className="flex text-[#4caf50] items-center justify-between bg-[#d4f6b6] px-5 py-3 rounded-2xl mx-auto" onClick={showToggle}>
                 MENU <Menu className="ml-3" />
               </button>
 
