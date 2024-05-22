@@ -1,7 +1,8 @@
 "use client";
 import { LoginButton } from "@/components";
+import { FlagshipCarousel } from "@/components/Carousel";
 import EventCard from "@/components/EventCard";
-import { FlagshipContainerCard } from "@/components/EventCard/Flagship";
+import { FlagshipContainerCard, FlagshipEventDetails } from "@/components/EventCard/Flagship";
 import LoadingEventCards from "@/components/LoadingEventCards";
 import { useAxios } from "@/contexts";
 import { useSelector } from "@/store";
@@ -50,6 +51,24 @@ export default function EventsPage() {
   //   console.log(loading);
   // }, [loading]);
 
+  const flagshipEvents:FlagshipEventDetails[] = [
+    // {
+    //     name: '',
+    //     url: 'genai',
+    //     image: '/genai_bot.svg'
+    // },
+    // {
+    //     name: 'Laser Tag',
+    //     url: 'lasertag',
+    //     image: ''
+    // },
+    {
+        name: 'Prom Night',
+        url: 'promnight',
+        image: '/promnight_banner.webp'
+    },
+]
+
   if (loading) {
     return <LoadingEventCards />;
   }
@@ -58,7 +77,7 @@ export default function EventsPage() {
     <div>
       <div className="flex flex-col gap-4 ">
         {/* FLAGSHIP EVENTS */}
-        {/* <FlagshipContainerCard /> */}
+        <FlagshipCarousel slides={flagshipEvents} options={{ loop: true }} />
         {events.length == 0 && (
           <h2
             className={`${eastSeaDokdo.className} text-7xl text-center`}

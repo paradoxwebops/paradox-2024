@@ -8,7 +8,7 @@ import Link from "next/link"
 const zen_font = Zen_Dots({ weight: ['400'], subsets: ['latin'] })
 const zilla_font = Zilla_Slab({weight: ["300", "400", "500"], subsets: ["latin"]})
 
-type FlagshipEventDetails = { url: string, name: string, image: string }
+export type FlagshipEventDetails = { url: string, name: string, image: string }
 
 export type GenAIPrizeCardProps = {
     main: boolean,
