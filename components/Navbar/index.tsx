@@ -112,7 +112,7 @@ const NavBar = () => {
             <Megaphone />
             <div className="w-[10px] h-[10px] rounded-full bg-[#fa2417] ml-[-7px]"></div>
           </button>          
-          <button className="flex text-[#4b2009] items-center justify-between bg-[#F1D4E2] px-5 py-3 rounded-2xl" onClick={showToggle}>
+          <button className="flex text-[#893405] items-center justify-between bg-[#ff9e68] px-5 py-3 rounded-2xl" onClick={showToggle}>
             MENU <Menu className="ml-3" />
           </button>
         </div>
