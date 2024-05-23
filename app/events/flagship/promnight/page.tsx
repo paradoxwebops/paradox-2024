@@ -67,7 +67,7 @@ export default function FlagshipEventPromNightPage() {
                         width={200}
                         height={200}
                     />
-                    <div className={`${island_moments.className} px-6 text-4xl mt-[-20px]`}>
+                    <div className={`${island_moments.className} px-6 lg:text-4xl mt-[-20px]`}>
                         Presents
                     </div>
                     <h1 className="text-2xl lg:text-7xl tracking-wide px-6 z-[4] relative my-6">
