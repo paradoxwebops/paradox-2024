@@ -5,6 +5,10 @@ import { Card } from "..";
 import { motion } from "framer-motion";
 import { rgba } from "@/lib/utils";
 import Link from "next/link";
+import { EventSponsor } from "../Pages/Event";
+import { Zilla_Slab } from "next/font/google";
+
+const zilla_slab = Zilla_Slab({weight: ['300', '400', '500', '600'], subsets: ['latin'], display: 'auto', style: ['italic', 'normal']})
 
 export type HeaderData = {
   bg: string;
@@ -15,6 +19,7 @@ export type HeaderData = {
   eventImage?: string;
   eventCategory?: string;
   eventId?: number | string;
+  sponsors?: EventSponsor[];
 };
 
 export type PageHeaderData = {
@@ -60,6 +65,7 @@ const Header = ({
   eventImage,
   isEvent,
   eventId,
+  sponsors,
 }: HeaderData) => {
   const circleMajorStyles: React.CSSProperties = {
     width: "200px",
@@ -75,6 +81,9 @@ const Header = ({
     backgroundColor: "rgba(0, 0, 0,0.25)",
     zIndex: 10,
   };
+
+  const event_sponsors:EventSponsor[] = (!!sponsors?.length ? [...sponsors.filter((val) => val.title === 'event_sponsor')] : [])
+  const event_partners:EventSponsor[] = (!!sponsors?.length ? [...sponsors.filter((val) => val.title === 'event_partner')] : [])
 
   return (
     <Card bgColor={bg} className="overflow-hidden relative">
@@ -99,14 +108,75 @@ const Header = ({
       {!!isEvent ? (
         <>
           <div className="flex flex-col w-full justify-center items-center px-4 md:px-6 xl:mt-20">
+            
+            {event_sponsors.length !== 0 ? 
+              <div className="text-white">
+                <div className="flex gap-4 flex-wrap items-center">
+                  {event_sponsors.map((val) => {
+                    return (
+                      <>
+                      <div className="flex flex-col gap-2 items-center justify-center relative" key={val.id}>
+                        <div className="max-md:hidden">
+                          {val.name}
+                        </div>
+                        <Image 
+                          src={val.logo}
+                          alt={val.name}
+                          height={200}
+                          width={200}
+                        />
+                        <a href={val.url} className="after:absolute after:inset-0" />
+                      </div>
+                      </>
+                    )
+                  })}  
+                </div>
+                <div className={`${zilla_slab.className} text-center italic my-3`}>
+                  presents
+                </div>
+              </div>
+            : 
+              <></>
+            }
+
             <Image
               className="w-full h-auto md:max-w-[30%] rounded-2xl shadow-2xl"
               alt={text}
               src={eventImage ?? ''}
+              height={200}
+              width={200}
             />
 
             <HeaderHeading1 text={text} className="text-center !my-6" />
-
+            {event_partners.length !== 0 ? 
+              <div className="text-white mb-12">
+                <div className={`${zilla_slab.className} text-center italic my-3`}>
+                  powered by
+                </div>
+                <div className="flex gap-4 flex-wrap items-center">
+                  {event_partners.map((val) => {
+                    return (
+                      <>
+                      <div className="flex flex-col gap-2 items-center justify-center relative" key={val.id}>
+                        <div className="max-md:hidden">
+                          {val.name}
+                        </div>
+                        <Image 
+                          src={val.logo}
+                          alt={val.name}
+                          height={200}
+                          width={200}
+                        />
+                        <a href={val.url} className="after:absolute after:inset-0" />
+                      </div>
+                      </>
+                    )
+                  })}  
+                </div>
+              </div>
+            : 
+              <></>
+            }
             <div
               className="px-12 py-2 rounded-full font-bold mb-6"
               style={{ color: bg, backgroundColor: rgba("#ffffff", 0.75) }}
