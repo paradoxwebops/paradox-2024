@@ -2,7 +2,7 @@ import { Card } from "@/components";
 import { GenAIPrizeCard, GenAIPrizeCardProps } from "@/components/EventCard/Flagship";
 import { rgba } from "@/lib/utils";
 import { Calendar, MapPin } from "lucide-react";
-import { Inter, Zen_Dots, Zen_Tokyo_Zoo, Zilla_Slab } from 'next/font/google'
+import { Inter, Island_Moments, Zen_Dots, Zen_Tokyo_Zoo, Zilla_Slab } from 'next/font/google'
 import Image from "next/image";
 
 const main_font = Zen_Tokyo_Zoo({weight: ["400"], subsets: ["latin"]})
@@ -10,6 +10,8 @@ const main_font = Zen_Tokyo_Zoo({weight: ["400"], subsets: ["latin"]})
 const second_font = Inter({weight: ["300", "400", "500", "600"], subsets: ["latin"]})
 
 const third_font = Zilla_Slab({weight: ['300', '400', '500', '600'], subsets: ['latin']})
+
+const island_moments = Island_Moments({weight: ['400'], subsets: ['latin'], style: ['normal']})
 
 const PromNightPagePill = ({children}: {children: React.ReactNode}) => {
     return (
@@ -65,6 +67,9 @@ export default function FlagshipEventPromNightPage() {
                         width={200}
                         height={200}
                     />
+                    <div className={`${island_moments.className} px-6 text-4xl mt-[-20px]`}>
+                        Presents
+                    </div>
                     <h1 className="text-2xl lg:text-7xl tracking-wide px-6 z-[4] relative my-6">
                         <span className="">
                             ENCHANTED
