@@ -5,10 +5,12 @@ import { GenAIInstructorCard, GenAIMentorCard, GenAIPersonCardProps, GenAIPrizeC
 import { rgba } from "@/lib/utils";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import { Calendar, MapPin, MessageCircleCode, Users2 } from "lucide-react";
-import { Zen_Dots } from 'next/font/google'
+import { Inter, Zen_Dots } from 'next/font/google'
 import Image from "next/image";
 
 const zen_font = Zen_Dots({ weight: ['400'], subsets: ['latin'] })
+
+const inter_font = Inter({weight: ['300', '400', '500'], subsets: ['latin']})
 
 type FAQProps = {
     question: string,
@@ -177,7 +179,7 @@ export default function FlagshipEventGenAIPage() {
                     </Card>
                     <Card bgColor={rgba('#ffffff', .1)} className="flex flex-col justify-between p-6">
                         <div className="text-[#CFB8DF]">
-                            To be announced.
+                            {/* To be announced. */}
                         </div>
                         <div className="flex items-center mt-3">
                             <span><MessageCircleCode className="mr-3" /></span><h6>Preliminary Workshop</h6>
@@ -189,31 +191,111 @@ export default function FlagshipEventGenAIPage() {
             {/* DESCRIPTION */}
             <div className="mb-12">
 
-                <h2 className={`${zen_font.className} text-center text-[#9C8DA6]`}>DESCRIPTION</h2>
+                <h3 className={`${inter_font.className} tracking-wide text-center text-[#9C8DA6]`}>Crafting Conversations that Assist: Hackathon to build a chatbot for a website.</h3>
                 
                 <Card bgColor={rgba('#ffffff', 0.1)} className={`w-full max-w-[1000px] tracking-wide mx-auto mt-12 p-6`}>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus nobis beatae saepe cum id est itaque tempora dicta ut, aliquid voluptatibus sit laudantium aliquam perspiciatis! Voluptatibus, repellendus. Odio explicabo quasi sed commodi sunt modi maxime laborum? Quibusdam cupiditate corporis non optio! Hic quod et excepturi, reprehenderit iste delectus ipsam nemo neque! Adipisci at cumque, eaque voluptatibus corrupti aut magnam deserunt labore dignissimos, facere molestiae reprehenderit. Magni cumque ex perferendis odio iure incidunt? Necessitatibus, laborum. Impedit vitae non reiciendis, soluta vel optio aut quas aperiam a totam quia, placeat aspernatur iure culpa sit reprehenderit molestias quos recusandae at! A, explicabo recusandae.
+                    <b>Challenge</b>:  Create a chatbot that answers questions based on content from websites, documents, and other sources! This hackathon is your opportunity to dive into open-source models, vector databases, and embeddings while constructing a specific business case or solution. Ready to code your way to victory? 🔥💻
+                </Card>
+            </div>
+
+            {/* DESCRIPTION */}
+            <div className="mb-12">
+
+                <h3 className={`${zen_font.className} tracking-wide text-center text-[#9C8DA6]`}>Your Mission 💡</h3>
+                
+                <Card bgColor={rgba('#ffffff', 0.1)} className={`w-full max-w-[1000px] tracking-wide mx-auto mt-12 p-6 flex flex-col gap-3`}>
+                    <div>
+                        <b>Create</b> 🎨: Build a chatbot with a user-friendly interface that is intuitive and engaging for users.
+                    </div>
+                    <div>
+                        <b>Interact</b> 💬: Allow the chatbot to interact with user in different ways.
+                    </div>
+                    <div>
+                        <b>Inform</b> 🔗: Ensure the chatbot includes reference links or citations to sources for its answers, establishing credibility and allowing users to verify information.
+                    </div>
+                    <div>
+                        <b>Optimize</b> 💸: Have the optimum design to ensure the queries are not expensive and the operational cost of the bot is competitive
+                    </div>
+                </Card>
+            </div>
+
+            {/* DESCRIPTION */}
+            <div className="mb-12">
+
+                <h3 className={`${zen_font.className} tracking-wide text-center text-[#9C8DA6]`}>Your Toolbox 🛠️</h3>
+                
+                <Card bgColor={rgba('#ffffff', 0.1)} className={`w-full max-w-[1000px] tracking-wide mx-auto mt-12 p-6 flex flex-col gap-3`}>
+                    <div>
+                        <b>Models</b>: Choose from a specific set range of Large Language Models.
+                    </div>
+                    <div>
+                        <b>APIs</b>: Use APIs to interact with the models.
+                    </div>
+                    <div>
+                        <b>Embeddings</b>: Explore different embeddings to store the context.
+                    </div>
+                    <div>
+                        <b>Vector Databases</b>: Select any open-source vector database.
+                    </div>
+                    <div>
+                        <b>TTS & STT</b>: Use supported browser services.
+                    </div>
+                </Card>
+            </div>
+
+            {/* DESCRIPTION */}
+            <div className="mb-12">
+
+                <h3 className={`${zen_font.className} tracking-wide text-center text-[#9C8DA6]`}>RULES</h3>
+                
+                <Card bgColor={rgba('#ffffff', 0.1)} className={`w-full max-w-[1000px] tracking-wide mx-auto mt-12 p-6 flex flex-col gap-3`}>
+                    <ul className="list-disc pl-6 flex flex-col gap-3">
+                        <li>
+                            <b>Preparation</b> 🛠️: You'll have two weeks (31/05/2024 - 14/06/2024) to get familiar with the provided tools.
+                        </li>
+                        <li>
+                            <b>Details</b> 📆: The specific website, models, constraints, and evaluation criteria will be announced on 15/06/2024 when submissions open.
+                        </li>
+                        <li>
+                            <b>Round 1: Submission</b> 🕒: You'll have 36 hours to submit your project starting from the announcement of the specific details. Submissions will be accepted from 15/06/2024 at 9:00 am to 16/06/2024 at 9:00 pm. Our evaluation LLM sandbox will be available during the same time.
+                        </li>
+                        <li>
+                            <b>Round 2: Final Presentation and Demo</b> 🎤: The top 5 submissions will present a demo of their solution along with a presentation on the approach used by them to solve the problem. (Details of the presentation template, duration etc., will be announced on 21/06/2024.)
+                        </li>
+                        <li>
+                            <b>Winners</b> 🏆: Winners will be determined based on final presentations and announced afterward.
+                        </li>
+                        <li>
+                            <b>License</b> : The code should be released under GNU General Public License version 3.
+                        </li>
+                        <li>
+                            <b>Rate limit on APIs</b>: There will be a rate limit on the resources provided to you (details to be provided on 15/06/2024). All the resources should be used efficiently. The organization team will reserve right to disqualify teams that attempt to take up more resources than the threshold permitted.
+                        </li>
+                        <li>
+                            <b>Team Size</b>: 3 - 5 members per team.
+                        </li>
+                    </ul>
                 </Card>
             </div>
 
 
             {/* ROUNDS */}
-            <div className="">
+            {/* <div className="">
 
-                <h2 className={`${zen_font.className} text-center text-[#9C8DA6]`}>ROUNDS</h2>
+                <h3 className={`${zen_font.className} text-center text-[#9C8DA6]`}>ROUNDS</h3>
                 
                 {rounds_data.map((item) => {
                     return (
                         <GenAIRoundCard {...item} key={item.round} />
                     )
                 })}
-            </div>
+            </div> */}
 
 
             {/* PRIZES */}
             <div className="mb-12">
 
-                <h2 className={`${zen_font.className} text-center text-[#9C8DA6]`}>PRIZE POOL</h2>
+                <h3 className={`${zen_font.className} text-center text-[#9C8DA6]`}>PRIZE POOL</h3>
                 <div className="flex justify-center items-center gap-12 my-12 flex-col lg:flex-row">
                     {prizes_data.map((item) => {
                         return (
@@ -233,14 +315,29 @@ export default function FlagshipEventGenAIPage() {
                         className="mr-6"
                     />
 
-                    <span>&#8377; </span><span className="text-[#C5ACD4] mx-3">5,000</span> EACH FOR NEXT 2 FINALISTS
+                    <span>&#8377; </span><span className="text-[#C5ACD4] mx-3">5,000</span> EACH FOR 4th AND 5th
                 </Card>
+            </div>
+
+            {/* TIMETABLE */}
+            <div className="mb-12">
+                <h3 className={`${zen_font.className} text-center text-[#9C8DA6]`}>TIME TABLE</h3>
+                <div className="grid mt-12 max-w-[1000px] mx-auto">
+                    <Image
+                        src={'/genai_timetable.png'}
+                        alt="Time table"
+                        height={200}
+                        width={200}
+                        className="w-full h-auto"
+                    />
+                </div>
+
             </div>
 
             {/* MENTORS */}
             <div className="mb-12">
 
-                <h2 className={`${zen_font.className} text-center text-[#9C8DA6]`}>MENTORS</h2>
+                <h3 className={`${zen_font.className} text-center text-[#9C8DA6]`}>MENTORS</h3>
                 <div className="grid lg:grid-cols-2 gap-6 mt-12 max-w-[1000px] mx-auto">
                     {mentors_data.map((item, ind) => {
                         return (
@@ -256,7 +353,7 @@ export default function FlagshipEventGenAIPage() {
             {/* INSTRUCTORS */}
             <div className="mb-12">
 
-                <h2 className={`${zen_font.className} text-center text-[#9C8DA6]`}>INSTRUCTORS</h2>
+                <h3 className={`${zen_font.className} text-center text-[#9C8DA6]`}>INSTRUCTORS</h3>
                 <div className="grid lg:grid-cols-2 gap-6 mt-12 max-w-[1000px] mx-auto">
                     {instructors_data.map((item, ind) => {
                         return (
@@ -270,9 +367,9 @@ export default function FlagshipEventGenAIPage() {
             </div>
 
             {/* FAQS */}
-            <div className="mb-12">
+            {/* <div className="mb-12">
 
-                <h2 className={`${zen_font.className} text-center text-[#9C8DA6]`}>FAQs</h2>
+                <h3 className={`${zen_font.className} text-center text-[#9C8DA6]`}>FAQs</h3>
                 <div className="mt-12 max-w-[1000px] mx-auto">
                     <Accordion variant="splitted">
                         {faqs_data.map(({ question, answer }, ind) => {
@@ -294,7 +391,7 @@ export default function FlagshipEventGenAIPage() {
                         })}
                     </Accordion>
                 </div>
-            </div>
+            </div> */}
 
 
         </Card>

@@ -31,7 +31,7 @@ const GenAIMentorCard = ({name, description}: GenAIPersonCardProps) => {
     return (
         <Card bgColor={rgba('#ffffff', .1)} className="!p-8">
             <h6>{name}</h6>
-            <div>{description}</div>
+            {/* <div>{description}</div> */}
         </Card>
     )
 }
