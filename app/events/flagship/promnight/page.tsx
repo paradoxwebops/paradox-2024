@@ -118,13 +118,33 @@ export default function FlagshipEventPromNightPage() {
                         title="Dress Code" 
                         description={<>
                             <div>
-                                Prom night is a formal event. To maintain the elegance and formality of the evening, please adhere to the following guidelines:
+                            Prom night is a formal event. To maintain the elegance and formality of the evening, please adhere to the following guidelines:
                             </div>
                             <div className="my-4">
-                                Formal Attire: Everyone is expected to wear formal clothing.
-                            </div>
-                            <div>
-                                Footwear: Flip flops and any type of casual footwear are not permitted.
+                                <h5 className="my-3 mt-6">For Boys:</h5>
+                                <ul className="list-none">
+                                    <li>
+                                        Formals: Shirt and pant tucked in with a belt.
+                                    </li>
+                                    <li>
+                                        Formals with Blazer: Shirt and pant tucked in with a belt, and a blazer on top.
+                                    </li>
+                                    <li>
+                                        Three-Piece Suit: A proper three-piece suit.
+                                    </li>
+                                </ul>
+                                <h5 className="my-3 mt-6">For Girls:</h5>
+                                <ul className="list-none">
+                                    <li>
+                                        Formal Attire: Girls are expected to be properly dressed in formal attire appropriate for the event.
+                                    </li>
+                                </ul>
+                                <h5 className="my-3 mt-6">For All Attendees:</h5>
+                                <ul className="list-none">
+                                    <li>
+                                        Footwear: Flip flops and any type of casual footwear are not permitted.
+                                    </li>
+                                </ul>
                             </div>
                         </>}
                         className="lg:!pr-[200px] lg:max-w-[60%] h-full" 

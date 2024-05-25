@@ -82,7 +82,7 @@ const Header = ({
     zIndex: 10,
   };
 
-  const event_sponsors:EventSponsor[] = (!!sponsors?.length ? [...sponsors.filter((val) => val.title === 'event_sponsor')] : [])
+  const event_sponsors:EventSponsor[] = (!!sponsors?.length ? [...sponsors.filter((val) => val.title === 'event_sponsor')] : [{name: "Paradox '24", id: 0, title: "", url: '', logo: '/paradox_title.webp'}])
   const event_partners:EventSponsor[] = (!!sponsors?.length ? [...sponsors.filter((val) => val.title === 'event_partner')] : [])
 
   return (
@@ -139,13 +139,13 @@ const Header = ({
               <></>
             }
 
-            <Image
+            {/* <Image
               className="w-full h-auto md:max-w-[30%] rounded-2xl shadow-2xl"
               alt={text}
               src={eventImage ?? ''}
               height={200}
               width={200}
-            />
+            /> */}
 
             <HeaderHeading1 text={text} className="text-center !my-6" />
             {event_partners.length !== 0 ? 
