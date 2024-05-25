@@ -8,6 +8,7 @@ import { useAxios } from "@/contexts";
 import { useSelector } from "@/store";
 import { Info } from "lucide-react";
 import { East_Sea_Dokdo } from "next/font/google";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const eastSeaDokdo = East_Sea_Dokdo({ weight: "400", subsets: ["latin"] });
@@ -16,6 +17,27 @@ export interface allEventData {
   name: string;
   header_image: string;
   department: string;
+}
+
+const FlagshipEventsContainer = ({data}:{data: FlagshipEventDetails[]}) => {
+  return (
+    <div className="w-full grid lg:grid-cols-2 gap-6">
+      {data.map((val, ind) => {
+        return (
+          <div className="w-full relative" key={ind}>
+            <Image
+              src={val.image}
+              alt={val.name}
+              height={200}
+              width={200}
+              className="w-full h-auto"
+            />
+            <a href={`/events/flagship/${val.url}`} className="after:absolute after:inset-0" />
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 export default function EventsPage() {
@@ -51,12 +73,13 @@ export default function EventsPage() {
   //   console.log(loading);
   // }, [loading]);
 
+
   const flagshipEvents:FlagshipEventDetails[] = [
-    // {
-    //     name: '',
-    //     url: 'genai',
-    //     image: '/genai_bot.svg'
-    // },
+    {
+        name: 'Gen AI Hackathon',
+        url: 'genai',
+        image: '/genai_banner.webp'
+    },
     // {
     //     name: 'Laser Tag',
     //     url: 'lasertag',
@@ -77,7 +100,8 @@ export default function EventsPage() {
     <div>
       <div className="flex flex-col gap-4 ">
         {/* FLAGSHIP EVENTS */}
-        <FlagshipCarousel slides={flagshipEvents} options={{ loop: true }} />
+        {/* <FlagshipCarousel slides={flagshipEvents} options={{ loop: true }} /> */}
+        <FlagshipEventsContainer data={flagshipEvents} />
         {events.length == 0 && (
           <h2
             className={`${eastSeaDokdo.className} text-7xl text-center`}
