@@ -13,7 +13,7 @@ import { Card } from "../Card";
 import moment from "moment";
 import { getAnnouncements } from "@/lib/methods";
 import { AnnouncementData } from "@/lib/types";
-import { useAxios } from "@/contexts";
+import { useAxios, useNavbar } from "@/contexts";
 
 type NavbarLink = {
   name: string;
@@ -78,11 +78,11 @@ const NavbarAnnouncements = ({open, showToggle}:ToggleableProps) => {
 }
 
 const NavBar = () => {
-  const [open, setOpen] = useState<boolean>(false);
   const [openAnnouncements, setOpenAnnouncements] = useState<boolean>(false)
+  const {navbarShow, setNavbarShow} = useNavbar()
 
   const showToggle = () => {
-    setOpen((s) => !s);
+    setNavbarShow((s) => !s);
   };
 
   const announcementToggle = () => {
@@ -92,7 +92,7 @@ const NavBar = () => {
   const maxHeightPx = 98;
   return (
     <div className="w-full" style={{ height: `${maxHeightPx}px` }}>
-      <NavBarMenuFullScreen open={open} showToggle={showToggle} />
+      <NavBarMenuFullScreen open={navbarShow} showToggle={showToggle} />
       <NavbarAnnouncements open={openAnnouncements} showToggle={announcementToggle} />
       <nav
         className="flex justify-between p-6 items-center fixed w-full z-[99]"
@@ -108,19 +108,14 @@ const NavBar = () => {
           />
         </Link>
         <div className="flex items-center justify-between">
-          <button className="mr-3 lg:mr-6" onClick={announcementToggle}>
+          <button className="mr-3 lg:mr-6 flex bg-[#AAD4D4] px-5 py-3 rounded-2xl" onClick={announcementToggle}>
             <Megaphone />
-          </button>
-          <button className="flex text-[#ff9e68] items-center justify-between" onClick={showToggle}>
+            <div className="w-[10px] h-[10px] rounded-full bg-[#fa2417] ml-[-7px]"></div>
+          </button>          
+          <button className="flex text-[#893405] items-center justify-between bg-[#ff9e68] px-5 py-3 rounded-2xl" onClick={showToggle}>
             MENU <Menu className="ml-3" />
           </button>
         </div>
-        {/* <button
-          className="px-5 py-1 bg-neutral-950/20 rounded"
-          onClick={showToggle}
-        >
-          Menu
-        </button> */}
       </nav>
     </div>
   );

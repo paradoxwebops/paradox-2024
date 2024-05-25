@@ -7,10 +7,11 @@ import {
   AnimatePresence,
 } from "framer-motion";
 import { useLayoutEffect, useState } from "react";
-import { ArrowRight, ExternalLink, Loader2 } from "lucide-react";
+import { ArrowRight, ExternalLink, Loader2, Menu } from "lucide-react";
 import { East_Sea_Dokdo } from "next/font/google";
 import Link from "next/link";
 import LoaderAnimation from "@/components/LottieAnimation";
+import { useNavbar } from "@/contexts";
 interface CloudProps {
   top?: number | string;
   left?: number | string;
@@ -156,6 +157,11 @@ export default function Home() {
     dar: 16 / 9,
   });
   const [comp, setComp] = useState<number>(0);
+  const {setNavbarShow} = useNavbar()
+
+  const showToggle = () => {
+    setNavbarShow((s) => !s);
+  };
 
   useLayoutEffect(() => {
     setTimeout(() => {
@@ -403,6 +409,12 @@ export default function Home() {
                 width={1000}
                 height={1000}
               />
+
+              {/* NAV MENU BUTTON */}
+              <button className="flex text-[#4caf50] items-center justify-between bg-[#d4f6b6] px-5 py-3 rounded-2xl mx-auto" onClick={showToggle}>
+                MENU <Menu className="ml-3" />
+              </button>
+
             </div>
             <motion.div
               className="fixed bottom-[12%] left-0 right-0 m-auto w-[50%] md:w-[30%] lg:w-[20%] z-[9]"

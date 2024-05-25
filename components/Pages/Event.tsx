@@ -46,7 +46,7 @@ type EventFAQ = {
   answer: string;
 };
 
-type EventSponsor = {
+export type EventSponsor = {
   id: number;
   name: string;
   title: string;
@@ -487,6 +487,7 @@ const EventPage = ({ ...props }: EventData) => {
         eventCategory={props.department.name}
         eventImage={props.header_image ?? "https://placehold.co/200"}
         eventId={props.id}
+        sponsors={props.sponsors}
       />
 
       <EventPageMainBody {...props} />

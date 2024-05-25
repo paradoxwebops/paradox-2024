@@ -4,6 +4,7 @@ import { GoogleOAuthProvider } from "./GoogleAuthProvider";
 import { ToastProvider } from "./ToastProvider";
 import { ReduxProvider } from "./ReduxProvider";
 import SmoothScrolling from "../SmoothScrolling";
+import { NavbarProvider } from "./NavbarProvider";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +13,11 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         <GoogleOAuthProvider>
           <ReduxProvider>
             <NextUIProvider>
-              <SmoothScrolling>{children}</SmoothScrolling>
+              <SmoothScrolling>
+                <NavbarProvider>
+                  {children}
+                </NavbarProvider>
+              </SmoothScrolling>
             </NextUIProvider>
           </ReduxProvider>
         </GoogleOAuthProvider>
