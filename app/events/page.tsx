@@ -24,7 +24,7 @@ const FlagshipEventsContainer = ({data}:{data: FlagshipEventDetails[]}) => {
     <div className="w-full grid lg:grid-cols-2 gap-6">
       {data.map((val, ind) => {
         return (
-          <div className="w-full relative">
+          <div className="w-full relative" key={ind}>
             <Image
               src={val.image}
               alt={val.name}

@@ -251,13 +251,13 @@ export default function FlagshipEventGenAIPage() {
                 <Card bgColor={rgba('#ffffff', 0.1)} className={`w-full max-w-[1000px] tracking-wide mx-auto mt-12 p-6 flex flex-col gap-3`}>
                     <ul className="list-disc pl-6 flex flex-col gap-3">
                         <li>
-                            <b>Preparation</b> 🛠️: You'll have two weeks (31/05/2024 - 14/06/2024) to get familiar with the provided tools.
+                            <b>Preparation</b> 🛠️: You&apos;ll have two weeks (31/05/2024 - 14/06/2024) to get familiar with the provided tools.
                         </li>
                         <li>
                             <b>Details</b> 📆: The specific website, models, constraints, and evaluation criteria will be announced on 15/06/2024 when submissions open.
                         </li>
                         <li>
-                            <b>Round 1: Submission</b> 🕒: You'll have 36 hours to submit your project starting from the announcement of the specific details. Submissions will be accepted from 15/06/2024 at 9:00 am to 16/06/2024 at 9:00 pm. Our evaluation LLM sandbox will be available during the same time.
+                            <b>Round 1: Submission</b> 🕒: You&apos;ll have 36 hours to submit your project starting from the announcement of the specific details. Submissions will be accepted from 15/06/2024 at 9:00 am to 16/06/2024 at 9:00 pm. Our evaluation LLM sandbox will be available during the same time.
                         </li>
                         <li>
                             <b>Round 2: Final Presentation and Demo</b> 🎤: The top 5 submissions will present a demo of their solution along with a presentation on the approach used by them to solve the problem. (Details of the presentation template, duration etc., will be announced on 21/06/2024.)
