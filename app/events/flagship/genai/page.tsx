@@ -217,7 +217,7 @@ export default function FlagshipEventGenAIPage() {
           </Card>
         </div>
          <div className=" w-full flex justify-center items-center">
-          <Link href="/events/register/85">
+          <Link className="w-full" href="/events/register/85">
             <Button className="max-w-[700px] w-full text-center">
               Register
             </Button>
