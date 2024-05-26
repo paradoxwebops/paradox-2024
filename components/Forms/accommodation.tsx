@@ -126,12 +126,13 @@ function AccommodationForm() {
       };
     }
   };
+
   const check = async () => {
     setLoading(true);
     try {
       const res = await checkFestRegistration(axios);
       if (res && res.data) {
-        setCheckFest(res.data.registered);
+        // setCheckFest(res.data.registered);
       }
       setLoading(false);
     } catch (err) {
@@ -141,10 +142,11 @@ function AccommodationForm() {
     try {
       const res = await checkAccomRegistration(axios);
       if (res && res.data) {
-        setCheckAccom({
-          registered: res.data.registered,
-          paid: res.data.paid,
-        });
+        // setFormData((v) => ({...v, ...res.data}))
+        // setCheckAccom({
+        //   registered: res.data.registered,
+        //   paid: res.data.paid,
+        // });
       }
       setLoading(false);
     } catch (err) {
@@ -153,9 +155,11 @@ function AccommodationForm() {
     }
     setLoading(false);
   };
+
   useEffect(() => {
     check();
   }, []);
+
   const handleSubmit = () => {
     setLoading(true);
     if (validate().isValidated) {
