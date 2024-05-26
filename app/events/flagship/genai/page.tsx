@@ -186,13 +186,7 @@ export default function FlagshipEventGenAIPage() {
             </div>
           </Card>
         </div>
-        <div className=" w-full flex justify-center items-center">
-          <Link href="/events/register/85">
-            <Button className="max-w-[700px] w-full text-center">
-              Register
-            </Button>
-          </Link>
-        </div>
+       
         <div className="flex flex-col lg:flex-row gap-6">
           <Card
             bgColor={rgba("#ffffff", 0.1)}
@@ -221,6 +215,13 @@ export default function FlagshipEventGenAIPage() {
               <h6>Preliminary Workshop</h6>
             </div>
           </Card>
+        </div>
+         <div className=" w-full flex justify-center items-center">
+          <Link href="/events/register/85">
+            <Button className="max-w-[700px] w-full text-center">
+              Register
+            </Button>
+          </Link>
         </div>
       </div>
 
