@@ -194,7 +194,7 @@ export default function FlagshipEventPromNightPage() {
               title={new Intl.NumberFormat("en-IN", {
                 style: "currency",
                 currency: "INR",
-              }).format(300)}
+              }).format(200)}
               description={
                 <div className="flex flex-col gap-4">
                   <p>Couple Entry</p>
