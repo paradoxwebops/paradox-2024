@@ -108,7 +108,7 @@ export default function FlagshipEventPromNightPage() {
                     <div className="w-[1px] h-[1px] shadow-[0_0_100px_50px_rgba(220,164,254,0.35)] rounded-full z-[0] absolute lg:ml-48" />
                     <PromNightPageCard 
                         title="" 
-                        description="Enjoy a night filled with great music, dancing, and entertainment. Exclusively for IIT-Madras BS degree students."
+                        description="Enjoy a night filled with great music, Salsa (no skills required, we'll teach you how to Salsa!^_^), and entertainment. Exclusively for IIT-Madras BS degree students."
                         className="!pl-24"
                     />
                 </div>
@@ -198,13 +198,12 @@ export default function FlagshipEventPromNightPage() {
                 <div className="w-full max-lg:flex-col flex gap-12 text-right lg:max-w-[75%] justify-self-center">
                     <PromNightPageCard 
                         title="Inclusivity and Conduct"
-                        description="We are committed to creating an inclusive space where everyone feels welcome and respected. Discrimination of any form, including heteronormativity, will not be tolerated. Regardless of your sexual orientation, gender identity, or expression, you are invited to join us for a night of celebration and fun." 
+                        description="We are committed to creating an inclusive space where everyone feels welcome and respected. Discrimination of any form, including heteronormativity, will not be tolerated. You are invited to join us for a night of celebration and fun." 
                     />
                     <div className="w-[1px] h-[1px] shadow-[0_0_200px_100px_rgba(220,164,254,0.35)] rounded-full z-[0] absolute lg:ml-48" />
                     <PromNightPageCard 
                         title="Safety and Support"
-                        description="To ensure everyone has an enjoyable experience:
-                        Chaperones: Chaperones will be stationed around the venue. If you feel uncomfortable at any point, please reach out to the coordinators or a chaperone for assistance."
+                        description="To ensure everyone has an enjoyable experience, Chaperones will be stationed around the venue. If you feel uncomfortable at any point, please reach out to the coordinators or a chaperone for assistance."
                     />
                 </div>
                 <Image 
