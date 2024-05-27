@@ -52,8 +52,8 @@ function AccommodationForm() {
     departure_date: "",
     jain_food: "",
     emergency_contact: "",
-    emergency_relationship: "",
-    emergency_name: "",
+    emergency_contact_relation: "",
+    emergency_contact_name: "",
     medical_issues: "",
     pwd: "",
     pwd_certificate: null,
@@ -67,7 +67,7 @@ function AccommodationForm() {
         isValidated: false,
         message: "Emergency contact number is empty",
       };
-    } else if (formData.emergency_name.length <= 0) {
+    } else if (formData.emergency_contact_name.length <= 0) {
       return {
         isValidated: false,
         message: "Emergency contact name is empty",
@@ -87,7 +87,7 @@ function AccommodationForm() {
         isValidated: false,
         message: "Outside India field is not selected",
       };
-    } else if (formData.emergency_relationship.length <= 0) {
+    } else if (formData.emergency_contact_relation.length <= 0) {
       return {
         isValidated: false,
         message: "Emergency relationship field is empty",
@@ -163,28 +163,11 @@ function AccommodationForm() {
   const handleSubmit = () => {
     setLoading(true);
     if (validate().isValidated) {
-      finalForm.set("arrival_date", formData.arrival_date);
-      finalForm.set("departure_date", formData.departure_date);
-      finalForm.set("jain_food", formData.jain_food);
-      finalForm.set("emergency_contact", formData.emergency_contact);
-      finalForm.set(
-        "emergency_contact_relation",
-        formData.emergency_relationship
-      );
-      finalForm.set("emergency_contact_name", formData.emergency_name);
-      finalForm.set(
-        "medical_issues",
-        formData.medical_issues ? formData.medical_issues : ""
-      );
-      finalForm.set("pwd", formData.pwd);
-      //@ts-ignore
-      finalForm.set("pwd_certificate", formData.pwd_certificate);
-      finalForm.set("outside_india", formData.outside_india);
-      //@ts-ignore
-      finalForm.set("passport", formData.passport);
+      Object.keys(formData).forEach((val) => {
+        finalForm.set(val, formData[val]);
+      })
 
-      axios
-        .post("/fest/accom_register/", finalForm, {
+      axios.post("/fest/accom_register/", finalForm, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -234,6 +217,7 @@ function AccommodationForm() {
                 label="Arrival Date "
                 placeholder="Arrival"
                 isRequired
+                value={formData.arrival_date}
                 classNames={{ ...inputClassNames }}
                 type="datetime-local"
                 isInvalid={
@@ -261,6 +245,7 @@ function AccommodationForm() {
               <Input
                 label="Departure Date"
                 defaultValue={new Date("30-5-2024").toString()}
+                value={formData.departure_date}
                 classNames={{ ...inputClassNames }}
                 placeholder="Departure"
                 isRequired
@@ -296,10 +281,11 @@ function AccommodationForm() {
                 onChange={(e) => {
                   setFormData((prev) => ({
                     ...prev,
-                    emergency_name: e.target.value,
+                    emergency_contact_name: e.target.value,
                   }));
                   finalForm.set("emergency_contact_name", e.target.value);
                 }}
+                value={String(formData.emergency_contact_name)}
               />
               <Input
                 label="Emergency contact number"
@@ -314,6 +300,7 @@ function AccommodationForm() {
                   }));
                   finalForm.set("emergency_contact", e.target.value);
                 }}
+                value={String(formData.emergency_contact)}
               />
 
               <Select
@@ -324,10 +311,11 @@ function AccommodationForm() {
                 onChange={(e) => {
                   setFormData((prev) => ({
                     ...prev,
-                    emergency_relationship: e.target.value,
+                    emergency_contact_relation: e.target.value,
                   }));
                   finalForm.set("emergency_contact_relation", e.target.value);
                 }}
+                value={String(formData.emergency_contact_relation)}
               >
                 <SelectItem key="spouse" value={"spouse"}>
                   Spouse
@@ -366,6 +354,7 @@ function AccommodationForm() {
                   }));
                   finalForm.set("jain_food", e.target.value);
                 }}
+                value={String(formData.jain_food)}
               >
                 <SelectItem key="true" value={"true"}>
                   Yes
@@ -386,6 +375,7 @@ function AccommodationForm() {
                   }));
                   finalForm.set("medical_issues", e.target.value);
                 }}
+                value={String(formData.medical_issues)}
               />
               <Select
                 isRequired
@@ -404,6 +394,7 @@ function AccommodationForm() {
                   }));
                   finalForm.set("outside_india", e.target.value);
                 }}
+                value={String(formData.passport)}
               >
                 <SelectItem key="true" value={"true"}>
                   Yes
@@ -456,6 +447,7 @@ function AccommodationForm() {
                   setFormData((prev) => ({ ...prev, pwd: e.target.value }));
                   finalForm.set("pwd", e.target.value);
                 }}
+                value={String(formData.pwd)}
               >
                 <SelectItem key="true" value={"true"}>
                   Yes
