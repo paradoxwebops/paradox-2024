@@ -14,8 +14,8 @@ export interface AccommodationProps {
   departure_date: string;
   jain_food: string;
   emergency_contact: string;
-  emergency_relationship: string;
-  emergency_name: string;
+  emergency_contact_relation: string;
+  emergency_contact_name: string;
   medical_issues: string | null;
   pwd: string;
   pwd_certificate: File | null;
