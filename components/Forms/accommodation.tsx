@@ -132,7 +132,7 @@ function AccommodationForm() {
     try {
       const res = await checkFestRegistration(axios);
       if (res && res.data) {
-        // setCheckFest(res.data.registered);
+        setCheckFest(res.data.registered);
       }
       setLoading(false);
     } catch (err) {
@@ -143,10 +143,10 @@ function AccommodationForm() {
       const res = await checkAccomRegistration(axios);
       if (res && res.data) {
         // setFormData((v) => ({...v, ...res.data}))
-        // setCheckAccom({
-        //   registered: res.data.registered,
-        //   paid: res.data.paid,
-        // });
+        setCheckAccom((v) => ({
+          ...v,
+          paid: res.data.paid,
+        }));
       }
       setLoading(false);
     } catch (err) {
