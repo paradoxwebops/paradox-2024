@@ -163,9 +163,25 @@ function AccommodationForm() {
   const handleSubmit = () => {
     setLoading(true);
     if (validate().isValidated) {
-      Object.keys(formData).forEach((val) => {
-        finalForm.set(val, formData[val]);
-      })
+      finalForm.set("arrival_date", formData.arrival_date);
+      finalForm.set("departure_date", formData.departure_date);
+      finalForm.set("jain_food", formData.jain_food);
+      finalForm.set("emergency_contact", formData.emergency_contact);
+      finalForm.set(
+        "emergency_contact_relation",
+        formData.emergency_contact_relation
+      );
+      finalForm.set("emergency_contact_name", formData.emergency_contact_name);
+      finalForm.set(
+        "medical_issues",
+        formData.medical_issues ? formData.medical_issues : ""
+      );
+      finalForm.set("pwd", formData.pwd);
+      //@ts-ignore
+      finalForm.set("pwd_certificate", formData.pwd_certificate);
+      finalForm.set("outside_india", formData.outside_india);
+      //@ts-ignore
+      finalForm.set("passport", formData.passport);
 
       axios.post("/fest/accom_register/", finalForm, {
           headers: {
