@@ -142,7 +142,7 @@ function AccommodationForm() {
     try {
       const res = await checkAccomRegistration(axios);
       if (res && res.data) {
-        // setFormData((v) => ({...v, ...res.data}))
+        setFormData((v) => ({...v, ...res.data}))
         setCheckAccom((v) => ({
           ...v,
           paid: res.data.paid,

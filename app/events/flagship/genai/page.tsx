@@ -66,7 +66,7 @@ export default function FlagshipEventGenAIPage() {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum maiores harum inventore reiciendis voluptatibus dolores aut, quidem minus cum corporis earum sed? Blanditiis libero eos autem unde, facere fugit beatae!",
     },
     {
-      name: "Livin Nector",
+      name: "Rishav Thakker ",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum maiores harum inventore reiciendis voluptatibus dolores aut, quidem minus cum corporis earum sed? Blanditiis libero eos autem unde, facere fugit beatae!",
     },
@@ -74,7 +74,7 @@ export default function FlagshipEventGenAIPage() {
 
   const instructors_data: GenAIPersonCardProps[] = [
     {
-      name: "Rishav Thakker",
+      name: "Livin Nector",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum maiores harum inventore reiciendis voluptatibus dolores aut, quidem minus cum corporis earum sed? Blanditiis libero eos autem unde, facere fugit beatae!",
     },
@@ -177,7 +177,7 @@ export default function FlagshipEventGenAIPage() {
             bgColor={rgba("#ffffff", 0.1)}
             className="flex flex-col justify-between p-6"
           >
-            <div className="text-[#CFB8DF]">To be announced.</div>
+            <div className="text-[#CFB8DF]">NAC 505</div>
             <div className="flex items-center mt-3">
               <span>
                 <MapPin className="mr-3" />
