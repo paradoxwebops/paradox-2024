@@ -107,6 +107,14 @@ export default function SponsorsPage() {
             width={500}
             className="w-full h-auto max-w-[500px] mx-auto"
           />
+
+          <Image 
+            src={'/sponsors/cotitle_tredence.png'}
+            alt="Acer"
+            height={500}
+            width={500}
+            className="w-full h-auto max-w-[500px] mx-auto"
+          />
         </div>
       </Card>
       
@@ -196,7 +204,7 @@ export default function SponsorsPage() {
         </div>
       </Card>
 
-      <div className="lg:min-h-screen w-full gap-8 flex justify-center items-center rounded-xl bg-[url(/bg.svg)] flex-col p-4 bg-cover bg-no-repeat">
+      {/* <div className="lg:min-h-screen w-full gap-8 flex justify-center items-center rounded-xl bg-[url(/bg.svg)] flex-col p-4 bg-cover bg-no-repeat">
         <div className="flex text-left w-full uppercase">
 
           <h3 className="text-[#740D47]">Past Sponsors</h3>
@@ -240,7 +248,8 @@ export default function SponsorsPage() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
+
     </div>
   );
 }
