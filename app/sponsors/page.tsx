@@ -83,7 +83,7 @@ export default function SponsorsPage() {
       <Card bgColor={rgba('#000000', 0)} className="bg-[url(/bg.svg)] bg-cover bg-no-repeat">
 
         <h2 className={`${inika.className} text-white text-center tracking-wide my-3`}>TITLE</h2>
-        <div className="grid lg:grid-cols-1 gap-6">
+        <div className="grid lg:grid-cols-2 gap-6 items-center">
 
           <Image 
             src={'/sponsors/title_acer.svg'}
@@ -92,29 +92,80 @@ export default function SponsorsPage() {
             width={500}
             className="w-full h-auto max-w-[500px] mx-auto"
           />
+
+          <div className={`${inika.className} flex flex-col gap-3 text-white font-bold`}>
+            <p>
+              Level up your tech game with Acer, a leading innovator in electronics and computing for over four decades. They craft top-notch laptops, desktops, monitors, and more, pushing the boundaries of what technology can achieve.
+            </p>
+            <p>
+              Whether you're a student, professional, or gamer, Acer has something to offer. Conquer deadlines on sleek and powerful Aspire laptops. For gamers, the Predator line delivers cutting-edge hardware and immersive displays to dominate the competition. Creative professionals can unleash creativity with stunning monitors and workstations, bringing visions to life with clarity and color accuracy.
+            </p>
+            <p>
+              Acer's focus extends beyond hardware, striving to create technology that seamlessly integrates into your life, enhancing productivity, entertainment, and computing. With innovation, reliability, and quality, Acer delivers performance, style, and cutting-edge features.
+            </p>
+            <p>
+              Don't settle for less. Acer earned its reputation by exceeding expectations. Explore their computing solutions and unlock possibilities. From ultrabooks to gaming rigs, crystal-clear monitors to cloud solutions, Acer has something for everyone. Elevate your tech game and experience Acer's commitment to excellence. You won't be disappointed.
+            </p>
+          </div>
+          
         </div>
       </Card>
 
       <Card bgColor={rgba('#000000', 0)} className="bg-[url(/bg.svg)] bg-cover bg-no-repeat">
 
         <h2 className={`${inika.className} text-white text-center tracking-wide my-3`}>CO - TITLE</h2>
-        <div className="grid lg:grid-cols-1 gap-6">
+        <div className="grid lg:grid-cols-1 gap-12">
 
-          <Image 
-            src={'/sponsors/cotitle_insightsias.png'}
-            alt="Acer"
-            height={500}
-            width={500}
-            className="w-full h-auto max-w-[500px] mx-auto"
-          />
+          <div className="grid lg:grid-cols-2 gap-6 items-center">
 
-          <Image 
-            src={'/sponsors/cotitle_tredence.png'}
-            alt="Acer"
-            height={500}
-            width={500}
-            className="w-full h-auto max-w-[500px] mx-auto"
-          />
+            <Image 
+              src={'/sponsors/cotitle_insightsias.png'}
+              alt="Acer"
+              height={500}
+              width={500}
+              className="w-full h-auto max-w-[500px] mx-auto"
+            />
+            <div className={`${inika.className} flex flex-col gap-3 text-white font-bold`}>
+              <p>
+                Unlock your potential with Insights IAS, the premier institute for Civil Services preparation. This esteemed organization has been guiding aspiring candidates towards their dreams of serving the nation.
+              </p>
+              <p>
+                Insights IAS offers a comprehensive suite of programs meticulously designed to equip you with the knowledge, skills, and strategies necessary to excel in the highly competitive Civil Services examinations. Their expert faculty, comprising experienced educators and former civil servants, impart invaluable insights and mentor you through every stage of the rigorous selection process.
+              </p>
+              <p>
+                From comprehensive coursework and interactive classroom sessions to mock tests and personalized mentoring, Insights IAS provides a holistic learning experience tailored to your individual needs. Their cutting-edge study materials, combined with a supportive learning environment, empower you to approach the exams with confidence and determination.
+              </p>
+              <p>
+                Embark on a rewarding journey towards serving the nation with Insights IAS as your trusted partner. Unlock your true potential and pave the way for a fulfilling career in the prestigious Civil Services.
+              </p>
+            </div>
+
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-6 items-center">
+            <Image 
+              src={'/sponsors/cotitle_tredence.png'}
+              alt="Acer"
+              height={500}
+              width={500}
+              className="w-full h-auto max-w-[500px] mx-auto"
+            />
+            <div className={`${inika.className} flex flex-col gap-3 text-white font-bold`}>
+              <p>
+                Harness the power of data-driven insights with Tredence, a trailblazer in analytics solutions. This visionary company has empowered businesses to unleash the true potential of their data.
+              </p>
+              <p>
+                Seeking operational streamlining, process optimization, or game-changing revelations? Tredence's cutting-edge analytics capabilities deliver. Their seasoned experts, armed with advanced technologies and industry know-how, craft tailored solutions for unprecedented growth and efficiency.
+              </p>
+              <p>
+                From robust data management to predictive modeling and prescriptive analytics, Tredence's comprehensive services equip you with tools for informed decisions and staying ahead. Their holistic approach fosters a data-driven culture fueling continuous improvement.
+              </p>
+              <p>
+                Don't let data be a mere byproduct; let Tredence transform it into your greatest asset. Embrace excellence, innovation, and customer success as they navigate the evolving analytics landscape. Unlock new possibilities and gain a competitive edge with Tredence as your analytics partner.
+              </p>
+            </div>
+          </div>
+
         </div>
       </Card>
       
