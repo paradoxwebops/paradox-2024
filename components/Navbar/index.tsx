@@ -19,81 +19,98 @@ type NavbarLink = {
   name: string;
   href: string;
   target: "_self" | "_target";
-  onClick?: Function
+  onClick?: Function;
 };
 
 type ToggleableProps = {
   open: boolean;
   showToggle: () => void;
-}
+};
 
-const NavbarAnnouncements = ({open, showToggle}:ToggleableProps) => {
+const NavbarAnnouncements = ({ open, showToggle }: ToggleableProps) => {
+  const [data, setData] = useState<AnnouncementData[]>([]);
+  const { axios } = useAxios();
 
-  const [data, setData] = useState<AnnouncementData[]>([])
-  const {axios} = useAxios()
-
-  const showAnimationDuration = 1
+  const showAnimationDuration = 1;
 
   useEffect(() => {
-    getAnnouncements(axios)
-    .then((res) => {
-      setData((s) => [...res.data])
-    })
-  }, [])
+    getAnnouncements(axios).then((res) => {
+      if (res.data) {
+        setData((s) => [...res.data]);
+      }
+    });
+  }, []);
 
   return (
     <AnimatePresence mode="wait">
-        {open && (
-          <motion.div
-            className="w-full h-screen lg:max-w-[400px] lg:max-h-[500px] fixed top-0 right-0 lg:right-[50px] lg:top-[90px] z-[100] lg:rounded-2xl p-2 flex flex-col justify-evenly max-lg:!bg-[#eeeeee]"
-            style={{ backgroundColor: rgba('#aaaaaa', .45), transformOrigin: 'top right' }}
-            initial={{ transform: 'scale(0)' }}
-            animate={{ transform: 'scale(1)' }}
-            exit={{ transform: 'scale(0)' }}
+      {open && (
+        <motion.div
+          className="w-full h-screen lg:max-w-[400px] lg:max-h-[500px] fixed top-0 right-0 lg:right-[50px] lg:top-[90px] z-[100] lg:rounded-2xl p-2 flex flex-col justify-evenly max-lg:!bg-[#eeeeee]"
+          style={{
+            backgroundColor: rgba("#aaaaaa", 0.45),
+            transformOrigin: "top right",
+          }}
+          initial={{ transform: "scale(0)" }}
+          animate={{ transform: "scale(1)" }}
+          exit={{ transform: "scale(0)" }}
+        >
+          <div className="flex items-center justify-between px-6 py-3">
+            <h4 className={`milestone text-[#15253E] tracking-wide`}>
+              Announcement
+            </h4>
+            <button onClick={showToggle}>
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+          <Card
+            bgColor={rgba("#031248", 0.5)}
+            className="h-[600px] lg:h-[500px] overflow-y-scroll grid gap-4"
           >
-            <div className="flex items-center justify-between px-6 py-3">
-              <h4 className={`milestone text-[#15253E] tracking-wide`}>Announcement</h4>
-              <button onClick={showToggle}>
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            <Card bgColor={rgba('#031248', 0.5)} className="h-[600px] lg:h-[500px] overflow-y-scroll grid gap-4">
-              {data.map(({title, id, body, created_by, created_at}) => {
-                return (
-                  <Card bgColor={rgba('#000000', 0.35)} key={id} className="text-white w-full h-[fit-content]">
-                    <h6 className="tracking-wide">{title}</h6>
-                    <p className="my-3 whitespace-pre-line">{body}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="italic">~ {created_by}</span>
-                      <span className="bg-[#3E5DAB] px-4 py-2 rounded-2xl">{moment(created_at).format('DD MMMM YYYY')}</span>
-                    </div>
-                  </Card>
-                )
-              })}
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
-  )
-}
+            {data.map(({ title, id, body, created_by, created_at }) => {
+              return (
+                <Card
+                  bgColor={rgba("#000000", 0.35)}
+                  key={id}
+                  className="text-white w-full h-[fit-content]"
+                >
+                  <h6 className="tracking-wide">{title}</h6>
+                  <p className="my-3 whitespace-pre-line">{body}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="italic">~ {created_by}</span>
+                    <span className="bg-[#3E5DAB] px-4 py-2 rounded-2xl">
+                      {moment(created_at).format("DD MMMM YYYY")}
+                    </span>
+                  </div>
+                </Card>
+              );
+            })}
+          </Card>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 
 const NavBar = () => {
-  const [openAnnouncements, setOpenAnnouncements] = useState<boolean>(false)
-  const {navbarShow, setNavbarShow} = useNavbar()
+  const [openAnnouncements, setOpenAnnouncements] = useState<boolean>(false);
+  const { navbarShow, setNavbarShow } = useNavbar();
 
   const showToggle = () => {
     setNavbarShow((s) => !s);
   };
 
   const announcementToggle = () => {
-    setOpenAnnouncements((s) => !s)
-  }
+    setOpenAnnouncements((s) => !s);
+  };
 
   const maxHeightPx = 98;
   return (
     <div className="w-full" style={{ height: `${maxHeightPx}px` }}>
       <NavBarMenuFullScreen open={navbarShow} showToggle={showToggle} />
-      <NavbarAnnouncements open={openAnnouncements} showToggle={announcementToggle} />
+      <NavbarAnnouncements
+        open={openAnnouncements}
+        showToggle={announcementToggle}
+      />
       <nav
         className="flex justify-between p-6 items-center fixed w-full z-[99]"
         style={{ maxHeight: `${maxHeightPx}px` }}
@@ -108,11 +125,17 @@ const NavBar = () => {
           />
         </Link>
         <div className="flex items-center justify-between">
-          <button className="mr-3 lg:mr-6 flex bg-[#AAD4D4] px-5 py-3 rounded-2xl" onClick={announcementToggle}>
+          <button
+            className="mr-3 lg:mr-6 flex bg-[#AAD4D4] px-5 py-3 rounded-2xl"
+            onClick={announcementToggle}
+          >
             <Megaphone />
             <div className="w-[10px] h-[10px] rounded-full bg-[#fa2417] ml-[-7px]"></div>
-          </button>          
-          <button className="flex text-[#893405] items-center justify-between bg-[#ff9e68] px-5 py-3 rounded-2xl" onClick={showToggle}>
+          </button>
+          <button
+            className="flex text-[#893405] items-center justify-between bg-[#ff9e68] px-5 py-3 rounded-2xl"
+            onClick={showToggle}
+          >
             MENU <Menu className="ml-3" />
           </button>
         </div>
@@ -121,10 +144,7 @@ const NavBar = () => {
   );
 };
 
-const NavBarMenuFullScreen = ({
-  open,
-  showToggle,
-}: ToggleableProps) => {
+const NavBarMenuFullScreen = ({ open, showToggle }: ToggleableProps) => {
   const showAnimationDuration = 1;
 
   return (
@@ -167,11 +187,11 @@ const NavBarMenuFullScreen = ({
                 height={1000}
               />
             </motion.div>
-            <motion.div 
-              className="fixed bottom-0 right-0 z-[100]" 
-              style={{transform: 'rotate(-90deg)', transformOrigin: 'top'}}
+            <motion.div
+              className="fixed bottom-0 right-0 z-[100]"
+              style={{ transform: "rotate(-90deg)", transformOrigin: "top" }}
               initial={{ bottom: -500 }}
-              animate={{ bottom: 0, transition: {delay: 1}}}
+              animate={{ bottom: 0, transition: { delay: 1 } }}
               exit={{ bottom: -500 }}
             >
               <Image
@@ -193,12 +213,11 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
   const dispatch = useDispatch();
   const { access_token } = useSelector((state) => state.auth);
 
-  const beforeData:NavbarLink[] = []
+  const beforeData: NavbarLink[] = [];
 
-  const afterData:NavbarLink[] = []
+  const afterData: NavbarLink[] = [];
 
   if (access_token !== "") {
-
     afterData.push({
       href: "/",
       name: "LOGOUT",
@@ -208,19 +227,18 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
         dispatch(delAuth());
         window.localStorage.clear();
         showToggle();
-      }
-    })
+      },
+    });
 
-    beforeData.push({
-      href: "/profile",
-      name: "PROFILE",
-      target: "_self",
-    })
-
+    beforeData.push();
   }
 
   const data: NavbarLink[] = [
-    ...beforeData,
+    {
+      href: "/profile",
+      name: "PROFILE",
+      target: "_self",
+    },
     {
       href: "/about",
       name: "ABOUT",
@@ -266,7 +284,7 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
       name: "SCHEDULE",
       target: "_self",
     },
-    ...afterData
+    ...afterData,
   ];
   return (
     <div data-lenis-prevent className="">
@@ -275,20 +293,17 @@ const NavBarLinks = ({ showToggle }: { showToggle: any }) => {
 
         const callback = () => {
           if (item.onClick) {
-            item.onClick()
+            item.onClick();
           }
-          showToggle()
-        }
+          showToggle();
+        };
 
         return (
           <div
             className="p-3 milestone text-3xl tracking-wide text-[#6D878F] "
             key={name}
           >
-            <Link
-              {...item}
-              onClick={callback}
-            >
+            <Link {...item} onClick={callback}>
               {name}
             </Link>
           </div>
