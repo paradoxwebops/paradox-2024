@@ -129,13 +129,13 @@ export default function SponsorsPage() {
               Level up your tech game with Acer, a leading innovator in electronics and computing for over four decades. They craft top-notch laptops, desktops, monitors, and more, pushing the boundaries of what technology can achieve.
             </p>
             <p>
-              Whether you're a student, professional, or gamer, Acer has something to offer. Conquer deadlines on sleek and powerful Aspire laptops. For gamers, the Predator line delivers cutting-edge hardware and immersive displays to dominate the competition. Creative professionals can unleash creativity with stunning monitors and workstations, bringing visions to life with clarity and color accuracy.
+              Whether you&apos;re a student, professional, or gamer, Acer has something to offer. Conquer deadlines on sleek and powerful Aspire laptops. For gamers, the Predator line delivers cutting-edge hardware and immersive displays to dominate the competition. Creative professionals can unleash creativity with stunning monitors and workstations, bringing visions to life with clarity and color accuracy.
             </p>
             <p>
-              Acer's focus extends beyond hardware, striving to create technology that seamlessly integrates into your life, enhancing productivity, entertainment, and computing. With innovation, reliability, and quality, Acer delivers performance, style, and cutting-edge features.
+              Acer&apos;s focus extends beyond hardware, striving to create technology that seamlessly integrates into your life, enhancing productivity, entertainment, and computing. With innovation, reliability, and quality, Acer delivers performance, style, and cutting-edge features.
             </p>
             <p>
-              Don't settle for less. Acer earned its reputation by exceeding expectations. Explore their computing solutions and unlock possibilities. From ultrabooks to gaming rigs, crystal-clear monitors to cloud solutions, Acer has something for everyone. Elevate your tech game and experience Acer's commitment to excellence. You won't be disappointed.
+              Don&apos;t settle for less. Acer earned its reputation by exceeding expectations. Explore their computing solutions and unlock possibilities. From ultrabooks to gaming rigs, crystal-clear monitors to cloud solutions, Acer has something for everyone. Elevate your tech game and experience Acer&apos;s commitment to excellence. You won&apos;t be disappointed.
             </p>
           </div>
           
@@ -186,13 +186,13 @@ export default function SponsorsPage() {
                 Harness the power of data-driven insights with Tredence, a trailblazer in analytics solutions. This visionary company has empowered businesses to unleash the true potential of their data.
               </p>
               <p>
-                Seeking operational streamlining, process optimization, or game-changing revelations? Tredence's cutting-edge analytics capabilities deliver. Their seasoned experts, armed with advanced technologies and industry know-how, craft tailored solutions for unprecedented growth and efficiency.
+                Seeking operational streamlining, process optimization, or game-changing revelations? Tredence&apos;s cutting-edge analytics capabilities deliver. Their seasoned experts, armed with advanced technologies and industry know-how, craft tailored solutions for unprecedented growth and efficiency.
               </p>
               <p>
-                From robust data management to predictive modeling and prescriptive analytics, Tredence's comprehensive services equip you with tools for informed decisions and staying ahead. Their holistic approach fosters a data-driven culture fueling continuous improvement.
+                From robust data management to predictive modeling and prescriptive analytics, Tredence&apos;s comprehensive services equip you with tools for informed decisions and staying ahead. Their holistic approach fosters a data-driven culture fueling continuous improvement.
               </p>
               <p>
-                Don't let data be a mere byproduct; let Tredence transform it into your greatest asset. Embrace excellence, innovation, and customer success as they navigate the evolving analytics landscape. Unlock new possibilities and gain a competitive edge with Tredence as your analytics partner.
+                Don&apos;t let data be a mere byproduct; let Tredence transform it into your greatest asset. Embrace excellence, innovation, and customer success as they navigate the evolving analytics landscape. Unlock new possibilities and gain a competitive edge with Tredence as your analytics partner.
               </p>
             </div>
           </div>
